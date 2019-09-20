@@ -1,0 +1,25 @@
+{
+  "name": "config-form",
+  "version": "1.0.0",
+  "description": "config-form",
+  "main": "index.js",
+  "directories": {
+    "example": "example"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gintamamadao/config-form.git"
+  },
+  "author": "gintamamadao",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gintamamadao/config-form/issues"
+  },
+  "homepage": "https://github.com/gintamamadao/config-form#readme",
+  "dependencies": {
+    "schema-verify": "^1.2.2"
+  }
+}
