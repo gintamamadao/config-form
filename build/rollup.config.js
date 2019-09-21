@@ -16,11 +16,7 @@ const babelOptions = {
             }
         ]
     ],
-    plugins: [
-        "@babel/external-helpers",
-        "@babel/transform-runtime",
-        "@babel/transform-react-jsx"
-    ]
+    plugins: ["@babel/transform-react-jsx"]
 };
 
 module.exports = {
