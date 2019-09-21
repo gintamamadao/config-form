@@ -1,9 +1,7 @@
-import { PureComponent } from "react";
-import antd from "antd";
+import { Input } from "antd";
+import React from "react";
 
-const AntdInput = antd.Input;
-
-class Input extends PureComponent {
+class CInput extends React.PureComponent {
     constructor(props) {
         super(props);
     }
@@ -11,8 +9,8 @@ class Input extends PureComponent {
     onChange() {}
 
     render() {
-        <AntdInput placeholder="placeholder" />;
+        return <Input />;
     }
 }
 
-export default Input;
+export default CInput;
