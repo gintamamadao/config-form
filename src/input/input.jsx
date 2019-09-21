@@ -1,10 +1,9 @@
-import Util from "../util/util";
+import { PureComponent } from "react";
+import antd from "antd";
 
-const reactMoudle = Util.loadModule("react");
-const antdMoudle = Util.loadModule("antd");
-const AntdInput = antdMoudle.Input;
+const AntdInput = antd.Input;
 
-class Input extends reactMoudle.PureComponent {
+class Input extends PureComponent {
     constructor(props) {
         super(props);
     }

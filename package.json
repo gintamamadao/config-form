@@ -1,25 +1,43 @@
 {
-  "name": "config-form",
-  "version": "1.0.0",
-  "description": "config-form",
-  "main": "index.js",
-  "directories": {
-    "example": "example"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/gintamamadao/config-form.git"
-  },
-  "author": "gintamamadao",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/gintamamadao/config-form/issues"
-  },
-  "homepage": "https://github.com/gintamamadao/config-form#readme",
-  "dependencies": {
-    "schema-verify": "^1.2.2"
-  }
+    "name": "config-form",
+    "version": "1.0.0",
+    "description": "config-form",
+    "main": "index.js",
+    "directories": {
+        "example": "example"
+    },
+    "scripts": {
+        "dev": "node_modules/.bin/rollup -c ./build/rollup.dev.config.js -w",
+        "build": "node_modules/.bin/rollup -c ./build/rollup.bundle.config.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/gintamamadao/config-form.git"
+    },
+    "author": "gintamamadao",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/gintamamadao/config-form/issues"
+    },
+    "homepage": "https://github.com/gintamamadao/config-form#readme",
+    "dependencies": {
+        "babel-runtime": "^6.26.0",
+        "classnames": "^2.2.6",
+        "schema-verify": "^1.2.2"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.4.5",
+        "@babel/plugin-external-helpers": "^7.2.0",
+        "@babel/plugin-transform-react-jsx": "^7.3.0",
+        "@babel/plugin-transform-runtime": "^7.4.4",
+        "@babel/preset-env": "^7.4.5",
+        "antd": "^3.23.4",
+        "react": "^16.9.0",
+        "rollup": "^1.21.4",
+        "rollup-plugin-babel": "^4.3.3",
+        "rollup-plugin-commonjs": "^10.1.0",
+        "rollup-plugin-node-resolve": "^5.2.0",
+        "rollup-plugin-postcss": "^2.0.3",
+        "rollup-plugin-uglify": "^6.0.3"
+    }
 }
