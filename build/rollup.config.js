@@ -26,5 +26,5 @@ module.exports = {
         nodeResolve({ extensions }),
         commonjs({ extensions, ignore: ["conditional-runtime-dependency"] })
     ],
-    external: ["schema-verify", "react", "antd"]
+    external: ["schema-verify", "react", "antd", "classnames"]
 };
