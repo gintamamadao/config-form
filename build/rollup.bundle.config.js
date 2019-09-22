@@ -5,6 +5,6 @@ module.exports = {
     ...baseConfig,
     output: {
         file: util.resolve("dist/config-form.js"),
-        format: "es"
+        format: "cjs"
     }
 };

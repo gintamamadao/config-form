@@ -1,5 +1,9 @@
-import { Input } from 'antd';
-import React from 'react';
+'use strict';
+
+function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+
+var antd = require('antd');
+var React = _interopDefault(require('react'));
 
 function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
@@ -87,7 +91,7 @@ function (_React$PureComponent) {
   }, {
     key: "render",
     value: function render() {
-      return React.createElement(Input, null);
+      return React.createElement(antd.Input, null);
     }
   }]);
 
@@ -98,4 +102,4 @@ var index = {
   Input: CInput
 };
 
-export default index;
+module.exports = index;
