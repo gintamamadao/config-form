@@ -1,5 +1,5 @@
-import { Input } from "antd";
 import React from "react";
+import UnctrlInput from "../unctrl_input/unctrl_input";
 
 class CInput extends React.PureComponent {
     constructor(props) {
@@ -9,7 +9,7 @@ class CInput extends React.PureComponent {
     onChange() {}
 
     render() {
-        return <Input />;
+        return <UnctrlInput />;
     }
 }
 

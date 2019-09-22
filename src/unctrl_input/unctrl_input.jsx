@@ -49,10 +49,6 @@ class InInput extends React.PureComponent {
         this.focusDom();
     }
 
-    componentWillUpdate() {
-        this.focusDom();
-    }
-
     render() {
         const { props } = this;
         const { isTextArea } = props;
@@ -80,7 +76,8 @@ class UnctrlInput extends React.PureComponent {
         Util.bindme(super(props), "handleChange", "handleBlur", "handleFocus");
         this.state = {
             isShowCtrlInput: true,
-            defaultValue: null
+            defaultValue: null,
+            unctrlValue: null
         };
     }
 
@@ -91,34 +88,46 @@ class UnctrlInput extends React.PureComponent {
 
     handleFocus(e) {
         const onFocus = this.props.onFocus;
-        const value = this.props.value;
+        let value = this.props.value;
         const focusControl = this.props.focusControl;
+        const isShowCtrlInput = this.state.isShowCtrlInput;
+        const unctrlValue = this.state.unctrlValue;
         if (!focusControl) {
+            value =
+                Type.string.isNot(value) && Type.string.isNotEmpty(unctrlValue)
+                    ? unctrlValue
+                    : value;
             setTimeout(() => {
                 this.setState({
                     isShowCtrlInput: false,
                     defaultValue: value
                 });
             }, 0);
+            if (isShowCtrlInput) {
+                return;
+            }
         }
         Type.function.is(onFocus) && onFocus(e);
     }
 
     handleBlur(e) {
+        const notTrim = this.props.notTrim;
+        e = Type.object.safe(e);
+        e.target = Type.object.safe(e.target);
+        e.target.value = Type.string.safe(e.target.value);
+        if (!notTrim) {
+            e.target.value = e.target.value.trim();
+        }
+        const value = e.target.value;
         setTimeout(() => {
             this.setState({
                 isShowCtrlInput: true,
-                defaultValue: null
+                defaultValue: null,
+                unctrlValue: value
             });
         }, 0);
         const onBlur = this.props.onBlur;
         const onChange = this.props.onChange;
-        const notTrim = this.props.notTrim;
-        e = Type.object.safe(e);
-        e.target = Type.object.safe(e.target);
-        if (!notTrim) {
-            e.target.value = Type.string.safe(e.target.value).trim();
-        }
         Type.function.is(onBlur) && onBlur(e);
         Type.function.is(onChange) && onChange(e);
     }
@@ -126,7 +135,6 @@ class UnctrlInput extends React.PureComponent {
     render() {
         const { props, state } = this;
         const {
-            value,
             type,
             disabled,
             placeholder,
@@ -134,7 +142,8 @@ class UnctrlInput extends React.PureComponent {
             rows,
             focusControl
         } = props;
-        const { isShowCtrlInput, defaultValue } = state;
+        const { isShowCtrlInput, defaultValue, unctrlValue } = state;
+        let value = props.value;
 
         const InputTag = isTextArea ? TextArea : Input;
 
@@ -153,6 +162,10 @@ class UnctrlInput extends React.PureComponent {
 
         let inputhtml = null;
         if (isShowCtrlInput || focusControl) {
+            value =
+                Type.string.isNot(value) && Type.string.isNotEmpty(unctrlValue)
+                    ? unctrlValue
+                    : value;
             inputhtml = (
                 <div className={styles["ctrl-input-view"]}>
                     <InputTag

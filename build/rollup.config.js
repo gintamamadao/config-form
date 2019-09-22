@@ -26,7 +26,7 @@ module.exports = {
         postcss(),
         babel(babelOptions),
         nodeResolve({ extensions }),
-        commonjs({ extensions, ignore: ["conditional-runtime-dependency"] })
+        commonjs({ extensions })
     ],
     external: ["schema-verify", "react", "antd", "classnames"]
 };
