@@ -2,7 +2,7 @@
     "name": "config-form",
     "version": "1.0.0",
     "description": "config-form",
-    "main": "index.js",
+    "main": "./dist/config-form.js",
     "directories": {
         "example": "example"
     },
