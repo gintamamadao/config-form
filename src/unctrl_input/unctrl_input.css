@@ -1,0 +1,14 @@
+.ctrl-input-view {
+    position: relative;
+    width: 100%;
+}
+
+.ctrl-input {
+    box-shadow: 0 !important;
+    border-color: #d9d9d9 !important;
+}
+
+.unctrl-input-view {
+    position: relative;
+    width: 100%;
+}
