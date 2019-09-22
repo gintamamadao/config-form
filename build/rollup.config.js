@@ -2,6 +2,7 @@ const util = require("./util");
 const babel = require("rollup-plugin-babel");
 const nodeResolve = require("rollup-plugin-node-resolve");
 const commonjs = require("rollup-plugin-commonjs");
+const postcss = require("rollup-plugin-postcss-modules").default;
 
 const extensions = [".js", ".jsx", ".ts", ".tsx"];
 
@@ -22,6 +23,7 @@ const babelOptions = {
 module.exports = {
     input: util.resolve("src/index.jsx"),
     plugins: [
+        postcss(),
         babel(babelOptions),
         nodeResolve({ extensions }),
         commonjs({ extensions, ignore: ["conditional-runtime-dependency"] })
