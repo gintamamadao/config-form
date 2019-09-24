@@ -16,9 +16,25 @@ const Util = {
             if (Type.string.is(func) && Type.function.is(context[func])) {
                 context[func] = context[func].bind(context);
             } else {
-                throw new Error(`Method ${func} is not defined`);
+                throw new Error(`缺少 ${func} 属性方法`);
             }
         });
+    },
+    filterItemProps(props, isIllegal) {
+        props = Type.object.safe(props);
+        const result = {
+            noRedPoint: props.noRedPoint,
+            needed: props.needed,
+            check: props.check,
+            label: props.label,
+            disabled: props.disabled,
+            errorHint: props.errorHint,
+            layout: props.layout,
+            hidden: props.hidden,
+            help: props.help,
+            isIllegal: isIllegal
+        };
+        return result;
     }
 };
 
