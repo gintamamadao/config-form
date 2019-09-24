@@ -1,0 +1,17 @@
+:global(.cffade-enter) {
+    opacity: 0.01;
+}
+
+:global(.cffade-enter .cffade-enter-active) {
+    opacity: 1;
+    transition: opacity 500ms ease-in;
+}
+
+:global(.cffade-exit) {
+    opacity: 1;
+}
+
+:global(.cffade-exit .cffade-exit-active) {
+    opacity: 0.01;
+    transition: opacity 300ms ease-in;
+}

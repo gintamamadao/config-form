@@ -21,8 +21,8 @@
     },
     "homepage": "https://github.com/gintamamadao/config-form#readme",
     "dependencies": {
-        "babel-runtime": "^6.26.0",
-        "classnames": "^2.2.6",
+        "@babel/runtime": "^7.6.2",
+        "react-transition-group": "^4.3.0",
         "schema-verify": "^1.2.2"
     },
     "devDependencies": {
