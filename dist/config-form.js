@@ -5,6 +5,7 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 var React = _interopDefault(require('react'));
 var antd = require('antd');
 var schemaVerify = require('schema-verify');
+var reactTransitionGroup = require('react-transition-group');
 
 function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
@@ -163,9 +164,25 @@ var Util = {
       if (schemaVerify.Type.string.is(func) && schemaVerify.Type["function"].is(context[func])) {
         context[func] = context[func].bind(context);
       } else {
-        throw new Error("Method ".concat(func, " is not defined"));
+        throw new Error("\u7F3A\u5C11 ".concat(func, " \u5C5E\u6027\u65B9\u6CD5"));
       }
     });
+  },
+  filterItemProps: function filterItemProps(props, isIllegal) {
+    props = schemaVerify.Type.object.safe(props);
+    var result = {
+      noRedPoint: props.noRedPoint,
+      needed: props.needed,
+      check: props.check,
+      label: props.label,
+      disabled: props.disabled,
+      errorHint: props.errorHint,
+      layout: props.layout,
+      hidden: props.hidden,
+      help: props.help,
+      isIllegal: isIllegal
+    };
+    return result;
   }
 };
 
@@ -417,24 +434,184 @@ function (_React$PureComponent2) {
   return UnctrlInput;
 }(React.PureComponent);
 
+var css$1 = ".cffade-enter {\r\n    opacity: 0.01;\r\n}\r\n\r\n.cffade-enter .cffade-enter-active {\r\n    opacity: 1;\r\n    transition: opacity 500ms ease-in;\r\n}\r\n\r\n.cffade-exit {\r\n    opacity: 1;\r\n}\r\n\r\n.cffade-exit .cffade-exit-active {\r\n    opacity: 0.01;\r\n    transition: opacity 300ms ease-in;\r\n}\r\n";
+styleInject(css$1);
+
+var CLASSNAME = "cffade";
+var TIMEOUT_CONFIG = {
+  enter: 500,
+  exit: 300
+};
+
+var FadeView =
+/*#__PURE__*/
+function (_React$PureComponent) {
+  _inherits(FadeView, _React$PureComponent);
+
+  function FadeView() {
+    _classCallCheck(this, FadeView);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(FadeView).apply(this, arguments));
+  }
+
+  _createClass(FadeView, [{
+    key: "render",
+    value: function render() {
+      var props = this.props;
+      var hidden = props.hidden;
+      var classNames = props.classNames;
+      var children = props.children;
+      classNames = schemaVerify.Type.string.isNotEmpty(classNames) ? classNames : CLASSNAME;
+      children = hidden ? null : children;
+      var transItems = React.Children.map(children, function (item, i) {
+        return React.createElement(reactTransitionGroup.CSSTransition, {
+          key: i,
+          classNames: classNames,
+          timeout: TIMEOUT_CONFIG
+        }, item);
+      });
+      return React.createElement(reactTransitionGroup.TransitionGroup, null, transItems);
+    }
+  }]);
+
+  return FadeView;
+}(React.PureComponent);
+
+var FormItem = antd.Form.Item;
+var LAYOUT = {
+  labelCol: {
+    xs: {
+      span: 24
+    },
+    sm: {
+      span: 6
+    }
+  },
+  wrapperCol: {
+    xs: {
+      span: 24
+    },
+    sm: {
+      span: 14
+    }
+  }
+};
+var DEFAULT_HINT = "输入存在错误";
+var DEFAULT_LABEL = "(未命名)";
+var SUCC_STATUS = "success";
+var ERR_STATUS = "error";
+
+var ItemView =
+/*#__PURE__*/
+function (_React$PureComponent) {
+  _inherits(ItemView, _React$PureComponent);
+
+  function ItemView() {
+    _classCallCheck(this, ItemView);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(ItemView).apply(this, arguments));
+  }
+
+  _createClass(ItemView, [{
+    key: "render",
+    value: function render() {
+      var props = this.props;
+      var isIllegal = props.isIllegal,
+          noRedPoint = props.noRedPoint,
+          required = props.required,
+          check = props.check,
+          disabled = props.disabled,
+          errorHint = props.errorHint,
+          hidden = props.hidden,
+          help = props.help,
+          children = props.children;
+      var layout = props.layout;
+      var label = props.label;
+      var valiStatus = {
+        status: SUCC_STATUS
+      };
+
+      if (schemaVerify.Type.string.isNotEmpty(help)) {
+        valiStatus["text"] = help;
+      }
+
+      if (check && required && !disabled && isIllegal) {
+        valiStatus = {
+          status: ERR_STATUS,
+          text: errorHint || DEFAULT_HINT
+        };
+      }
+
+      layout = schemaVerify.Type.object.is(layout) ? layout : LAYOUT;
+      label = schemaVerify.Type.string.isNotEmpty(label) ? label : DEFAULT_LABEL;
+      return React.createElement(FadeView, {
+        hidden: hidden
+      }, React.createElement(FormItem, _extends({}, layout, {
+        required: !noRedPoint && required,
+        validateStatus: valiStatus.status,
+        help: valiStatus.text,
+        label: label
+      }), children));
+    }
+  }]);
+
+  return ItemView;
+}(React.PureComponent);
+
+var DEFAULT_TYPE = "text";
+var TEXTAREA_TYPE = "textArea";
+var DEFAULT_ROW = 3;
+
 var CInput =
 /*#__PURE__*/
 function (_React$PureComponent) {
   _inherits(CInput, _React$PureComponent);
 
   function CInput(props) {
+    var _this;
+
     _classCallCheck(this, CInput);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(CInput).call(this, props));
+    Util.bindme(_this = _possibleConstructorReturn(this, _getPrototypeOf(CInput).call(this, props)), "onChange");
+    return _this;
   }
 
   _createClass(CInput, [{
     key: "onChange",
-    value: function onChange() {}
+    value: function onChange(e) {
+      var onChange = this.props.onChange;
+      schemaVerify.Type["function"].is(onChange) && onChange(e);
+    }
   }, {
     key: "render",
     value: function render() {
-      return React.createElement(UnctrlInput, null);
+      var props = this.props;
+      var disabled = props.disabled,
+          value = props.value,
+          focusControl = props.focusControl,
+          placeholder = props.placeholder;
+      var type = props.type;
+      var row = props.row;
+      var isIllegal = props.isIllegal;
+      type = type ? type : DEFAULT_TYPE;
+      var inputProps = {
+        disabled: disabled,
+        type: type,
+        value: value,
+        focusControl: focusControl,
+        placeholder: placeholder,
+        onChange: this.onChange
+      };
+
+      if (type === TEXTAREA_TYPE) {
+        row = schemaVerify.Type.number.is(row) ? row : DEFAULT_ROW;
+        inputProps["row"] = row;
+        inputProps["isTextArea"] = true;
+      }
+
+      isIllegal = isIllegal || !schemaVerify.Type.string.isNotEmpty(value);
+      var itemProps = Util.filterItemProps(props, isIllegal);
+      return React.createElement(ItemView, itemProps, React.createElement(UnctrlInput, inputProps));
     }
   }]);
 
