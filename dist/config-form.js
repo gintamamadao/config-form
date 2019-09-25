@@ -312,9 +312,8 @@ function (_React$PureComponent2) {
 
     Util.bindme(_this2 = _possibleConstructorReturn(this, _getPrototypeOf(UnctrlInput).call(this, props)), "handleChange", "handleBlur", "handleFocus");
     _this2.state = {
-      isShowCtrlInput: true,
-      defaultValue: null,
-      unctrlValue: null
+      isCtrlInputShow: true,
+      defaultValue: null
     };
     return _this2;
   }
@@ -331,23 +330,19 @@ function (_React$PureComponent2) {
       var _this3 = this;
 
       var onFocus = this.props.onFocus;
-      var value = this.props.value;
       var focusControl = this.props.focusControl;
-      var isShowCtrlInput = this.state.isShowCtrlInput;
-      var unctrlValue = this.state.unctrlValue;
+      var isCtrlInputShow = this.state.isCtrlInputShow;
 
-      if (!focusControl) {
-        value = schemaVerify.Type.string.isNot(value) && schemaVerify.Type.string.isNotEmpty(unctrlValue) ? unctrlValue : value;
+      if (!focusControl && isCtrlInputShow) {
+        var value = this.props.value;
+        value = schemaVerify.Type.string.is(value) ? value : "";
         setTimeout(function () {
           _this3.setState({
-            isShowCtrlInput: false,
+            isCtrlInputShow: false,
             defaultValue: value
           });
         }, 0);
-
-        if (isShowCtrlInput) {
-          return;
-        }
+        return;
       }
 
       schemaVerify.Type["function"].is(onFocus) && onFocus(e);
@@ -366,12 +361,10 @@ function (_React$PureComponent2) {
         e.target.value = e.target.value.trim();
       }
 
-      var value = e.target.value;
       setTimeout(function () {
         _this4.setState({
-          isShowCtrlInput: true,
-          defaultValue: null,
-          unctrlValue: value
+          isCtrlInputShow: true,
+          defaultValue: null
         });
       }, 0);
       var onBlur = this.props.onBlur;
@@ -390,9 +383,8 @@ function (_React$PureComponent2) {
           isTextArea = props.isTextArea,
           rows = props.rows,
           focusControl = props.focusControl;
-      var isShowCtrlInput = state.isShowCtrlInput,
-          defaultValue = state.defaultValue,
-          unctrlValue = state.unctrlValue;
+      var isCtrlInputShow = state.isCtrlInputShow,
+          defaultValue = state.defaultValue;
       var value = props.value;
       var InputTag = isTextArea ? TextArea : antd.Input;
       var inputProps = {
@@ -410,8 +402,8 @@ function (_React$PureComponent2) {
 
       var inputhtml = null;
 
-      if (isShowCtrlInput || focusControl) {
-        value = schemaVerify.Type.string.isNot(value) && schemaVerify.Type.string.isNotEmpty(unctrlValue) ? unctrlValue : value;
+      if (isCtrlInputShow || focusControl) {
+        value = schemaVerify.Type.string.is(value) ? value : "";
         inputhtml = React.createElement("div", {
           className: styles["ctrl-input-view"]
         }, React.createElement(InputTag, _extends({}, inputProps, {
@@ -591,7 +583,8 @@ function (_React$PureComponent) {
     key: "onChange",
     value: function onChange(e) {
       var onChange = this.props.onChange;
-      schemaVerify.Type["function"].is(onChange) && onChange(e);
+      var value = e.target.value;
+      schemaVerify.Type["function"].is(onChange) && onChange(value);
     }
   }, {
     key: "render",

@@ -15,7 +15,8 @@ class CInput extends React.PureComponent {
 
     onChange(e) {
         const onChange = this.props.onChange;
-        Type.function.is(onChange) && onChange(e);
+        const value = e.target.value;
+        Type.function.is(onChange) && onChange(value);
     }
 
     render() {

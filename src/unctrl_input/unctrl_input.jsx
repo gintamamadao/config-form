@@ -75,9 +75,8 @@ class UnctrlInput extends React.PureComponent {
     constructor(props) {
         Util.bindme(super(props), "handleChange", "handleBlur", "handleFocus");
         this.state = {
-            isShowCtrlInput: true,
-            defaultValue: null,
-            unctrlValue: null
+            isCtrlInputShow: true,
+            defaultValue: null
         };
     }
 
@@ -88,24 +87,18 @@ class UnctrlInput extends React.PureComponent {
 
     handleFocus(e) {
         const onFocus = this.props.onFocus;
-        let value = this.props.value;
         const focusControl = this.props.focusControl;
-        const isShowCtrlInput = this.state.isShowCtrlInput;
-        const unctrlValue = this.state.unctrlValue;
-        if (!focusControl) {
-            value =
-                Type.string.isNot(value) && Type.string.isNotEmpty(unctrlValue)
-                    ? unctrlValue
-                    : value;
+        const isCtrlInputShow = this.state.isCtrlInputShow;
+        if (!focusControl && isCtrlInputShow) {
+            let value = this.props.value;
+            value = Type.string.is(value) ? value : "";
             setTimeout(() => {
                 this.setState({
-                    isShowCtrlInput: false,
+                    isCtrlInputShow: false,
                     defaultValue: value
                 });
             }, 0);
-            if (isShowCtrlInput) {
-                return;
-            }
+            return;
         }
         Type.function.is(onFocus) && onFocus(e);
     }
@@ -118,12 +111,10 @@ class UnctrlInput extends React.PureComponent {
         if (!notTrim) {
             e.target.value = e.target.value.trim();
         }
-        const value = e.target.value;
         setTimeout(() => {
             this.setState({
-                isShowCtrlInput: true,
-                defaultValue: null,
-                unctrlValue: value
+                isCtrlInputShow: true,
+                defaultValue: null
             });
         }, 0);
         const onBlur = this.props.onBlur;
@@ -142,7 +133,7 @@ class UnctrlInput extends React.PureComponent {
             rows,
             focusControl
         } = props;
-        const { isShowCtrlInput, defaultValue, unctrlValue } = state;
+        const { isCtrlInputShow, defaultValue } = state;
         let value = props.value;
 
         const InputTag = isTextArea ? TextArea : Input;
@@ -161,11 +152,8 @@ class UnctrlInput extends React.PureComponent {
         }
 
         let inputhtml = null;
-        if (isShowCtrlInput || focusControl) {
-            value =
-                Type.string.isNot(value) && Type.string.isNotEmpty(unctrlValue)
-                    ? unctrlValue
-                    : value;
+        if (isCtrlInputShow || focusControl) {
+            value = Type.string.is(value) ? value : "";
             inputhtml = (
                 <div className={styles["ctrl-input-view"]}>
                     <InputTag
