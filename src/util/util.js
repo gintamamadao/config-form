@@ -24,7 +24,7 @@ const Util = {
         props = Type.object.safe(props);
         const result = {
             noRedPoint: props.noRedPoint,
-            needed: props.needed,
+            required: props.required,
             check: props.check,
             label: props.label,
             disabled: props.disabled,

@@ -172,7 +172,7 @@ var Util = {
     props = schemaVerify.Type.object.safe(props);
     var result = {
       noRedPoint: props.noRedPoint,
-      needed: props.needed,
+      required: props.required,
       check: props.check,
       label: props.label,
       disabled: props.disabled,
