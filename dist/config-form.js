@@ -434,13 +434,26 @@ function (_React$PureComponent2) {
   return UnctrlInput;
 }(React.PureComponent);
 
-var css$1 = ".cffade-enter {\r\n    opacity: 0.01;\r\n}\r\n\r\n.cffade-enter .cffade-enter-active {\r\n    opacity: 1;\r\n    transition: opacity 500ms ease-in;\r\n}\r\n\r\n.cffade-exit {\r\n    opacity: 1;\r\n}\r\n\r\n.cffade-exit .cffade-exit-active {\r\n    opacity: 0.01;\r\n    transition: opacity 300ms ease-in;\r\n}\r\n";
-styleInject(css$1);
-
-var CLASSNAME = "cffade";
-var TIMEOUT_CONFIG = {
-  enter: 500,
-  exit: 300
+var DURATION = 300;
+var DEFAULT_STYLES = {
+  position: "relative",
+  width: "100%",
+  transition: "opacity ".concat(DURATION, "ms ease-in-out"),
+  opacity: 0
+};
+var TRANS_STYLES = {
+  entering: {
+    opacity: 1
+  },
+  entered: {
+    opacity: 1
+  },
+  exiting: {
+    opacity: 0
+  },
+  exited: {
+    opacity: 0
+  }
 };
 
 var FadeView =
@@ -460,16 +473,15 @@ function (_React$PureComponent) {
       var props = this.props;
       var hidden = props.hidden,
           children = props.children;
-      var classNames = props.classNames;
-      classNames = schemaVerify.Type.string.isNotEmpty(classNames) ? classNames : CLASSNAME;
-      var transItems = hidden ? null : React.Children.map(children, function (item, i) {
-        return React.createElement(reactTransitionGroup.CSSTransition, {
-          key: i,
-          classNames: classNames,
-          timeout: TIMEOUT_CONFIG
-        }, item);
+      return React.createElement(reactTransitionGroup.Transition, {
+        unmountOnExit: true,
+        "in": !hidden,
+        timeout: DURATION
+      }, function (state) {
+        return React.createElement("div", {
+          style: _objectSpread2({}, DEFAULT_STYLES, {}, TRANS_STYLES[state])
+        }, children);
       });
-      return React.createElement(reactTransitionGroup.TransitionGroup, null, transItems);
     }
   }]);
 
