@@ -499,7 +499,7 @@ var LAYOUT = {
     }
   }
 };
-var DEFAULT_HINT = "输入存在错误";
+var DEFAULT_HINT = "当前输入存在错误";
 var DEFAULT_LABEL = "(未命名)";
 var SUCC_STATUS = "success";
 var ERR_STATUS = "error";
@@ -622,8 +622,128 @@ function (_React$PureComponent) {
   return CInput;
 }(React.PureComponent);
 
+var PATTERN_INFO = {
+  "default": {
+    name: "字符串",
+    patternHint: "当前值不符合规定格式",
+    emptyHint: "当前输入不能为空",
+    check: function check() {
+      return true;
+    }
+  },
+  sign: {
+    name: "标识",
+    patternHint: "只允许字母、下划线或数字组成",
+    check: function check(v) {
+      return schemaVerify.Pattern.sign.is(v);
+    }
+  },
+  uri: {
+    name: "链接",
+    patternHint: "只允许输入链接",
+    check: function check(v) {
+      return schemaVerify.Pattern.uri.is(v);
+    }
+  },
+  version: {
+    name: "版本",
+    patternHint: "只允许字母v，数字和小数点组成",
+    check: function check(v) {
+      return schemaVerify.Pattern.version.is(v);
+    }
+  },
+  email: {
+    name: "邮件地址",
+    patternHint: "只允许输入电子邮件地址",
+    check: function check(v) {
+      return schemaVerify.Pattern.email.is(v);
+    }
+  },
+  phone: {
+    name: "手机",
+    patternHint: "只允许11位的手机号",
+    check: function check(v) {
+      return schemaVerify.Pattern.phone.is(v);
+    }
+  },
+  json: {
+    name: "json字符串",
+    patternHint: "无法解析json字符串",
+    check: function check(v) {
+      return schemaVerify.Pattern.jsonStr.is(v);
+    }
+  }
+};
+
+var PatternInput =
+/*#__PURE__*/
+function (_React$PureComponent) {
+  _inherits(PatternInput, _React$PureComponent);
+
+  function PatternInput() {
+    _classCallCheck(this, PatternInput);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(PatternInput).apply(this, arguments));
+  }
+
+  _createClass(PatternInput, [{
+    key: "render",
+    value: function render() {
+      var props = this.props;
+      var pattern = props.pattern,
+          value = props.value;
+
+      var inputProps = _objectSpread2({}, props);
+
+      var errorHint = props.errorHint;
+      var placeholder = props.placeholder;
+      var patternInfo = props.patternInfo;
+      var required = props.required;
+      var isIllegal = props.isIllegal;
+      info = PATTERN_INFO[pattern] || PATTERN_INFO["default"];
+
+      if (schemaVerify.Type.object.is(patternInfo)) {
+        patternInfo = Object.assign({}, info, patternInfo);
+      } else {
+        patternInfo = info;
+      }
+
+      if (!schemaVerify.Type.string.isNotEmpty(placeholder)) {
+        var name = schemaVerify.Type.string.is(patternInfo.name) ? patternInfo["name"] : PATTERN_INFO["default"]["name"];
+        placeholder = "\u8BF7\u8F93\u5165".concat(name);
+      }
+
+      switch (true) {
+        case !schemaVerify.Type.string.isNotEmpty(value):
+          errorHint = schemaVerify.Type.string.isNotEmpty(errorHint) ? errorHint : PATTERN_INFO["default"]["emptyHint"];
+          isIllegal = true;
+          break;
+
+        case schemaVerify.Type.string.isNotEmpty(value) && schemaVerify.Type["function"].is(patternInfo.check) && !patternInfo.check(value):
+          errorHint = schemaVerify.Type.string.is(patternInfo.patternHint) ? patternInfo["patternHint"] : PATTERN_INFO["default"]["patternHint"];
+          isIllegal = true;
+          break;
+      }
+
+      if (schemaVerify.Type.string.isNotEmpty(value)) {
+        required = true;
+      }
+
+      inputProps["placeholder"] = placeholder;
+      inputProps["errorHint"] = errorHint;
+      inputProps["required"] = required;
+      inputProps["isIllegal"] = isIllegal;
+      delete inputProps["patternInfo"];
+      return React.createElement(CInput, inputProps);
+    }
+  }]);
+
+  return PatternInput;
+}(React.PureComponent);
+
 var index = {
-  Input: CInput
+  Input: CInput,
+  PatternInput: PatternInput
 };
 
 module.exports = index;

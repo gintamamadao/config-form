@@ -22,7 +22,7 @@ const LAYOUT = {
         }
     }
 };
-const DEFAULT_HINT = "输入存在错误";
+const DEFAULT_HINT = "当前输入存在错误";
 const DEFAULT_LABEL = "(未命名)";
 const SUCC_STATUS = "success";
 const ERR_STATUS = "error";
