@@ -26,7 +26,7 @@ const PATTERN_INFO = {
     },
     email: {
         name: "邮件地址",
-        patternHint: "只允许输入电子邮件地址",
+        patternHint: "只允许输入email地址",
         check: v => Pattern.email.is(v)
     },
     phone: {
@@ -52,7 +52,7 @@ class PatternInput extends React.PureComponent {
         let required = props.required;
         let isIllegal = props.isIllegal;
 
-        info = PATTERN_INFO[pattern] || PATTERN_INFO["default"];
+        const info = PATTERN_INFO[pattern] || PATTERN_INFO["default"];
         if (Type.object.is(patternInfo)) {
             patternInfo = Object.assign({}, info, patternInfo);
         } else {
