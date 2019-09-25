@@ -458,12 +458,11 @@ function (_React$PureComponent) {
     key: "render",
     value: function render() {
       var props = this.props;
-      var hidden = props.hidden;
+      var hidden = props.hidden,
+          children = props.children;
       var classNames = props.classNames;
-      var children = props.children;
       classNames = schemaVerify.Type.string.isNotEmpty(classNames) ? classNames : CLASSNAME;
-      children = hidden ? null : children;
-      var transItems = React.Children.map(children, function (item, i) {
+      var transItems = hidden ? null : React.Children.map(children, function (item, i) {
         return React.createElement(reactTransitionGroup.CSSTransition, {
           key: i,
           classNames: classNames,
