@@ -35,8 +35,7 @@ class MultiInput extends PureComponent {
     }
 
     handleItemAdd() {
-        const valuesArr = this.state.valuesArr;
-        valuesArr = Type.array.safe(valuesArr);
+        const valuesArr = Type.array.safe(this.state.valuesArr);
         valuesArr.push("");
         this.handleChange(valuesArr);
     }

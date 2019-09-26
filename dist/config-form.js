@@ -6,6 +6,7 @@ var React = _interopDefault(require('react'));
 var antd = require('antd');
 var schemaVerify = require('schema-verify');
 var reactTransitionGroup = require('react-transition-group');
+var classnames = _interopDefault(require('classnames'));
 
 function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
@@ -168,7 +169,7 @@ var Util = {
       }
     });
   },
-  filterItemProps: function filterItemProps(props, isIllegal) {
+  filterItemProps: function filterItemProps(props, newProps) {
     props = schemaVerify.Type.object.safe(props);
     var result = {
       noRedPoint: props.noRedPoint,
@@ -179,10 +180,9 @@ var Util = {
       errorHint: props.errorHint,
       layout: props.layout,
       hidden: props.hidden,
-      help: props.help,
-      isIllegal: isIllegal
+      help: props.help
     };
-    return result;
+    return Object.assign({}, result, newProps);
   }
 };
 
@@ -575,13 +575,13 @@ function (_React$PureComponent) {
 
     _classCallCheck(this, CInput);
 
-    Util.bindme(_this = _possibleConstructorReturn(this, _getPrototypeOf(CInput).call(this, props)), "onChange");
+    Util.bindme(_this = _possibleConstructorReturn(this, _getPrototypeOf(CInput).call(this, props)), "handleChange");
     return _this;
   }
 
   _createClass(CInput, [{
-    key: "onChange",
-    value: function onChange(e) {
+    key: "handleChange",
+    value: function handleChange(e) {
       var onChange = this.props.onChange;
       var value = e.target.value;
       schemaVerify.Type["function"].is(onChange) && onChange(value);
@@ -597,14 +597,14 @@ function (_React$PureComponent) {
       var type = props.type;
       var row = props.row;
       var isIllegal = props.isIllegal;
-      type = type ? type : DEFAULT_TYPE;
+      type = schemaVerify.Type.string.isNotEmpty(type) ? type : DEFAULT_TYPE;
       var inputProps = {
         disabled: disabled,
         type: type,
         value: value,
         focusControl: focusControl,
         placeholder: placeholder,
-        onChange: this.onChange
+        onChange: this.handleChange
       };
 
       if (type === TEXTAREA_TYPE) {
@@ -614,7 +614,9 @@ function (_React$PureComponent) {
       }
 
       isIllegal = isIllegal || !schemaVerify.Type.string.isNotEmpty(value);
-      var itemProps = Util.filterItemProps(props, isIllegal);
+      var itemProps = Util.filterItemProps(props, {
+        isIllegal: isIllegal
+      });
       return React.createElement(ItemView, itemProps, React.createElement(UnctrlInput, inputProps));
     }
   }]);
@@ -741,9 +743,156 @@ function (_React$PureComponent) {
   return PatternInput;
 }(React.PureComponent);
 
+var css$1 = ".multi_input_inputs-btns-view__2puLZ button {\r\n    margin-right: 10px;\r\n}\r\n\r\n.multi_input_inputs-item__2e1y3 {\r\n    margin-top: 10px;\r\n    display: flex;\r\n    align-items: center;\r\n    margin-right: 10px;\r\n}\r\n\r\n.multi_input_inputs-textarea-item__3tmrs {\r\n    align-items: flex-start;\r\n}\r\n\r\n.multi_input_item-input-view__1cjS5 {\r\n    display: flex;\r\n    flex-direction: column;\r\n}\r\n\r\n.multi_input_item-input-view__1cjS5 button {\r\n    margin-right: 10px;\r\n    width: 20px;\r\n    height: 20px;\r\n    display: flex;\r\n    justify-content: center;\r\n    align-items: center;\r\n}\r\n\r\n.multi_input_item-input-hint__2C4NL {\r\n    margin-right: 5px;\r\n}\r\n";
+var styles$1 = {"inputs-btns-view":"multi_input_inputs-btns-view__2puLZ","inputs-item":"multi_input_inputs-item__2e1y3","inputs-textarea-item":"multi_input_inputs-textarea-item__3tmrs","item-input-view":"multi_input_item-input-view__1cjS5","item-input-hint":"multi_input_item-input-hint__2C4NL","inputsBtnsView":"multi_input_inputs-btns-view__2puLZ","inputsItem":"multi_input_inputs-item__2e1y3","inputsTextareaItem":"multi_input_inputs-textarea-item__3tmrs","itemInputView":"multi_input_item-input-view__1cjS5","itemInputHint":"multi_input_item-input-hint__2C4NL"};
+styleInject(css$1);
+
+var DEFAULT_TYPE$1 = "text";
+var TEXTAREA_TYPE$1 = "textArea";
+var DEFAULT_EMPTY_HINT = "当前表单输入为空";
+var DEFAULT_ERROR_HINT = "当前表单存在空输入";
+
+var MultiInput =
+/*#__PURE__*/
+function (_PureComponent) {
+  _inherits(MultiInput, _PureComponent);
+
+  function MultiInput(props) {
+    var _this;
+
+    _classCallCheck(this, MultiInput);
+
+    Util.bindme(_this = _possibleConstructorReturn(this, _getPrototypeOf(MultiInput).call(this, props)), "handleChange", "handleItemAdd", "handleItemChange", "handleItemDel");
+    _this.state = {
+      valuesArr: []
+    };
+    return _this;
+  }
+
+  _createClass(MultiInput, [{
+    key: "handleChange",
+    value: function handleChange(valuesArr) {
+      valuesArr = schemaVerify.Type.array.safe(valuesArr);
+      var onChange = this.props.onChange;
+      schemaVerify.Type["function"].is(onChange) && onChange(valuesArr);
+      this.state.valuesArr = valuesArr;
+    }
+  }, {
+    key: "handleItemAdd",
+    value: function handleItemAdd() {
+      var valuesArr = schemaVerify.Type.array.safe(this.state.valuesArr);
+      valuesArr.push("");
+      this.handleChange(valuesArr);
+    }
+  }, {
+    key: "handleItemChange",
+    value: function handleItemChange(index, valuesArr, e) {
+      var value = e.target.value;
+      valuesArr[index] = value;
+      this.handleChange(valuesArr);
+    }
+  }, {
+    key: "handleItemDel",
+    value: function handleItemDel(index, valuesArr) {
+      valuesArr.splice(index, 1);
+      this.handleChange(valuesArr);
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _classnames,
+          _this2 = this;
+
+      var props = this.props,
+          state = this.state;
+      var disabled = props.disabled,
+          focusControl = props.focusControl,
+          placeholder = props.placeholder;
+      var type = props.type;
+      var required = props.required;
+      var errorHint = props.errorHint;
+      var valueHintMap = props.valueHintMap;
+      var valuesArr = state.valuesArr;
+      type = type ? type : DEFAULT_TYPE$1;
+      valuesArr = schemaVerify.Type.array.safe(valuesArr);
+      valueHintMap = schemaVerify.Type.object.safe(valueHintMap);
+      var inputItemClass = classnames((_classnames = {}, _defineProperty(_classnames, styles$1["inputs-item"], true), _defineProperty(_classnames, styles$1["inputs-textarea-item"], type === TEXTAREA_TYPE$1), _classnames));
+      var inputProps = {
+        disabled: disabled,
+        type: type,
+        focusControl: focusControl,
+        placeholder: placeholder
+      };
+      var buttonProps = {
+        disabled: disabled,
+        type: "danger",
+        ghost: true,
+        icon: "minus"
+      };
+      var itemsHtml = valuesArr.map(function (itemValue, index) {
+        var itemProps = _objectSpread2({}, inputProps, {
+          value: itemValue,
+          onChange: _this2.handleItemChange.bind(_this2, index, valuesArr)
+        });
+
+        var itemButtonProps = _objectSpread2({}, buttonProps, {
+          onChange: _this2.handleItemDel.bind(_this2, index, valuesArr)
+        });
+
+        var hint = valueHintMap[itemValue];
+        var isShowHint = schemaVerify.Type.string.isNotEmpty(hint);
+        return React.createElement("div", {
+          className: inputItemClass
+        }, React.createElement("div", {
+          className: styles$1["item-input-view"]
+        }, React.createElement(UnctrlInput, itemProps), React.createElement(FadeView, {
+          hidden: !isShowHint
+        }, React.createElement("div", {
+          className: styles$1["item-input-hint"]
+        }, hint))), React.createElement(antd.Button, itemButtonProps));
+      });
+      var isExistIllegal = !valuesArr.every(function (v) {
+        return schemaVerify.Type.string.is(v);
+      });
+
+      if (schemaVerify.Type.array.isNotEmpty(valuesArr)) {
+        required = true;
+      }
+
+      isIllegal = isIllegal || schemaVerify.Type.array.isEmpty(valuesArr) || isExistIllegal;
+
+      if (!schemaVerify.Type.string.isNotEmpty(errorHint)) {
+        if (schemaVerify.Type.array.isEmpty(valuesArr)) {
+          errorHint = DEFAULT_EMPTY_HINT;
+        }
+
+        if (isExistIllegal) {
+          errorHint = DEFAULT_ERROR_HINT;
+        }
+      }
+
+      var itemProps = Util.filterItemProps(props, {
+        required: required,
+        isIllegal: isIllegal,
+        errorHint: errorHint
+      });
+      return React.createElement(ItemView, itemProps, React.createElement("div", {
+        className: styles$1["inputs-btns-view"]
+      }, React.createElement(antd.Button, {
+        disabled: disabled,
+        icon: "plus",
+        onClick: this.onInputAdd
+      })), itemsHtml);
+    }
+  }]);
+
+  return MultiInput;
+}(PureComponent);
+
 var index = {
   Input: CInput,
-  PatternInput: PatternInput
+  PatternInput: PatternInput,
+  MultiInput: MultiInput
 };
 
 module.exports = index;
