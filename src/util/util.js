@@ -20,7 +20,7 @@ const Util = {
             }
         });
     },
-    filterItemProps(props, isIllegal) {
+    filterItemProps(props, newProps) {
         props = Type.object.safe(props);
         const result = {
             noRedPoint: props.noRedPoint,
@@ -31,10 +31,9 @@ const Util = {
             errorHint: props.errorHint,
             layout: props.layout,
             hidden: props.hidden,
-            help: props.help,
-            isIllegal: isIllegal
+            help: props.help
         };
-        return result;
+        return Object.assign({}, result, newProps);
     }
 };
 

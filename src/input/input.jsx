@@ -10,10 +10,10 @@ const DEFAULT_ROW = 3;
 
 class CInput extends React.PureComponent {
     constructor(props) {
-        Util.bindme(super(props), "onChange");
+        Util.bindme(super(props), "handleChange");
     }
 
-    onChange(e) {
+    handleChange(e) {
         const onChange = this.props.onChange;
         const value = e.target.value;
         Type.function.is(onChange) && onChange(value);
@@ -27,15 +27,15 @@ class CInput extends React.PureComponent {
         let row = props.row;
         let isIllegal = props.isIllegal;
 
-        type = type ? type : DEFAULT_TYPE;
+        type = Type.string.isNotEmpty(type) ? type : DEFAULT_TYPE;
 
         const inputProps = {
-            disabled: disabled,
-            type: type,
-            value: value,
-            focusControl: focusControl,
-            placeholder: placeholder,
-            onChange: this.onChange
+            disabled,
+            type,
+            value,
+            focusControl,
+            placeholder,
+            onChange: this.handleChange
         };
 
         if (type === TEXTAREA_TYPE) {
@@ -46,7 +46,7 @@ class CInput extends React.PureComponent {
 
         isIllegal = isIllegal || !Type.string.isNotEmpty(value);
 
-        const itemProps = Util.filterItemProps(props, isIllegal);
+        const itemProps = Util.filterItemProps(props, { isIllegal });
 
         return (
             <ItemView {...itemProps}>

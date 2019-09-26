@@ -28,5 +28,11 @@ module.exports = {
         nodeResolve({ extensions }),
         commonjs({ extensions })
     ],
-    external: ["schema-verify", "react", "antd", "react-transition-group"]
+    external: [
+        "schema-verify",
+        "react",
+        "antd",
+        "react-transition-group",
+        "classnames"
+    ]
 };

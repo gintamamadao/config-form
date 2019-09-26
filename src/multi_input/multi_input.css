@@ -1,0 +1,32 @@
+.inputs-btns-view button {
+    margin-right: 10px;
+}
+
+.inputs-item {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+}
+
+.inputs-textarea-item {
+    align-items: flex-start;
+}
+
+.item-input-view {
+    display: flex;
+    flex-direction: column;
+}
+
+.item-input-view button {
+    margin-right: 10px;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.item-input-hint {
+    margin-right: 5px;
+}
