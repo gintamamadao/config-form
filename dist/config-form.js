@@ -743,8 +743,8 @@ function (_React$PureComponent) {
   return PatternInput;
 }(React.PureComponent);
 
-var css$1 = ".multi_input_inputs-btns-view__2puLZ button {\r\n    margin-right: 10px;\r\n}\r\n\r\n.multi_input_inputs-list-view__RTXsH {\r\n    display: flex;\r\n    flex-direction: column;\r\n    width: 100%;\r\n    margin-bottom: 10px;\r\n}\r\n\r\n.multi_input_inputs-item__2e1y3 {\r\n    width: 100%;\r\n    position: relative;\r\n    margin-top: 10px;\r\n    display: flex;\r\n    align-items: center;\r\n    margin-right: 10px;\r\n}\r\n\r\n.multi_input_inputs-textarea-item__3tmrs {\r\n    align-items: flex-start;\r\n}\r\n\r\n.multi_input_item-input-view__1cjS5 {\r\n    flex-basis: 90%;\r\n    display: flex;\r\n    flex-direction: column;\r\n    margin-right: 10px;\r\n}\r\n\r\n.multi_input_inputs-item__2e1y3 button {\r\n    margin-right: 10px;\r\n    width: 20px;\r\n    height: 20px;\r\n    display: flex;\r\n    justify-content: center;\r\n    align-items: center;\r\n}\r\n\r\n.multi_input_item-input-hint__2C4NL {\r\n    min-height: 22px;\r\n    margin-top: -2px;\r\n    color: rgba(0, 0, 0, 0.45);\r\n    font-size: 14px !important;\r\n    line-height: 1.5 !important;\r\n    transition: color 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);\r\n}\r\n";
-var styles$1 = {"inputs-btns-view":"multi_input_inputs-btns-view__2puLZ","inputs-list-view":"multi_input_inputs-list-view__RTXsH","inputs-item":"multi_input_inputs-item__2e1y3","inputs-textarea-item":"multi_input_inputs-textarea-item__3tmrs","item-input-view":"multi_input_item-input-view__1cjS5","item-input-hint":"multi_input_item-input-hint__2C4NL","inputsBtnsView":"multi_input_inputs-btns-view__2puLZ","inputsListView":"multi_input_inputs-list-view__RTXsH","inputsItem":"multi_input_inputs-item__2e1y3","inputsTextareaItem":"multi_input_inputs-textarea-item__3tmrs","itemInputView":"multi_input_item-input-view__1cjS5","itemInputHint":"multi_input_item-input-hint__2C4NL"};
+var css$1 = ".multi_input_inputs-btns-view__2puLZ button {\r\n    margin-right: 10px;\r\n}\r\n\r\n.multi_input_inputs-list-view__RTXsH {\r\n    display: flex;\r\n    flex-direction: column;\r\n    width: 100%;\r\n    margin-bottom: 10px;\r\n}\r\n\r\n.multi_input_inputs-item__2e1y3 {\r\n    width: 100%;\r\n    position: relative;\r\n    margin-top: 10px;\r\n    display: flex;\r\n    align-items: center;\r\n    margin-right: 10px;\r\n}\r\n\r\n.multi_input_inputs-textarea-item__3tmrs {\r\n    align-items: flex-start;\r\n}\r\n\r\n.multi_input_item-input-view__1cjS5 {\r\n    flex-basis: 90%;\r\n    display: flex;\r\n    flex-direction: column;\r\n    margin-right: 10px;\r\n}\r\n\r\n.multi_input_inputs-item__2e1y3 button {\r\n    margin-right: 10px;\r\n    width: 20px;\r\n    height: 20px;\r\n    display: flex;\r\n    justify-content: center;\r\n    align-items: center;\r\n}\r\n\r\n.multi_input_item-input-hint__2C4NL {\r\n    min-height: 22px;\r\n    margin-top: -2px;\r\n    color: rgba(0, 0, 0, 0.45);\r\n    font-size: 14px !important;\r\n    line-height: 1.5 !important;\r\n}\r\n\r\n.multi_input_item-input-err-hint__1Yboo {\r\n    color: #f5222d;\r\n}\r\n";
+var styles$1 = {"inputs-btns-view":"multi_input_inputs-btns-view__2puLZ","inputs-list-view":"multi_input_inputs-list-view__RTXsH","inputs-item":"multi_input_inputs-item__2e1y3","inputs-textarea-item":"multi_input_inputs-textarea-item__3tmrs","item-input-view":"multi_input_item-input-view__1cjS5","item-input-hint":"multi_input_item-input-hint__2C4NL","item-input-err-hint":"multi_input_item-input-err-hint__1Yboo","inputsBtnsView":"multi_input_inputs-btns-view__2puLZ","inputsListView":"multi_input_inputs-list-view__RTXsH","inputsItem":"multi_input_inputs-item__2e1y3","inputsTextareaItem":"multi_input_inputs-textarea-item__3tmrs","itemInputView":"multi_input_item-input-view__1cjS5","itemInputHint":"multi_input_item-input-hint__2C4NL","itemInputErrHint":"multi_input_item-input-err-hint__1Yboo"};
 styleInject(css$1);
 
 var DEFAULT_TYPE$1 = "text";
@@ -814,9 +814,9 @@ function (_React$PureComponent) {
       var isIllegal = props.isIllegal;
       var errorHint = props.errorHint;
       var row = props.row;
-      var valueHintMap = props.valueHintMap;
+      var indexHintMap = props.indexHintMap;
       type = type ? type : DEFAULT_TYPE$1;
-      valueHintMap = schemaVerify.Type.object.safe(valueHintMap);
+      indexHintMap = schemaVerify.Type.object.safe(indexHintMap);
       var valuesArr = schemaVerify.Type.array.safe(values);
       this.state.valuesArr = valuesArr;
       var isTextArea = type === TEXTAREA_TYPE$1;
@@ -841,6 +841,8 @@ function (_React$PureComponent) {
         icon: "minus"
       };
       var itemsHtml = valuesArr.map(function (itemValue, index) {
+        var _classnames2;
+
         var itemProps = _objectSpread2({}, inputProps, {
           value: itemValue,
           onChange: _this2.handleItemChange.bind(_this2, index, valuesArr)
@@ -850,8 +852,11 @@ function (_React$PureComponent) {
           onClick: _this2.handleItemDel.bind(_this2, index, valuesArr)
         });
 
-        var hint = valueHintMap[itemValue];
-        var isShowHint = schemaVerify.Type.string.isNotEmpty(hint);
+        var hint = schemaVerify.Type.object.safe(indexHintMap[index]);
+        var hintText = hint.text;
+        var hintStatus = hint.status;
+        var isShowHint = schemaVerify.Type.string.isNotEmpty(hintText);
+        var inputHintClass = classnames((_classnames2 = {}, _defineProperty(_classnames2, styles$1["item-input-hint"], true), _defineProperty(_classnames2, styles$1["item-input-err-hint"], isShowHint && !hintStatus), _classnames2));
         return React.createElement("div", {
           key: index,
           className: inputItemClass
@@ -860,8 +865,8 @@ function (_React$PureComponent) {
         }, React.createElement(UnctrlInput, itemProps), React.createElement(FadeView, {
           hidden: !isShowHint
         }, React.createElement("div", {
-          className: styles$1["item-input-hint"]
-        }, hint))), React.createElement(antd.Button, itemButtonProps));
+          className: inputHintClass
+        }, hintText))), React.createElement(antd.Button, itemButtonProps));
       });
       var isExistIllegal = !valuesArr.every(function (v) {
         return schemaVerify.Type.string.isNotEmpty(v);

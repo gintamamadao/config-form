@@ -60,10 +60,10 @@ class MultiInput extends React.PureComponent {
         let isIllegal = props.isIllegal;
         let errorHint = props.errorHint;
         let row = props.row;
-        let valueHintMap = props.valueHintMap;
+        let indexHintMap = props.indexHintMap;
 
         type = type ? type : DEFAULT_TYPE;
-        valueHintMap = Type.object.safe(valueHintMap);
+        indexHintMap = Type.object.safe(indexHintMap);
 
         const valuesArr = Type.array.safe(values);
         this.state.valuesArr = valuesArr;
@@ -101,16 +101,22 @@ class MultiInput extends React.PureComponent {
                 ...buttonProps,
                 onClick: this.handleItemDel.bind(this, index, valuesArr)
             };
-            const hint = valueHintMap[itemValue];
-            const isShowHint = Type.string.isNotEmpty(hint);
+            const hint = Type.object.safe(indexHintMap[index]);
+            const hintText = hint.text;
+            const hintStatus = hint.status;
+            const isShowHint = Type.string.isNotEmpty(hintText);
+
+            const inputHintClass = classnames({
+                [styles["item-input-hint"]]: true,
+                [styles["item-input-err-hint"]]: isShowHint && !hintStatus
+            });
+
             return (
                 <div key={index} className={inputItemClass}>
                     <div className={styles["item-input-view"]}>
                         <UnctrlInput {...itemProps} />
                         <FadeView hidden={!isShowHint}>
-                            <div className={styles["item-input-hint"]}>
-                                {hint}
-                            </div>
+                            <div className={inputHintClass}>{hintText}</div>
                         </FadeView>
                     </div>
                     <Button {...itemButtonProps} />

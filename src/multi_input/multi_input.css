@@ -44,5 +44,8 @@
     color: rgba(0, 0, 0, 0.45);
     font-size: 14px !important;
     line-height: 1.5 !important;
-    transition: color 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+.item-input-err-hint {
+    color: #f5222d;
 }
