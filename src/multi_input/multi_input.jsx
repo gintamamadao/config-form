@@ -13,7 +13,7 @@ const TEXTAREA_TYPE = "textArea";
 const DEFAULT_EMPTY_HINT = "当前表单输入为空";
 const DEFAULT_ERROR_HINT = "当前表单存在空输入";
 
-class MultiInput extends PureComponent {
+class MultiInput extends React.PureComponent {
     constructor(props) {
         Util.bindme(
             super(props),

@@ -754,8 +754,8 @@ var DEFAULT_ERROR_HINT = "当前表单存在空输入";
 
 var MultiInput =
 /*#__PURE__*/
-function (_PureComponent) {
-  _inherits(MultiInput, _PureComponent);
+function (_React$PureComponent) {
+  _inherits(MultiInput, _React$PureComponent);
 
   function MultiInput(props) {
     var _this;
@@ -887,7 +887,7 @@ function (_PureComponent) {
   }]);
 
   return MultiInput;
-}(PureComponent);
+}(React.PureComponent);
 
 var index = {
   Input: CInput,
