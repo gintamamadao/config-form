@@ -10,6 +10,7 @@ import FadeView from "../fade_view/fade_view";
 
 const DEFAULT_TYPE = "text";
 const TEXTAREA_TYPE = "textArea";
+const DEFAULT_ROW = 3;
 const DEFAULT_EMPTY_HINT = "当前表单输入为空";
 const DEFAULT_ERROR_HINT = "当前表单存在空输入";
 
@@ -52,21 +53,26 @@ class MultiInput extends React.PureComponent {
     }
 
     render() {
-        const { props, state } = this;
-        const { disabled, focusControl, placeholder } = props;
+        const { props } = this;
+        const { values, disabled, focusControl, placeholder } = props;
         let type = props.type;
         let required = props.required;
+        let isIllegal = props.isIllegal;
         let errorHint = props.errorHint;
+        let row = props.row;
         let valueHintMap = props.valueHintMap;
-        let valuesArr = state.valuesArr;
 
         type = type ? type : DEFAULT_TYPE;
-        valuesArr = Type.array.safe(valuesArr);
         valueHintMap = Type.object.safe(valueHintMap);
+
+        const valuesArr = Type.array.safe(values);
+        this.state.valuesArr = valuesArr;
+
+        const isTextArea = type === TEXTAREA_TYPE;
 
         const inputItemClass = classnames({
             [styles["inputs-item"]]: true,
-            [styles["inputs-textarea-item"]]: type === TEXTAREA_TYPE
+            [styles["inputs-textarea-item"]]: isTextArea
         });
         const inputProps = {
             disabled,
@@ -74,6 +80,11 @@ class MultiInput extends React.PureComponent {
             focusControl,
             placeholder
         };
+        if (isTextArea) {
+            row = Type.number.is(row) ? row : DEFAULT_ROW;
+            inputProps["row"] = row;
+            inputProps["isTextArea"] = true;
+        }
         const buttonProps = {
             disabled,
             type: "danger",
@@ -88,12 +99,12 @@ class MultiInput extends React.PureComponent {
             };
             const itemButtonProps = {
                 ...buttonProps,
-                onChange: this.handleItemDel.bind(this, index, valuesArr)
+                onClick: this.handleItemDel.bind(this, index, valuesArr)
             };
             const hint = valueHintMap[itemValue];
             const isShowHint = Type.string.isNotEmpty(hint);
             return (
-                <div className={inputItemClass}>
+                <div key={index} className={inputItemClass}>
                     <div className={styles["item-input-view"]}>
                         <UnctrlInput {...itemProps} />
                         <FadeView hidden={!isShowHint}>
@@ -108,7 +119,7 @@ class MultiInput extends React.PureComponent {
         });
 
         const isExistIllegal = !valuesArr.every(v => {
-            return Type.string.is(v);
+            return Type.string.isNotEmpty(v);
         });
 
         if (Type.array.isNotEmpty(valuesArr)) {
@@ -139,10 +150,10 @@ class MultiInput extends React.PureComponent {
                     <Button
                         disabled={disabled}
                         icon="plus"
-                        onClick={this.onInputAdd}
+                        onClick={this.handleItemAdd}
                     />
                 </div>
-                {itemsHtml}
+                <div className={styles["inputs-list-view"]}>{itemsHtml}</div>
             </ItemView>
         );
     }

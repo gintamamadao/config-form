@@ -743,12 +743,13 @@ function (_React$PureComponent) {
   return PatternInput;
 }(React.PureComponent);
 
-var css$1 = ".multi_input_inputs-btns-view__2puLZ button {\r\n    margin-right: 10px;\r\n}\r\n\r\n.multi_input_inputs-item__2e1y3 {\r\n    margin-top: 10px;\r\n    display: flex;\r\n    align-items: center;\r\n    margin-right: 10px;\r\n}\r\n\r\n.multi_input_inputs-textarea-item__3tmrs {\r\n    align-items: flex-start;\r\n}\r\n\r\n.multi_input_item-input-view__1cjS5 {\r\n    display: flex;\r\n    flex-direction: column;\r\n}\r\n\r\n.multi_input_item-input-view__1cjS5 button {\r\n    margin-right: 10px;\r\n    width: 20px;\r\n    height: 20px;\r\n    display: flex;\r\n    justify-content: center;\r\n    align-items: center;\r\n}\r\n\r\n.multi_input_item-input-hint__2C4NL {\r\n    margin-right: 5px;\r\n}\r\n";
-var styles$1 = {"inputs-btns-view":"multi_input_inputs-btns-view__2puLZ","inputs-item":"multi_input_inputs-item__2e1y3","inputs-textarea-item":"multi_input_inputs-textarea-item__3tmrs","item-input-view":"multi_input_item-input-view__1cjS5","item-input-hint":"multi_input_item-input-hint__2C4NL","inputsBtnsView":"multi_input_inputs-btns-view__2puLZ","inputsItem":"multi_input_inputs-item__2e1y3","inputsTextareaItem":"multi_input_inputs-textarea-item__3tmrs","itemInputView":"multi_input_item-input-view__1cjS5","itemInputHint":"multi_input_item-input-hint__2C4NL"};
+var css$1 = ".multi_input_inputs-btns-view__2puLZ button {\r\n    margin-right: 10px;\r\n}\r\n\r\n.multi_input_inputs-list-view__RTXsH {\r\n    display: flex;\r\n    flex-direction: column;\r\n    width: 100%;\r\n    margin-bottom: 10px;\r\n}\r\n\r\n.multi_input_inputs-item__2e1y3 {\r\n    width: 100%;\r\n    position: relative;\r\n    margin-top: 10px;\r\n    display: flex;\r\n    align-items: center;\r\n    margin-right: 10px;\r\n}\r\n\r\n.multi_input_inputs-textarea-item__3tmrs {\r\n    align-items: flex-start;\r\n}\r\n\r\n.multi_input_item-input-view__1cjS5 {\r\n    flex-basis: 90%;\r\n    display: flex;\r\n    flex-direction: column;\r\n    margin-right: 10px;\r\n}\r\n\r\n.multi_input_inputs-item__2e1y3 button {\r\n    margin-right: 10px;\r\n    width: 20px;\r\n    height: 20px;\r\n    display: flex;\r\n    justify-content: center;\r\n    align-items: center;\r\n}\r\n\r\n.multi_input_item-input-hint__2C4NL {\r\n    min-height: 22px;\r\n    margin-top: -2px;\r\n    color: rgba(0, 0, 0, 0.45);\r\n    font-size: 14px !important;\r\n    line-height: 1.5 !important;\r\n    transition: color 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);\r\n}\r\n";
+var styles$1 = {"inputs-btns-view":"multi_input_inputs-btns-view__2puLZ","inputs-list-view":"multi_input_inputs-list-view__RTXsH","inputs-item":"multi_input_inputs-item__2e1y3","inputs-textarea-item":"multi_input_inputs-textarea-item__3tmrs","item-input-view":"multi_input_item-input-view__1cjS5","item-input-hint":"multi_input_item-input-hint__2C4NL","inputsBtnsView":"multi_input_inputs-btns-view__2puLZ","inputsListView":"multi_input_inputs-list-view__RTXsH","inputsItem":"multi_input_inputs-item__2e1y3","inputsTextareaItem":"multi_input_inputs-textarea-item__3tmrs","itemInputView":"multi_input_item-input-view__1cjS5","itemInputHint":"multi_input_item-input-hint__2C4NL"};
 styleInject(css$1);
 
 var DEFAULT_TYPE$1 = "text";
 var TEXTAREA_TYPE$1 = "textArea";
+var DEFAULT_ROW$1 = 3;
 var DEFAULT_EMPTY_HINT = "当前表单输入为空";
 var DEFAULT_ERROR_HINT = "当前表单存在空输入";
 
@@ -803,26 +804,36 @@ function (_React$PureComponent) {
       var _classnames,
           _this2 = this;
 
-      var props = this.props,
-          state = this.state;
-      var disabled = props.disabled,
+      var props = this.props;
+      var values = props.values,
+          disabled = props.disabled,
           focusControl = props.focusControl,
           placeholder = props.placeholder;
       var type = props.type;
       var required = props.required;
+      var isIllegal = props.isIllegal;
       var errorHint = props.errorHint;
+      var row = props.row;
       var valueHintMap = props.valueHintMap;
-      var valuesArr = state.valuesArr;
       type = type ? type : DEFAULT_TYPE$1;
-      valuesArr = schemaVerify.Type.array.safe(valuesArr);
       valueHintMap = schemaVerify.Type.object.safe(valueHintMap);
-      var inputItemClass = classnames((_classnames = {}, _defineProperty(_classnames, styles$1["inputs-item"], true), _defineProperty(_classnames, styles$1["inputs-textarea-item"], type === TEXTAREA_TYPE$1), _classnames));
+      var valuesArr = schemaVerify.Type.array.safe(values);
+      this.state.valuesArr = valuesArr;
+      var isTextArea = type === TEXTAREA_TYPE$1;
+      var inputItemClass = classnames((_classnames = {}, _defineProperty(_classnames, styles$1["inputs-item"], true), _defineProperty(_classnames, styles$1["inputs-textarea-item"], isTextArea), _classnames));
       var inputProps = {
         disabled: disabled,
         type: type,
         focusControl: focusControl,
         placeholder: placeholder
       };
+
+      if (isTextArea) {
+        row = schemaVerify.Type.number.is(row) ? row : DEFAULT_ROW$1;
+        inputProps["row"] = row;
+        inputProps["isTextArea"] = true;
+      }
+
       var buttonProps = {
         disabled: disabled,
         type: "danger",
@@ -836,12 +847,13 @@ function (_React$PureComponent) {
         });
 
         var itemButtonProps = _objectSpread2({}, buttonProps, {
-          onChange: _this2.handleItemDel.bind(_this2, index, valuesArr)
+          onClick: _this2.handleItemDel.bind(_this2, index, valuesArr)
         });
 
         var hint = valueHintMap[itemValue];
         var isShowHint = schemaVerify.Type.string.isNotEmpty(hint);
         return React.createElement("div", {
+          key: index,
           className: inputItemClass
         }, React.createElement("div", {
           className: styles$1["item-input-view"]
@@ -852,7 +864,7 @@ function (_React$PureComponent) {
         }, hint))), React.createElement(antd.Button, itemButtonProps));
       });
       var isExistIllegal = !valuesArr.every(function (v) {
-        return schemaVerify.Type.string.is(v);
+        return schemaVerify.Type.string.isNotEmpty(v);
       });
 
       if (schemaVerify.Type.array.isNotEmpty(valuesArr)) {
@@ -881,8 +893,10 @@ function (_React$PureComponent) {
       }, React.createElement(antd.Button, {
         disabled: disabled,
         icon: "plus",
-        onClick: this.onInputAdd
-      })), itemsHtml);
+        onClick: this.handleItemAdd
+      })), React.createElement("div", {
+        className: styles$1["inputs-list-view"]
+      }, itemsHtml));
     }
   }]);
 
