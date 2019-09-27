@@ -17,17 +17,18 @@ const babelOptions = {
             }
         ]
     ],
-    plugins: ["@babel/transform-react-jsx"]
+    plugins: [
+        "@babel/transform-react-jsx",
+        [
+            "import",
+            { libraryName: "antd", libraryDirectory: "lib", style: "css" }
+        ]
+    ]
 };
 
 module.exports = {
     input: util.resolve("src/index.jsx"),
-    plugins: [
-        postcss(),
-        babel(babelOptions),
-        nodeResolve({ extensions }),
-        commonjs({ extensions })
-    ],
+    plugins: [postcss(), babel(babelOptions), commonjs({ extensions })],
     external: [
         "schema-verify",
         "react",

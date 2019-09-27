@@ -3,10 +3,17 @@
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
 var React = _interopDefault(require('react'));
-var antd = require('antd');
+require('antd/lib/input/style/css');
+var _Input = _interopDefault(require('antd/lib/input'));
 var schemaVerify = require('schema-verify');
+require('antd/lib/form/style/css');
+var _Form = _interopDefault(require('antd/lib/form'));
 var reactTransitionGroup = require('react-transition-group');
+require('antd/lib/button/style/css');
+var _Button = _interopDefault(require('antd/lib/button'));
 var classnames = _interopDefault(require('classnames'));
+require('antd/lib/input-number/style/css');
+var _InputNumber = _interopDefault(require('antd/lib/input-number'));
 
 function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
@@ -219,7 +226,7 @@ var css = ".unctrl_input_ctrl-input-view__197Y9 {\r\n    position: relative;\r\n
 var styles = {"ctrl-input-view":"unctrl_input_ctrl-input-view__197Y9","ctrl-input":"unctrl_input_ctrl-input__3M-Nn","unctrl-input-view":"unctrl_input_unctrl-input-view__2Djd7","ctrlInputView":"unctrl_input_ctrl-input-view__197Y9","ctrlInput":"unctrl_input_ctrl-input__3M-Nn","unctrlInputView":"unctrl_input_unctrl-input-view__2Djd7"};
 styleInject(css);
 
-var TextArea = antd.Input.TextArea;
+var TextArea = _Input.TextArea;
 
 var InInput =
 /*#__PURE__*/
@@ -283,7 +290,7 @@ function (_React$PureComponent) {
 
       var newProps = _objectSpread2({}, this.props);
 
-      var InInputTag = isTextArea ? TextArea : antd.Input;
+      var InInputTag = isTextArea ? TextArea : _Input;
       delete newProps["isTextArea"];
       delete newProps["onChange"];
       delete newProps["onBlur"];
@@ -386,7 +393,7 @@ function (_React$PureComponent2) {
       var isCtrlInputShow = state.isCtrlInputShow,
           defaultValue = state.defaultValue;
       var value = props.value;
-      var InputTag = isTextArea ? TextArea : antd.Input;
+      var InputTag = isTextArea ? TextArea : _Input;
       var inputProps = {
         type: type,
         disabled: disabled,
@@ -480,7 +487,7 @@ function (_React$PureComponent) {
   return FadeView;
 }(React.PureComponent);
 
-var FormItem = antd.Form.Item;
+var FormItem = _Form.Item;
 var LAYOUT = {
   labelCol: {
     xs: {
@@ -866,7 +873,7 @@ function (_React$PureComponent) {
           hidden: !isShowHint
         }, React.createElement("div", {
           className: inputHintClass
-        }, hintText))), React.createElement(antd.Button, itemButtonProps));
+        }, hintText))), React.createElement(_Button, itemButtonProps));
       });
       var isExistIllegal = !valuesArr.every(function (v) {
         return schemaVerify.Type.string.isNotEmpty(v);
@@ -895,7 +902,7 @@ function (_React$PureComponent) {
       });
       return React.createElement(ItemView, itemProps, React.createElement("div", {
         className: styles$1["inputs-btns-view"]
-      }, React.createElement(antd.Button, {
+      }, React.createElement(_Button, {
         disabled: disabled,
         icon: "plus",
         onClick: this.handleItemAdd
@@ -967,7 +974,7 @@ function (_React$PureComponent) {
       var itemProps = Util.filterItemProps(props, {
         isIllegal: isIllegal
       });
-      return React.createElement(ItemView, itemProps, React.createElement(antd.InputNumber, inputProps));
+      return React.createElement(ItemView, itemProps, React.createElement(_InputNumber, inputProps));
     }
   }]);
 
