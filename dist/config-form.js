@@ -908,10 +908,72 @@ function (_React$PureComponent) {
   return MultiInput;
 }(React.PureComponent);
 
+var CNumberInput =
+/*#__PURE__*/
+function (_React$PureComponent) {
+  _inherits(CNumberInput, _React$PureComponent);
+
+  function CNumberInput(props) {
+    var _this;
+
+    _classCallCheck(this, CNumberInput);
+
+    Util.bindme(_this = _possibleConstructorReturn(this, _getPrototypeOf(CNumberInput).call(this, props)), "handleChange", "handleBlur");
+    return _this;
+  }
+
+  _createClass(CNumberInput, [{
+    key: "handleChange",
+    value: function handleChange(value) {
+      var onChange = this.props.onChange;
+      schemaVerify.Type["function"].is(onChange) && onChange(value);
+    }
+  }, {
+    key: "handleBlur",
+    value: function handleBlur(e) {
+      var onBlur = this.props.onBlur;
+      schemaVerify.Type["function"].is(onBlur) && onBlur(e);
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var props = this.props;
+      var disabled = props.disabled,
+          value = props.value;
+      var max = props.max;
+      var min = props.min;
+      var isIllegal = props.isIllegal;
+      var inputProps = {
+        disabled: disabled,
+        value: value,
+        onChange: this.handleChange,
+        onBlur: this.handleBlur
+      };
+
+      if (schemaVerify.Type.number.is(max)) {
+        inputProps["max"] = max;
+      }
+
+      if (schemaVerify.Type.number.is(min)) {
+        inputProps["min"] = min;
+      }
+
+      isIllegal = isIllegal || schemaVerify.Type.number.isNot(value);
+      var itemProps = Util.filterItemProps(props, {
+        isIllegal: isIllegal
+      });
+      return React.createElement(ItemView, itemProps, React.createElement(antd.InputNumber, inputProps));
+    }
+  }]);
+
+  return CNumberInput;
+}(React.PureComponent);
+
 var index = {
   Input: CInput,
   PatternInput: PatternInput,
-  MultiInput: MultiInput
+  MultiInput: MultiInput,
+  NumberInput: CNumberInput
 };
 
 module.exports = index;
