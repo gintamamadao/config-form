@@ -14,6 +14,8 @@ var _Button = _interopDefault(require('antd/lib/button'));
 var classnames = _interopDefault(require('classnames'));
 require('antd/lib/input-number/style/css');
 var _InputNumber = _interopDefault(require('antd/lib/input-number'));
+require('antd/lib/select/style/css');
+var _Select = _interopDefault(require('antd/lib/select'));
 
 function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
@@ -981,11 +983,122 @@ function (_React$PureComponent) {
   return NumberInput;
 }(React.PureComponent);
 
+var Option = _Select.Option;
+var DEFAULT_STYLE = {
+  width: "100%"
+};
+
+function filterOptionFn(input, option) {
+  option = option || {};
+  var props = option.props || {};
+  var value = props.value || "";
+  var children = props.children || "";
+  input = schemaVerify.Type.string.is(input) ? input.toLowerCase() : "";
+  value = schemaVerify.Type.string.is(value) ? value.toLowerCase() : "";
+  children = schemaVerify.Type.string.is(children) ? children.toLowerCase() : "";
+  return value.match(input) || children.match(input);
+}
+
+var CSelect =
+/*#__PURE__*/
+function (_React$PureComponent) {
+  _inherits(CSelect, _React$PureComponent);
+
+  function CSelect(props) {
+    var _this;
+
+    _classCallCheck(this, CSelect);
+
+    Util.bindme(_this = _possibleConstructorReturn(this, _getPrototypeOf(CSelect).call(this, props)), "handleChange");
+    _this.onChange = _this.onChange.bind(_assertThisInitialized(_this));
+    return _this;
+  }
+
+  _createClass(CSelect, [{
+    key: "handleChange",
+    value: function handleChange(value) {
+      var onChange = this.props.onChange;
+      value = schemaVerify.Type.string.is(value) ? value : "";
+      schemaVerify.Type["function"].is(onChange) && onChange(value);
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var props = this.props;
+      var disabled = props.disabled,
+          value = props.value,
+          placeholder = props.placeholder;
+      var disableOpts = props.disableOpts;
+      var optionsData = props.optionsData;
+      var filterOption = props.filterOption;
+      var style = props.style;
+      var isIllegal = props.isIllegal;
+      disableOpts = schemaVerify.Type.object.safe(disableOpts);
+      optionsData = schemaVerify.Type.object.safe(optionsData);
+      var keys = Object.keys(optionsData).sort();
+      var optionsHtml = [];
+      var _iteratorNormalCompletion = true;
+      var _didIteratorError = false;
+      var _iteratorError = undefined;
+
+      try {
+        for (var _iterator = keys[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          var key = _step.value;
+          var optionInfo = optionsData[key];
+          var text = schemaVerify.Type.object.is(optionInfo) && schemaVerify.Type.string.isNotEmpty(optionInfo.text) ? optionInfo.text : key;
+          optionsHtml.push(React.createElement(Option, {
+            disabled: disableOpts[key],
+            key: key,
+            value: key
+          }, text));
+        }
+      } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion && _iterator["return"] != null) {
+            _iterator["return"]();
+          }
+        } finally {
+          if (_didIteratorError) {
+            throw _iteratorError;
+          }
+        }
+      }
+
+      style = schemaVerify.Type.object.is(style) ? Object.assign({}, DEFAULT_STYLE, style) : DEFAULT_STYLE;
+      var selectProps = {
+        style: style,
+        disabled: disabled,
+        placeholder: placeholder,
+        value: value,
+        allowClear: true,
+        onChange: this.handleChange
+      };
+
+      if (schemaVerify.Type["function"].is(filterOption) || filterOption === true) {
+        selectProps["showSearch"] = true;
+        selectProps["filterOption"] = schemaVerify.Type["function"].is(filterOption) ? filterOption : filterOptionFn;
+      }
+
+      isIllegal = isIllegal || !schemaVerify.Type.string.isNotEmpty(value);
+      var itemProps = Util.filterItemProps(props, {
+        isIllegal: isIllegal
+      });
+      return React.createElement(ItemView, itemProps, React.createElement(_Select, selectProps, optionsHtml));
+    }
+  }]);
+
+  return CSelect;
+}(React.PureComponent);
+
 var index = {
   Input: CInput,
   PatternInput: PatternInput,
   MultiInput: MultiInput,
-  NumberInput: NumberInput
+  NumberInput: NumberInput,
+  Select: CSelect
 };
 
 module.exports = index;
