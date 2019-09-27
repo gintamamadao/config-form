@@ -28,7 +28,17 @@ const babelOptions = {
 
 module.exports = {
     input: util.resolve("src/index.jsx"),
-    plugins: [postcss(), babel(babelOptions), commonjs({ extensions })],
+    plugins: [
+        postcss(),
+        babel(babelOptions),
+        nodeResolve({
+            extensions,
+            customResolveOptions: {
+                moduleDirectory: "antd"
+            }
+        }),
+        commonjs({ extensions })
+    ],
     external: [
         "schema-verify",
         "react",
