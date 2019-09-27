@@ -942,6 +942,7 @@ function (_React$PureComponent) {
           value = props.value;
       var max = props.max;
       var min = props.min;
+      var step = props.step;
       var isIllegal = props.isIllegal;
       var inputProps = {
         disabled: disabled,
@@ -956,6 +957,10 @@ function (_React$PureComponent) {
 
       if (schemaVerify.Type.number.is(min)) {
         inputProps["min"] = min;
+      }
+
+      if (schemaVerify.Type.number.is(step)) {
+        inputProps["step"] = step;
       }
 
       isIllegal = isIllegal || schemaVerify.Type.number.isNot(value);

@@ -24,6 +24,7 @@ class NumberInput extends React.PureComponent {
         const { disabled, value } = props;
         let max = props.max;
         let min = props.min;
+        let step = props.step;
         let isIllegal = props.isIllegal;
 
         const inputProps = {
@@ -39,6 +40,10 @@ class NumberInput extends React.PureComponent {
 
         if (Type.number.is(min)) {
             inputProps["min"] = min;
+        }
+
+        if (Type.number.is(step)) {
+            inputProps["step"] = step;
         }
 
         isIllegal = isIllegal || Type.number.isNot(value);
