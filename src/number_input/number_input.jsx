@@ -4,7 +4,7 @@ import ItemView from "../item_view/item_view";
 import Util from "../util/util";
 import { Type } from "schema-verify";
 
-class CNumberInput extends React.PureComponent {
+class NumberInput extends React.PureComponent {
     constructor(props) {
         Util.bindme(super(props), "handleChange", "handleBlur");
     }
@@ -52,4 +52,4 @@ class CNumberInput extends React.PureComponent {
     }
 }
 
-export default CNumberInput;
+export default NumberInput;

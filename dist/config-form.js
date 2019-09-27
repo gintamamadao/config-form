@@ -908,21 +908,21 @@ function (_React$PureComponent) {
   return MultiInput;
 }(React.PureComponent);
 
-var CNumberInput =
+var NumberInput =
 /*#__PURE__*/
 function (_React$PureComponent) {
-  _inherits(CNumberInput, _React$PureComponent);
+  _inherits(NumberInput, _React$PureComponent);
 
-  function CNumberInput(props) {
+  function NumberInput(props) {
     var _this;
 
-    _classCallCheck(this, CNumberInput);
+    _classCallCheck(this, NumberInput);
 
-    Util.bindme(_this = _possibleConstructorReturn(this, _getPrototypeOf(CNumberInput).call(this, props)), "handleChange", "handleBlur");
+    Util.bindme(_this = _possibleConstructorReturn(this, _getPrototypeOf(NumberInput).call(this, props)), "handleChange", "handleBlur");
     return _this;
   }
 
-  _createClass(CNumberInput, [{
+  _createClass(NumberInput, [{
     key: "handleChange",
     value: function handleChange(value) {
       var onChange = this.props.onChange;
@@ -966,14 +966,14 @@ function (_React$PureComponent) {
     }
   }]);
 
-  return CNumberInput;
+  return NumberInput;
 }(React.PureComponent);
 
 var index = {
   Input: CInput,
   PatternInput: PatternInput,
   MultiInput: MultiInput,
-  NumberInput: CNumberInput
+  NumberInput: NumberInput
 };
 
 module.exports = index;
