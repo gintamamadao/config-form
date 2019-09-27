@@ -16,9 +16,6 @@
     display: flex;
     align-items: center;
     margin-right: 10px;
-}
-
-.inputs-textarea-item {
     align-items: flex-start;
 }
 
@@ -30,12 +27,16 @@
 }
 
 .inputs-item button {
-    margin-right: 10px;
+    margin-top: 8px;
     width: 20px;
     height: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.inputs-textarea-item > button {
+    margin-top: 0 !important;
 }
 
 .item-input-hint {
