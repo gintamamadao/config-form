@@ -18,6 +18,8 @@ require('antd/lib/select/style/css');
 var _Select = _interopDefault(require('antd/lib/select'));
 require('antd/lib/radio/style/css');
 var _Radio = _interopDefault(require('antd/lib/radio'));
+require('antd/lib/checkbox/style/css');
+var _Checkbox = _interopDefault(require('antd/lib/checkbox'));
 
 function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
@@ -816,7 +818,7 @@ function (_React$PureComponent) {
           _this2 = this;
 
       var props = this.props;
-      var values = props.values,
+      var value = props.value,
           disabled = props.disabled,
           focusControl = props.focusControl,
           placeholder = props.placeholder;
@@ -828,7 +830,7 @@ function (_React$PureComponent) {
       var indexHintMap = props.indexHintMap;
       type = type ? type : DEFAULT_TYPE$1;
       indexHintMap = schemaVerify.Type.object.safe(indexHintMap);
-      var valuesArr = schemaVerify.Type.array.safe(values);
+      var valuesArr = schemaVerify.Type.array.safe(value);
       this.state.valuesArr = valuesArr;
       var isTextArea = type === TEXTAREA_TYPE$1;
       var inputItemClass = classnames((_classnames = {}, _defineProperty(_classnames, styles$1["inputs-item"], true), _defineProperty(_classnames, styles$1["inputs-textarea-item"], isTextArea), _classnames));
@@ -1138,13 +1140,109 @@ function (_React$PureComponent) {
   return CRadioGroup;
 }(React.PureComponent);
 
+var CheckboxGroup = _Checkbox.Group;
+
+var CCheckboxGroup =
+/*#__PURE__*/
+function (_React$PureComponent) {
+  _inherits(CCheckboxGroup, _React$PureComponent);
+
+  function CCheckboxGroup(props) {
+    var _this;
+
+    _classCallCheck(this, CCheckboxGroup);
+
+    Util.bindme(_this = _possibleConstructorReturn(this, _getPrototypeOf(CCheckboxGroup).call(this, props)), "handleChange");
+    return _this;
+  }
+
+  _createClass(CCheckboxGroup, [{
+    key: "handleChange",
+    value: function handleChange(valuesArr) {
+      var onChange = this.props.onChange;
+      var optionsData = this.props.optionsData;
+      optionsData = schemaVerify.Type.object.safe(optionsData);
+      valuesArr = schemaVerify.Type.array.safe(valuesArr);
+      var newValues = [];
+      var _iteratorNormalCompletion = true;
+      var _didIteratorError = false;
+      var _iteratorError = undefined;
+
+      try {
+        for (var _iterator = valuesArr[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          var valueKey = _step.value;
+
+          if (valueKey in optionsData) {
+            newValues.push(valueKey);
+          }
+        }
+      } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion && _iterator["return"] != null) {
+            _iterator["return"]();
+          }
+        } finally {
+          if (_didIteratorError) {
+            throw _iteratorError;
+          }
+        }
+      }
+
+      schemaVerify.Type["function"].is(onChange) && onChange(newValues);
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var props = this.props;
+      var disabled = props.disabled,
+          value = props.value;
+      var disableOpts = props.disableOpts;
+      var optionsData = props.optionsData;
+      var isIllegal = props.isIllegal;
+      var valuesArr = schemaVerify.Type.array.safe(value);
+      disableOpts = schemaVerify.Type.object.safe(disableOpts);
+      optionsData = schemaVerify.Type.object.safe(optionsData);
+      var checkBoxOpts = [];
+
+      for (var key in optionsData) {
+        var optionInfo = optionsData[key];
+        var text = schemaVerify.Type.object.is(optionInfo) && schemaVerify.Type.string.isNotEmpty(optionInfo.text) ? optionInfo.text : key;
+        var checkBoxOpt = {
+          label: text,
+          value: key,
+          disabled: disableOpts[key]
+        };
+        checkBoxOpts.push(checkBoxOpt);
+      }
+
+      var checkboxProps = {
+        disabled: disabled,
+        value: valuesArr,
+        options: checkBoxOpts,
+        onChange: this.handleChange
+      };
+      isIllegal = isIllegal || !schemaVerify.Type.array.isNotEmpty(valuesArr);
+      var itemProps = Util.filterItemProps(props, {
+        isIllegal: isIllegal
+      });
+      return React.createElement(ItemView, itemProps, React.createElement(CheckboxGroup, checkboxProps));
+    }
+  }]);
+
+  return CCheckboxGroup;
+}(React.PureComponent);
+
 var index = {
   Input: CInput,
   PatternInput: PatternInput,
   MultiInput: MultiInput,
   NumberInput: NumberInput,
   Select: CSelect,
-  RadioGroup: CRadioGroup
+  RadioGroup: CRadioGroup,
+  CheckboxGroup: CCheckboxGroup
 };
 
 module.exports = index;

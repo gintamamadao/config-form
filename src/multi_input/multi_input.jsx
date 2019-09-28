@@ -54,7 +54,7 @@ class MultiInput extends React.PureComponent {
 
     render() {
         const { props } = this;
-        const { values, disabled, focusControl, placeholder } = props;
+        const { value, disabled, focusControl, placeholder } = props;
         let type = props.type;
         let required = props.required;
         let isIllegal = props.isIllegal;
@@ -65,7 +65,7 @@ class MultiInput extends React.PureComponent {
         type = type ? type : DEFAULT_TYPE;
         indexHintMap = Type.object.safe(indexHintMap);
 
-        const valuesArr = Type.array.safe(values);
+        const valuesArr = Type.array.safe(value);
         this.state.valuesArr = valuesArr;
 
         const isTextArea = type === TEXTAREA_TYPE;
