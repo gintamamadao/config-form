@@ -8,8 +8,8 @@ const Option = Select.Option;
 const DEFAULT_STYLE = { width: "100%" };
 
 function filterOptionFn(input, option) {
-    option = option || {};
-    const props = option.props || {};
+    option = Type.object.safe(option);
+    const props = Type.object.safe(option.props);
     let value = props.value || "";
     let children = props.children || "";
     input = Type.string.is(input) ? input.toLowerCase() : "";

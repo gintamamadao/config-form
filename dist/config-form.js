@@ -989,8 +989,8 @@ var DEFAULT_STYLE = {
 };
 
 function filterOptionFn(input, option) {
-  option = option || {};
-  var props = option.props || {};
+  option = schemaVerify.Type.object.safe(option);
+  var props = schemaVerify.Type.object.safe(option.props);
   var value = props.value || "";
   var children = props.children || "";
   input = schemaVerify.Type.string.is(input) ? input.toLowerCase() : "";
