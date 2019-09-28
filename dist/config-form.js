@@ -1096,7 +1096,7 @@ function (_React$PureComponent) {
       e = schemaVerify.Type.object.safe(e);
       var target = schemaVerify.Type.object.safe(e.target);
       var onChange = this.props.onChange;
-      value = schemaVerify.Type.string.is(target.value) ? target.value : "";
+      var value = schemaVerify.Type.string.is(target.value) ? target.value : "";
       schemaVerify.Type["function"].is(onChange) && onChange(value);
     }
   }, {

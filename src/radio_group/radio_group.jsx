@@ -15,7 +15,7 @@ class CRadioGroup extends React.PureComponent {
         e = Type.object.safe(e);
         const target = Type.object.safe(e.target);
         const onChange = this.props.onChange;
-        value = Type.string.is(target.value) ? target.value : "";
+        const value = Type.string.is(target.value) ? target.value : "";
         Type.function.is(onChange) && onChange(value);
     }
 
