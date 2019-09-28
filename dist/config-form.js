@@ -1010,7 +1010,6 @@ function (_React$PureComponent) {
     _classCallCheck(this, CSelect);
 
     Util.bindme(_this = _possibleConstructorReturn(this, _getPrototypeOf(CSelect).call(this, props)), "handleChange");
-    _this.onChange = _this.onChange.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -1035,36 +1034,16 @@ function (_React$PureComponent) {
       var isIllegal = props.isIllegal;
       disableOpts = schemaVerify.Type.object.safe(disableOpts);
       optionsData = schemaVerify.Type.object.safe(optionsData);
-      var keys = Object.keys(optionsData).sort();
       var optionsHtml = [];
-      var _iteratorNormalCompletion = true;
-      var _didIteratorError = false;
-      var _iteratorError = undefined;
 
-      try {
-        for (var _iterator = keys[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-          var key = _step.value;
-          var optionInfo = optionsData[key];
-          var text = schemaVerify.Type.object.is(optionInfo) && schemaVerify.Type.string.isNotEmpty(optionInfo.text) ? optionInfo.text : key;
-          optionsHtml.push(React.createElement(Option, {
-            disabled: disableOpts[key],
-            key: key,
-            value: key
-          }, text));
-        }
-      } catch (err) {
-        _didIteratorError = true;
-        _iteratorError = err;
-      } finally {
-        try {
-          if (!_iteratorNormalCompletion && _iterator["return"] != null) {
-            _iterator["return"]();
-          }
-        } finally {
-          if (_didIteratorError) {
-            throw _iteratorError;
-          }
-        }
+      for (var key in optionsData) {
+        var optionInfo = optionsData[key];
+        var text = schemaVerify.Type.object.is(optionInfo) && schemaVerify.Type.string.isNotEmpty(optionInfo.text) ? optionInfo.text : key;
+        optionsHtml.push(React.createElement(Option, {
+          disabled: disableOpts[key],
+          key: key,
+          value: key
+        }, text));
       }
 
       style = schemaVerify.Type.object.is(style) ? Object.assign({}, DEFAULT_STYLE, style) : DEFAULT_STYLE;

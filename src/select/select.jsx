@@ -21,7 +21,6 @@ function filterOptionFn(input, option) {
 class CSelect extends React.PureComponent {
     constructor(props) {
         Util.bindme(super(props), "handleChange");
-        this.onChange = this.onChange.bind(this);
     }
 
     handleChange(value) {
@@ -42,10 +41,8 @@ class CSelect extends React.PureComponent {
         disableOpts = Type.object.safe(disableOpts);
         optionsData = Type.object.safe(optionsData);
 
-        const keys = Object.keys(optionsData).sort();
         const optionsHtml = [];
-
-        for (const key of keys) {
+        for (const key in optionsData) {
             const optionInfo = optionsData[key];
             const text =
                 Type.object.is(optionInfo) &&
