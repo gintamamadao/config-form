@@ -16,6 +16,8 @@ require('antd/lib/input-number/style/css');
 var _InputNumber = _interopDefault(require('antd/lib/input-number'));
 require('antd/lib/select/style/css');
 var _Select = _interopDefault(require('antd/lib/select'));
+require('antd/lib/radio/style/css');
+var _Radio = _interopDefault(require('antd/lib/radio'));
 
 function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
@@ -1072,12 +1074,77 @@ function (_React$PureComponent) {
   return CSelect;
 }(React.PureComponent);
 
+var RadioGroup = _Radio.Group;
+
+var CRadioGroup =
+/*#__PURE__*/
+function (_React$PureComponent) {
+  _inherits(CRadioGroup, _React$PureComponent);
+
+  function CRadioGroup(props) {
+    var _this;
+
+    _classCallCheck(this, CRadioGroup);
+
+    Util.bindme(_this = _possibleConstructorReturn(this, _getPrototypeOf(CRadioGroup).call(this, props)), "handleChange");
+    return _this;
+  }
+
+  _createClass(CRadioGroup, [{
+    key: "handleChange",
+    value: function handleChange(e) {
+      e = schemaVerify.Type.object.safe(e);
+      var target = schemaVerify.Type.object.safe(e.target);
+      var onChange = this.props.onChange;
+      value = schemaVerify.Type.string.is(target.value) ? target.value : "";
+      schemaVerify.Type["function"].is(onChange) && onChange(value);
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var props = this.props;
+      var disabled = props.disabled,
+          value = props.value;
+      var disableOpts = props.disableOpts;
+      var optionsData = props.optionsData;
+      var isIllegal = props.isIllegal;
+      disableOpts = schemaVerify.Type.object.safe(disableOpts);
+      optionsData = schemaVerify.Type.object.safe(optionsData);
+      var radiosHtml = [];
+
+      for (var key in optionsData) {
+        var optionInfo = optionsData[key];
+        var text = schemaVerify.Type.object.is(optionInfo) && schemaVerify.Type.string.isNotEmpty(optionInfo.text) ? optionInfo.text : key;
+        radiosHtml.push(React.createElement(_Radio, {
+          disabled: disableOpts[key],
+          key: key,
+          value: key
+        }, text));
+      }
+
+      var radioGroupProps = {
+        disabled: disabled,
+        value: value,
+        onChange: this.handleChange
+      };
+      isIllegal = isIllegal || !schemaVerify.Type.string.isNotEmpty(value);
+      var itemProps = Util.filterItemProps(props, {
+        isIllegal: isIllegal
+      });
+      return React.createElement(ItemView, itemProps, React.createElement(RadioGroup, radioGroupProps, radiosHtml));
+    }
+  }]);
+
+  return CRadioGroup;
+}(React.PureComponent);
+
 var index = {
   Input: CInput,
   PatternInput: PatternInput,
   MultiInput: MultiInput,
   NumberInput: NumberInput,
-  Select: CSelect
+  Select: CSelect,
+  RadioGroup: CRadioGroup
 };
 
 module.exports = index;
