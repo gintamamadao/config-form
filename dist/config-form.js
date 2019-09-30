@@ -1053,7 +1053,7 @@ function (_React$PureComponent) {
         }, text));
       }
 
-      style = schemaVerify.Type.object.is(style) ? Object.assign({}, DEFAULT_STYLE, style) : DEFAULT_STYLE;
+      style = schemaVerify.Type.object.is(style) ? Object.assign(style, DEFAULT_STYLE) : DEFAULT_STYLE;
       var selectProps = {
         style: style,
         disabled: disabled,
@@ -1386,7 +1386,7 @@ function (_React$PureComponent) {
         errorHint = "时间不在合法范围";
       }
 
-      style = schemaVerify.Type.object.is(style) ? Object.assign({}, DEFAULT_STYLE$1, style) : DEFAULT_STYLE$1;
+      style = schemaVerify.Type.object.is(style) ? Object.assign(style, DEFAULT_STYLE$1) : DEFAULT_STYLE$1;
       var dateProps = {
         showTime: true,
         format: TIME_FORMAT,

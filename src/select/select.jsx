@@ -57,7 +57,7 @@ class CSelect extends React.PureComponent {
         }
 
         style = Type.object.is(style)
-            ? Object.assign({}, DEFAULT_STYLE, style)
+            ? Object.assign(style, DEFAULT_STYLE)
             : DEFAULT_STYLE;
 
         const selectProps = {
