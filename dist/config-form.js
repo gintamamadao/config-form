@@ -1257,13 +1257,18 @@ function timeStampCheck(v) {
   return reg.test(v);
 }
 
-function getMomValue(time) {
-  if (!schemaVerify.Type.string.isNotEmpty(time) || !timeStampCheck(time)) {
-    throw new Error("时间格式错误");
+function getMomValue(value) {
+  var result = value;
+
+  if (schemaVerify.Type.string.isNotEmpty(value)) {
+    if (!timeStampCheck(value)) {
+      throw new Error("时间格式错误");
+    }
+
+    result = moment(value, TIME_FORMAT);
   }
 
-  var value = moment(time, TIME_FORMAT);
-  return moment.isMoment(value) && value.isValid() ? value : null;
+  return moment.isMoment(result) && result.isValid() ? result : null;
 }
 
 var CDatePicker =
@@ -1293,23 +1298,42 @@ function (_React$PureComponent) {
       e = schemaVerify.Type.object.safe(e);
       var target = schemaVerify.Type.object.safe(e.target);
       var checked = target.checked;
-      this.setState({
-        hmsValueStatus: status
-      });
 
       if (checked) {
+        this.setState({
+          hmsValueStatus: status
+        });
         setTimeout(function () {
           _this2.handleChange(_this2.state.tempValue);
         }, 0);
+      } else {
+        this.setState({
+          hmsValueStatus: null
+        });
       }
     }
   }, {
     key: "handleChange",
     value: function handleChange(value) {
-      var props = this.props;
-      var onChange = props.onChange,
-          panelModel = props.panelModel;
-      var result = null;
+      var props = this.props,
+          state = this.state;
+      var onChange = props.onChange;
+      var panelType = state.panelType,
+          hmsValueStatus = state.hmsValueStatus;
+
+      if (panelType === DATE_PANEL && moment.isMoment(value)) {
+        switch (hmsValueStatus) {
+          case RESET_STATUS:
+            value = value.startOf("day");
+            break;
+
+          case MAX_STATUS:
+            value = value.endOf("day");
+            break;
+        }
+      }
+
+      var result = moment.isMoment(value) ? value.format(TIME_FORMAT) : null;
       schemaVerify.Type["function"].is(onChange) && onChange(result);
     }
   }, {

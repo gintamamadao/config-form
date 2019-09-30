@@ -19,12 +19,15 @@ function timeStampCheck(v) {
     return reg.test(v);
 }
 
-function getMomValue(time) {
-    if (!Type.string.isNotEmpty(time) || !timeStampCheck(time)) {
-        throw new Error("时间格式错误");
+function getMomValue(value) {
+    let result = value;
+    if (Type.string.isNotEmpty(value)) {
+        if (!timeStampCheck(value)) {
+            throw new Error("时间格式错误");
+        }
+        result = moment(value, TIME_FORMAT);
     }
-    const value = moment(time, TIME_FORMAT);
-    return moment.isMoment(value) && value.isValid() ? value : null;
+    return moment.isMoment(result) && result.isValid() ? result : null;
 }
 
 class CDatePicker extends React.PureComponent {
@@ -48,20 +51,39 @@ class CDatePicker extends React.PureComponent {
         e = Type.object.safe(e);
         const target = Type.object.safe(e.target);
         const checked = target.checked;
-        this.setState({
-            hmsValueStatus: status
-        });
         if (checked) {
+            this.setState({
+                hmsValueStatus: status
+            });
             setTimeout(() => {
                 this.handleChange(this.state.tempValue);
             }, 0);
+        } else {
+            this.setState({
+                hmsValueStatus: null
+            });
         }
     }
 
     handleChange(value) {
-        const { props } = this;
-        const { onChange, panelModel } = props;
-        let result = null;
+        const { props, state } = this;
+        const { onChange } = props;
+        const { panelType, hmsValueStatus } = state;
+
+        if (panelType === DATE_PANEL && moment.isMoment(value)) {
+            switch (hmsValueStatus) {
+                case RESET_STATUS:
+                    value = value.startOf("day");
+                    break;
+                case MAX_STATUS:
+                    value = value.endOf("day");
+                    break;
+            }
+        }
+        const result = moment.isMoment(value)
+            ? value.format(TIME_FORMAT)
+            : null;
+
         Type.function.is(onChange) && onChange(result);
     }
 
