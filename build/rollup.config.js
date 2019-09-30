@@ -44,6 +44,7 @@ module.exports = {
         "react",
         "antd",
         "react-transition-group",
-        "classnames"
+        "classnames",
+        "moment"
     ]
 };

@@ -20,6 +20,9 @@ require('antd/lib/radio/style/css');
 var _Radio = _interopDefault(require('antd/lib/radio'));
 require('antd/lib/checkbox/style/css');
 var _Checkbox = _interopDefault(require('antd/lib/checkbox'));
+require('antd/lib/date-picker/style/css');
+var _DatePicker = _interopDefault(require('antd/lib/date-picker'));
+var moment = _interopDefault(require('moment'));
 
 function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
@@ -1235,6 +1238,154 @@ function (_React$PureComponent) {
   return CCheckboxGroup;
 }(React.PureComponent);
 
+var css$2 = ".date_picker_date-footer-view__1jIWu {\r\n    width: 100%;\r\n    position: relative;\r\n    display: flex;\r\n    justify-content: flex-end;\r\n}\r\n";
+var styles$2 = {"date-footer-view":"date_picker_date-footer-view__1jIWu","dateFooterView":"date_picker_date-footer-view__1jIWu"};
+styleInject(css$2);
+
+var DEFAULT_STYLE$1 = {
+  width: "100%"
+};
+var RESET_STATUS = "reset";
+var MAX_STATUS = "maxValue";
+var RESET_STATUS_VALUE = "00:00:00";
+var MAX_STATUS_VALUE = "23:59:59";
+var DATE_PANEL = "date";
+var TIME_FORMAT = "YYYY-MM-DD HH:mm:ss";
+
+function timeStampCheck(v) {
+  var reg = new RegExp(/^\d{4}-\d{2}-\d{2}\s{1}\d{2}:\d{2}:\d{2}/);
+  return reg.test(v);
+}
+
+function getMomValue(time) {
+  if (!schemaVerify.Type.string.isNotEmpty(time) || !timeStampCheck(time)) {
+    throw new Error("时间格式错误");
+  }
+
+  var value = moment(time, TIME_FORMAT);
+  return moment.isMoment(value) && value.isValid() ? value : null;
+}
+
+var CDatePicker =
+/*#__PURE__*/
+function (_React$PureComponent) {
+  _inherits(CDatePicker, _React$PureComponent);
+
+  function CDatePicker(props) {
+    var _this;
+
+    _classCallCheck(this, CDatePicker);
+
+    Util.bindme(_this = _possibleConstructorReturn(this, _getPrototypeOf(CDatePicker).call(this, props)), "handleChange", "setHMSValue", "handlePanelChange", "handleOpenChange", "datePanelFooter");
+    _this.state = {
+      panelType: DATE_PANEL,
+      hmsValueStatus: null,
+      tempValue: null
+    };
+    return _this;
+  }
+
+  _createClass(CDatePicker, [{
+    key: "setHMSValue",
+    value: function setHMSValue(status, e) {
+      var _this2 = this;
+
+      e = schemaVerify.Type.object.safe(e);
+      var target = schemaVerify.Type.object.safe(e.target);
+      var checked = target.checked;
+      this.setState({
+        hmsValueStatus: status
+      });
+
+      if (checked) {
+        setTimeout(function () {
+          _this2.handleChange(_this2.state.tempValue);
+        }, 0);
+      }
+    }
+  }, {
+    key: "handleChange",
+    value: function handleChange(value) {
+      var props = this.props;
+      var onChange = props.onChange,
+          panelModel = props.panelModel;
+      var result = null;
+      schemaVerify.Type["function"].is(onChange) && onChange(result);
+    }
+  }, {
+    key: "handlePanelChange",
+    value: function handlePanelChange(value, model) {
+      this.state.panelType = model;
+    }
+  }, {
+    key: "handleOpenChange",
+    value: function handleOpenChange(status) {
+      if (!schemaVerify.Type.string.isNotEmpty(status)) {
+        this.state.panelType = "date";
+      }
+    }
+  }, {
+    key: "datePanelFooter",
+    value: function datePanelFooter() {
+      var state = this.state;
+      var panelType = state.panelType,
+          hmsValueStatus = state.hmsValueStatus;
+      var disabled = panelType !== DATE_PANEL;
+      return React.createElement("div", {
+        className: styles$2["date-footer-view"]
+      }, React.createElement(_Checkbox, {
+        disabled: disabled,
+        checked: hmsValueStatus === RESET_STATUS,
+        onChange: this.setHMSValue.bind(this, RESET_STATUS)
+      }, RESET_STATUS_VALUE), React.createElement(_Checkbox, {
+        disabled: disabled,
+        checked: hmsValueStatus === MAX_STATUS,
+        onChange: this.setHMSValue.bind(this, MAX_STATUS)
+      }, MAX_STATUS_VALUE));
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var props = this.props;
+      var disabled = props.disabled,
+          disabledDate = props.disabledDate;
+      var value = props.value;
+      var style = props.style;
+      var errorHint = props.errorHint;
+      var isIllegal = props.isIlleg;
+      value = getMomValue(value);
+      this.state.tempValue = value;
+      isIllegal = isIllegal || !schemaVerify.Type.object.is(value);
+
+      if (schemaVerify.Type["function"].is(disabledDate) && disabledDate(value)) {
+        isIllegal = true;
+        errorHint = "时间不在合法范围";
+      }
+
+      style = schemaVerify.Type.object.is(style) ? Object.assign({}, DEFAULT_STYLE$1, style) : DEFAULT_STYLE$1;
+      var dateProps = {
+        showTime: true,
+        format: TIME_FORMAT,
+        disabled: disabled,
+        disabledDate: disabledDate,
+        style: style,
+        value: value,
+        onChange: this.handleChange,
+        onOpenChange: this.handleOpenChange,
+        onPanelChange: this.handlePanelChange,
+        renderExtraFooter: this.datePanelFooter
+      };
+      var itemProps = Util.filterItemProps(props, {
+        errorHint: errorHint,
+        isIllegal: isIllegal
+      });
+      return React.createElement(ItemView, itemProps, React.createElement(_DatePicker, dateProps));
+    }
+  }]);
+
+  return CDatePicker;
+}(React.PureComponent);
+
 var index = {
   Input: CInput,
   PatternInput: PatternInput,
@@ -1242,7 +1393,8 @@ var index = {
   NumberInput: NumberInput,
   Select: CSelect,
   RadioGroup: CRadioGroup,
-  CheckboxGroup: CCheckboxGroup
+  CheckboxGroup: CCheckboxGroup,
+  DatePicker: CDatePicker
 };
 
 module.exports = index;

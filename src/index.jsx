@@ -5,6 +5,7 @@ import NumberInput from "./number_input/number_input";
 import Select from "./select/select";
 import RadioGroup from "./radio_group/radio_group";
 import CheckboxGroup from "./checkbox_group/checkbox_group";
+import DatePicker from "./date_picker/date_picker";
 
 export default {
     Input,
@@ -13,5 +14,6 @@ export default {
     NumberInput,
     Select,
     RadioGroup,
-    CheckboxGroup
+    CheckboxGroup,
+    DatePicker
 };
