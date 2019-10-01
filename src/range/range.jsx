@@ -6,7 +6,7 @@ import { Type } from "schema-verify";
 import styles from "./range.css";
 
 const ILLEGAL_NUM_HINT = "当前输入存在非法数字";
-const COMPARE_HINT = "最小值不能小于最大值";
+const COMPARE_HINT = "下限数字不能大于上限";
 const OVER_RANGE_HINT = "当前输入超过合法的范围";
 
 class Range extends React.PureComponent {
@@ -61,7 +61,7 @@ class Range extends React.PureComponent {
         const legalMax = legalRange[1];
 
         if (Type.number.is(minValue) && Type.number.is(maxValue)) {
-            if (upperValue < lowerValue) {
+            if (maxValue < minValue) {
                 isIllegal = true;
                 errorHint = COMPARE_HINT;
             }
@@ -81,7 +81,7 @@ class Range extends React.PureComponent {
         };
 
         if (Type.number.is(legalMin)) {
-            inputProps["mix"] = legalMin;
+            inputProps["min"] = legalMin;
         }
         if (Type.number.is(legalMax)) {
             inputProps["max"] = legalMax;
