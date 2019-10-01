@@ -961,7 +961,7 @@ function (_React$PureComponent) {
 
     _classCallCheck(this, NumberInput);
 
-    Util.bindme(_this = _possibleConstructorReturn(this, _getPrototypeOf(NumberInput).call(this, props)), "handleChange", "handleBlur");
+    Util.bindme(_this = _possibleConstructorReturn(this, _getPrototypeOf(NumberInput).call(this, props)), "handleChange");
     return _this;
   }
 
@@ -969,13 +969,8 @@ function (_React$PureComponent) {
     key: "handleChange",
     value: function handleChange(value) {
       var onChange = this.props.onChange;
+      value = schemaVerify.Type.number.is(value) ? value : null;
       schemaVerify.Type["function"].is(onChange) && onChange(value);
-    }
-  }, {
-    key: "handleBlur",
-    value: function handleBlur(e) {
-      var onBlur = this.props.onBlur;
-      schemaVerify.Type["function"].is(onBlur) && onBlur(e);
     }
   }, {
     key: "render",
@@ -990,8 +985,7 @@ function (_React$PureComponent) {
       var inputProps = {
         disabled: disabled,
         value: value,
-        onChange: this.handleChange,
-        onBlur: this.handleBlur
+        onChange: this.handleChange
       };
 
       if (schemaVerify.Type.number.is(max)) {
@@ -1413,12 +1407,12 @@ function (_React$PureComponent) {
   return CDatePicker;
 }(React.PureComponent);
 
-var BE_FUTRUE_HINT = "开始时间不能晚于结束时间";
-var BE_OVER_RANGE_HINT = "时间不能超过合法的范围";
+var BE_FUTRUE_HINT = "开始时间晚于结束时间";
+var BE_OVER_RANGE_HINT = "时间超过合法的范围";
 var START_TIME_LABEL = "开始时间";
 var END_TIME_LABEL = "结束时间";
-var START_TIME_EMPTY_HINT = "开始时间不能为空";
-var END_TIME_EMPTY_HINT = "结束时间不能为空";
+var START_TIME_EMPTY_HINT = "开始时间为空";
+var END_TIME_EMPTY_HINT = "结束时间为空";
 var DATE_ITEM_LAYOUT = {
   labelCol: {
     xs: {
@@ -1500,6 +1494,9 @@ function (_React$PureComponent) {
       var valuesArr = schemaVerify.Type.array.safe(value);
       var startValue = Util.getMomValue(valuesArr[0]);
       var endValue = Util.getMomValue(valuesArr[1]);
+      legalRange = schemaVerify.Type.array.safe(legalRange);
+      var legalStart = Util.getMomValue(legalRange[0]);
+      var legalEnd = Util.getMomValue(legalRange[1]);
 
       if (moment.isMoment(startValue) && moment.isMoment(endValue)) {
         if (startValue.isAfter(endValue)) {
@@ -1507,16 +1504,12 @@ function (_React$PureComponent) {
           errorHint = BE_FUTRUE_HINT;
         }
 
-        if (schemaVerify.Type.array.is(legalRange)) {
-          var legalStart = Util.getMomValue(legalRange[0]);
-          var legalEnd = Util.getMomValue(legalRange[1]);
+        var isStartOver = moment.isMoment(legalStart) && startValue.isBefore(legalStart);
+        var isEndOver = moment.isMoment(legalEnd) && endValue.isAfter(legalEnd);
 
-          if (moment.isMoment(legalStart) && moment.isMoment(legalEnd)) {
-            if (startValue.isBefore(legalStart) || endValue.isAfter(legalEnd)) {
-              isIllegal = true;
-              errorHint = BE_OVER_RANGE_HINT;
-            }
-          }
+        if (isStartOver || isEndOver) {
+          isIllegal = true;
+          errorHint = BE_OVER_RANGE_HINT;
         }
       }
 

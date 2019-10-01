@@ -6,12 +6,12 @@ import moment from "moment";
 import { Type } from "schema-verify";
 import { RESET_STATUS, MAX_STATUS } from "../constant/constant";
 
-const BE_FUTRUE_HINT = "开始时间不能晚于结束时间";
-const BE_OVER_RANGE_HINT = "时间不能超过合法的范围";
+const BE_FUTRUE_HINT = "开始时间晚于结束时间";
+const BE_OVER_RANGE_HINT = "时间超过合法的范围";
 const START_TIME_LABEL = "开始时间";
 const END_TIME_LABEL = "结束时间";
-const START_TIME_EMPTY_HINT = "开始时间不能为空";
-const END_TIME_EMPTY_HINT = "结束时间不能为空";
+const START_TIME_EMPTY_HINT = "开始时间为空";
+const END_TIME_EMPTY_HINT = "结束时间为空";
 const DATE_ITEM_LAYOUT = {
     labelCol: {
         xs: {
@@ -91,23 +91,23 @@ class TimeRange extends React.PureComponent {
         const startValue = Util.getMomValue(valuesArr[0]);
         const endValue = Util.getMomValue(valuesArr[1]);
 
+        legalRange = Type.array.safe(legalRange);
+        const legalStart = Util.getMomValue(legalRange[0]);
+        const legalEnd = Util.getMomValue(legalRange[1]);
+
         if (moment.isMoment(startValue) && moment.isMoment(endValue)) {
             if (startValue.isAfter(endValue)) {
                 isIllegal = true;
                 errorHint = BE_FUTRUE_HINT;
             }
-            if (Type.array.is(legalRange)) {
-                const legalStart = Util.getMomValue(legalRange[0]);
-                const legalEnd = Util.getMomValue(legalRange[1]);
-                if (moment.isMoment(legalStart) && moment.isMoment(legalEnd)) {
-                    if (
-                        startValue.isBefore(legalStart) ||
-                        endValue.isAfter(legalEnd)
-                    ) {
-                        isIllegal = true;
-                        errorHint = BE_OVER_RANGE_HINT;
-                    }
-                }
+            const isStartOver =
+                moment.isMoment(legalStart) && startValue.isBefore(legalStart);
+            const isEndOver =
+                moment.isMoment(legalEnd) && endValue.isAfter(legalEnd);
+
+            if (isStartOver || isEndOver) {
+                isIllegal = true;
+                errorHint = BE_OVER_RANGE_HINT;
             }
         }
 

@@ -6,17 +6,13 @@ import { Type } from "schema-verify";
 
 class NumberInput extends React.PureComponent {
     constructor(props) {
-        Util.bindme(super(props), "handleChange", "handleBlur");
+        Util.bindme(super(props), "handleChange");
     }
 
     handleChange(value) {
         const onChange = this.props.onChange;
+        value = Type.number.is(value) ? value : null;
         Type.function.is(onChange) && onChange(value);
-    }
-
-    handleBlur(e) {
-        const onBlur = this.props.onBlur;
-        Type.function.is(onBlur) && onBlur(e);
     }
 
     render() {
@@ -30,8 +26,7 @@ class NumberInput extends React.PureComponent {
         const inputProps = {
             disabled,
             value,
-            onChange: this.handleChange,
-            onBlur: this.handleBlur
+            onChange: this.handleChange
         };
 
         if (Type.number.is(max)) {
