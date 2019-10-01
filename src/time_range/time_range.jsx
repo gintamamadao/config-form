@@ -2,8 +2,9 @@ import React from "react";
 import DatePicker from "../date_picker/date_picker";
 import ItemView from "../item_view/item_view";
 import Util from "../util/util";
-import { Type } from "schema-verify";
 import moment from "moment";
+import { Type } from "schema-verify";
+import { RESET_STATUS, MAX_STATUS } from "../constant/constant";
 
 const BE_FUTRUE_HINT = "开始时间不能晚于结束时间";
 const BE_OVER_RANGE_HINT = "时间不能超过合法的范围";
@@ -11,9 +12,6 @@ const START_TIME_LABEL = "开始时间";
 const END_TIME_LABEL = "结束时间";
 const START_TIME_EMPTY_HINT = "开始时间不能为空";
 const END_TIME_EMPTY_HINT = "结束时间不能为空";
-const RESET_STATUS = "reset";
-const MAX_STATUS = "maxValue";
-const DEFAULT_STYLE = { width: "100%", maxWidth: "280px" };
 const DATE_ITEM_LAYOUT = {
     labelCol: {
         xs: {
@@ -113,7 +111,6 @@ class TimeRange extends React.PureComponent {
             }
         }
 
-        style = Type.object.is(style) ? style : DEFAULT_STYLE;
         itemLayout = Type.object.is(itemLayout) ? itemLayout : DATE_ITEM_LAYOUT;
 
         const dateProps = {

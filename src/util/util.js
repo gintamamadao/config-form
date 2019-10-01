@@ -1,5 +1,6 @@
 import { Type } from "schema-verify";
 import moment from "moment";
+import { TIME_FORMAT } from "../constant/constant";
 
 const Util = {
     loadModule(moduleName) {
@@ -46,7 +47,7 @@ const Util = {
             if (!Util.timeStampCheck(v)) {
                 throw new Error("时间格式错误");
             }
-            result = moment(v, "YYYY-MM-DD HH:mm:ss");
+            result = moment(v, TIME_FORMAT);
         }
         return moment.isMoment(result) && result.isValid() ? result : null;
     }

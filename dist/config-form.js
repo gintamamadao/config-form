@@ -160,6 +160,13 @@ function _possibleConstructorReturn(self, call) {
   return _assertThisInitialized(self);
 }
 
+var RESET_STATUS = "reset";
+var MAX_STATUS = "maxValue";
+var TIME_FORMAT = "YYYY-MM-DD HH:mm:ss";
+var DEFAULT_STYLE = {
+  width: "100%"
+};
+
 var Util = {
   loadModule: function loadModule(moduleName) {
     try {
@@ -212,7 +219,7 @@ var Util = {
         throw new Error("时间格式错误");
       }
 
-      result = moment(v, "YYYY-MM-DD HH:mm:ss");
+      result = moment(v, TIME_FORMAT);
     }
 
     return moment.isMoment(result) && result.isValid() ? result : null;
@@ -597,9 +604,6 @@ function (_React$PureComponent) {
 var DEFAULT_TYPE = "text";
 var TEXTAREA_TYPE = "textArea";
 var DEFAULT_ROW = 3;
-var DEFAULT_STYLE = {
-  width: "100%"
-};
 
 var CInput =
 /*#__PURE__*/
@@ -1014,9 +1018,6 @@ function (_React$PureComponent) {
 }(React.PureComponent);
 
 var Option = _Select.Option;
-var DEFAULT_STYLE$1 = {
-  width: "100%"
-};
 
 function filterOptionFn(input, option) {
   option = schemaVerify.Type.object.safe(option);
@@ -1076,7 +1077,7 @@ function (_React$PureComponent) {
         }, text));
       }
 
-      style = schemaVerify.Type.object.is(style) ? style : DEFAULT_STYLE$1;
+      style = schemaVerify.Type.object.is(style) ? style : DEFAULT_STYLE;
       var selectProps = {
         style: style,
         disabled: disabled,
@@ -1265,16 +1266,13 @@ var css$2 = ".date_picker_date-footer-view__1jIWu {\r\n    width: 100%;\r\n    p
 var styles$2 = {"date-footer-view":"date_picker_date-footer-view__1jIWu","dateFooterView":"date_picker_date-footer-view__1jIWu"};
 styleInject(css$2);
 
-var DEFAULT_STYLE$2 = {
+var DEFAULT_STYLE$1 = {
   width: "100%",
   maxWidth: "280px"
 };
-var RESET_STATUS = "reset";
-var MAX_STATUS = "maxValue";
 var RESET_STATUS_VALUE = "00:00:00";
 var MAX_STATUS_VALUE = "23:59:59";
 var DATE_PANEL = "date";
-var TIME_FORMAT = "YYYY-MM-DD HH:mm:ss";
 
 var CDatePicker =
 /*#__PURE__*/
@@ -1391,7 +1389,7 @@ function (_React$PureComponent) {
         errorHint = "时间不在合法范围";
       }
 
-      style = schemaVerify.Type.object.is(style) ? style : DEFAULT_STYLE$2;
+      style = schemaVerify.Type.object.is(style) ? style : DEFAULT_STYLE$1;
       var dateProps = {
         showTime: true,
         format: TIME_FORMAT,
@@ -1421,12 +1419,6 @@ var START_TIME_LABEL = "开始时间";
 var END_TIME_LABEL = "结束时间";
 var START_TIME_EMPTY_HINT = "开始时间不能为空";
 var END_TIME_EMPTY_HINT = "结束时间不能为空";
-var RESET_STATUS$1 = "reset";
-var MAX_STATUS$1 = "maxValue";
-var DEFAULT_STYLE$3 = {
-  width: "100%",
-  maxWidth: "280px"
-};
 var DATE_ITEM_LAYOUT = {
   labelCol: {
     xs: {
@@ -1528,7 +1520,6 @@ function (_React$PureComponent) {
         }
       }
 
-      style = schemaVerify.Type.object.is(style) ? style : DEFAULT_STYLE$3;
       itemLayout = schemaVerify.Type.object.is(itemLayout) ? itemLayout : DATE_ITEM_LAYOUT;
       var dateProps = {
         disabled: disabled,
@@ -1548,13 +1539,13 @@ function (_React$PureComponent) {
         label: START_TIME_LABEL,
         errorHint: START_TIME_EMPTY_HINT,
         value: startValue,
-        hmsValueStatus: RESET_STATUS$1,
+        hmsValueStatus: RESET_STATUS,
         onChange: this.handleStartChange
       })), React.createElement(CDatePicker, _extends({}, itemDateProps, {
         label: END_TIME_LABEL,
         errorHint: END_TIME_EMPTY_HINT,
         value: endValue,
-        hmsValueStatus: MAX_STATUS$1,
+        hmsValueStatus: MAX_STATUS,
         onChange: this.handleEndChange
       })));
     }

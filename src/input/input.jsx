@@ -3,11 +3,11 @@ import UnctrlInput from "../unctrl_input/unctrl_input";
 import ItemView from "../item_view/item_view";
 import Util from "../util/util";
 import { Type } from "schema-verify";
+import { DEFAULT_STYLE } from "../constant/constant";
 
 const DEFAULT_TYPE = "text";
 const TEXTAREA_TYPE = "textArea";
 const DEFAULT_ROW = 3;
-const DEFAULT_STYLE = { width: "100%" };
 
 class CInput extends React.PureComponent {
     constructor(props) {

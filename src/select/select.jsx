@@ -3,9 +3,9 @@ import { Select } from "antd";
 import ItemView from "../item_view/item_view";
 import Util from "../util/util";
 import { Type } from "schema-verify";
+import { DEFAULT_STYLE } from "../constant/constant";
 
 const Option = Select.Option;
-const DEFAULT_STYLE = { width: "100%" };
 
 function filterOptionFn(input, option) {
     option = Type.object.safe(option);

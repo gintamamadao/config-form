@@ -4,15 +4,13 @@ import styles from "./date_picker.css";
 import ItemView from "../item_view/item_view";
 import Util from "../util/util";
 import { Type } from "schema-verify";
+import { RESET_STATUS, MAX_STATUS, TIME_FORMAT } from "../constant/constant";
 import moment from "moment";
 
 const DEFAULT_STYLE = { width: "100%", maxWidth: "280px" };
-const RESET_STATUS = "reset";
-const MAX_STATUS = "maxValue";
 const RESET_STATUS_VALUE = "00:00:00";
 const MAX_STATUS_VALUE = "23:59:59";
 const DATE_PANEL = "date";
-const TIME_FORMAT = "YYYY-MM-DD HH:mm:ss";
 
 class CDatePicker extends React.PureComponent {
     constructor(props) {
