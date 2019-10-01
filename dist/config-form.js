@@ -1421,6 +1421,8 @@ var START_TIME_LABEL = "开始时间";
 var END_TIME_LABEL = "结束时间";
 var START_TIME_EMPTY_HINT = "开始时间不能为空";
 var END_TIME_EMPTY_HINT = "结束时间不能为空";
+var RESET_STATUS$1 = "reset";
+var MAX_STATUS$1 = "maxValue";
 var DEFAULT_STYLE$3 = {
   width: "100%",
   maxWidth: "280px"
@@ -1546,11 +1548,13 @@ function (_React$PureComponent) {
         label: START_TIME_LABEL,
         errorHint: START_TIME_EMPTY_HINT,
         value: startValue,
+        hmsValueStatus: RESET_STATUS$1,
         onChange: this.handleStartChange
       })), React.createElement(CDatePicker, _extends({}, itemDateProps, {
         label: END_TIME_LABEL,
         errorHint: END_TIME_EMPTY_HINT,
         value: endValue,
+        hmsValueStatus: MAX_STATUS$1,
         onChange: this.handleEndChange
       })));
     }

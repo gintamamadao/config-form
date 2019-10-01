@@ -11,6 +11,8 @@ const START_TIME_LABEL = "开始时间";
 const END_TIME_LABEL = "结束时间";
 const START_TIME_EMPTY_HINT = "开始时间不能为空";
 const END_TIME_EMPTY_HINT = "结束时间不能为空";
+const RESET_STATUS = "reset";
+const MAX_STATUS = "maxValue";
 const DEFAULT_STYLE = { width: "100%", maxWidth: "280px" };
 const DATE_ITEM_LAYOUT = {
     labelCol: {
@@ -139,6 +141,7 @@ class TimeRange extends React.PureComponent {
                     label={START_TIME_LABEL}
                     errorHint={START_TIME_EMPTY_HINT}
                     value={startValue}
+                    hmsValueStatus={RESET_STATUS}
                     onChange={this.handleStartChange}
                 />
                 <DatePicker
@@ -146,6 +149,7 @@ class TimeRange extends React.PureComponent {
                     label={END_TIME_LABEL}
                     errorHint={END_TIME_EMPTY_HINT}
                     value={endValue}
+                    hmsValueStatus={MAX_STATUS}
                     onChange={this.handleEndChange}
                 />
             </ItemView>
