@@ -6,6 +6,7 @@ var React = _interopDefault(require('react'));
 require('antd/lib/input/style/css');
 var _Input = _interopDefault(require('antd/lib/input'));
 var schemaVerify = require('schema-verify');
+var moment = _interopDefault(require('moment'));
 require('antd/lib/form/style/css');
 var _Form = _interopDefault(require('antd/lib/form'));
 var reactTransitionGroup = require('react-transition-group');
@@ -22,7 +23,6 @@ require('antd/lib/checkbox/style/css');
 var _Checkbox = _interopDefault(require('antd/lib/checkbox'));
 require('antd/lib/date-picker/style/css');
 var _DatePicker = _interopDefault(require('antd/lib/date-picker'));
-var moment = _interopDefault(require('moment'));
 
 function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
@@ -199,6 +199,23 @@ var Util = {
       help: props.help
     };
     return Object.assign({}, result, newProps);
+  },
+  timeStampCheck: function timeStampCheck(v) {
+    var reg = new RegExp(/^\d{4}-\d{2}-\d{2}\s{1}\d{2}:\d{2}:\d{2}/);
+    return reg.test(v);
+  },
+  getMomValue: function getMomValue(v) {
+    var result = v;
+
+    if (schemaVerify.Type.string.isNotEmpty(v)) {
+      if (!Util.timeStampCheck(v)) {
+        throw new Error("时间格式错误");
+      }
+
+      result = moment(v, "YYYY-MM-DD HH:mm:ss");
+    }
+
+    return moment.isMoment(result) && result.isValid() ? result : null;
   }
 };
 
@@ -1252,25 +1269,6 @@ var MAX_STATUS_VALUE = "23:59:59";
 var DATE_PANEL = "date";
 var TIME_FORMAT = "YYYY-MM-DD HH:mm:ss";
 
-function timeStampCheck(v) {
-  var reg = new RegExp(/^\d{4}-\d{2}-\d{2}\s{1}\d{2}:\d{2}:\d{2}/);
-  return reg.test(v);
-}
-
-function getMomValue(value) {
-  var result = value;
-
-  if (schemaVerify.Type.string.isNotEmpty(value)) {
-    if (!timeStampCheck(value)) {
-      throw new Error("时间格式错误");
-    }
-
-    result = moment(value, TIME_FORMAT);
-  }
-
-  return moment.isMoment(result) && result.isValid() ? result : null;
-}
-
 var CDatePicker =
 /*#__PURE__*/
 function (_React$PureComponent) {
@@ -1377,7 +1375,7 @@ function (_React$PureComponent) {
       var style = props.style;
       var errorHint = props.errorHint;
       var isIllegal = props.isIlleg;
-      value = getMomValue(value);
+      value = Util.getMomValue(value);
       this.state.tempValue = value;
       isIllegal = isIllegal || !schemaVerify.Type.object.is(value);
 

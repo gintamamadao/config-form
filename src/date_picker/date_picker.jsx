@@ -14,22 +14,6 @@ const MAX_STATUS_VALUE = "23:59:59";
 const DATE_PANEL = "date";
 const TIME_FORMAT = "YYYY-MM-DD HH:mm:ss";
 
-function timeStampCheck(v) {
-    const reg = new RegExp(/^\d{4}-\d{2}-\d{2}\s{1}\d{2}:\d{2}:\d{2}/);
-    return reg.test(v);
-}
-
-function getMomValue(value) {
-    let result = value;
-    if (Type.string.isNotEmpty(value)) {
-        if (!timeStampCheck(value)) {
-            throw new Error("时间格式错误");
-        }
-        result = moment(value, TIME_FORMAT);
-    }
-    return moment.isMoment(result) && result.isValid() ? result : null;
-}
-
 class CDatePicker extends React.PureComponent {
     constructor(props) {
         Util.bindme(
@@ -129,7 +113,7 @@ class CDatePicker extends React.PureComponent {
         let errorHint = props.errorHint;
         let isIllegal = props.isIlleg;
 
-        value = getMomValue(value);
+        value = Util.getMomValue(value);
         this.state.tempValue = value;
 
         isIllegal = isIllegal || !Type.object.is(value);
