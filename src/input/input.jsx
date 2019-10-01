@@ -30,10 +30,7 @@ class CInput extends React.PureComponent {
         let isIllegal = props.isIllegal;
 
         type = Type.string.isNotEmpty(type) ? type : DEFAULT_TYPE;
-
-        style = Type.object.is(style)
-            ? Object.assign(style, DEFAULT_STYLE)
-            : DEFAULT_STYLE;
+        style = Type.object.is(style) ? style : DEFAULT_STYLE;
 
         const inputProps = {
             style,

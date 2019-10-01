@@ -123,9 +123,7 @@ class CDatePicker extends React.PureComponent {
             errorHint = "时间不在合法范围";
         }
 
-        style = Type.object.is(style)
-            ? Object.assign(style, DEFAULT_STYLE)
-            : DEFAULT_STYLE;
+        style = Type.object.is(style) ? style : DEFAULT_STYLE;
 
         const dateProps = {
             showTime: true,
