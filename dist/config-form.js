@@ -1547,6 +1547,128 @@ function (_React$PureComponent) {
   return TimeRange;
 }(React.PureComponent);
 
+var css$3 = ".range_range-inputs-view___jlue {\r\n    width: 100%;\r\n    position: relative;\r\n}\r\n\r\n.range_input-between-space__3G8Mc {\r\n    display: inline-block;\r\n    margin-left: 10px;\r\n    margin-right: 10px;\r\n}\r\n";
+var styles$3 = {"range-inputs-view":"range_range-inputs-view___jlue","input-between-space":"range_input-between-space__3G8Mc","rangeInputsView":"range_range-inputs-view___jlue","inputBetweenSpace":"range_input-between-space__3G8Mc"};
+styleInject(css$3);
+
+var ILLEGAL_NUM_HINT = "当前输入存在非法数字";
+var COMPARE_HINT = "最小值不能小于最大值";
+var OVER_RANGE_HINT = "当前输入超过合法的范围";
+
+var Range =
+/*#__PURE__*/
+function (_React$PureComponent) {
+  _inherits(Range, _React$PureComponent);
+
+  function Range(props) {
+    var _this;
+
+    _classCallCheck(this, Range);
+
+    Util.bindme(_this = _possibleConstructorReturn(this, _getPrototypeOf(Range).call(this, props)), "handleChange", "handleMinChange", "handleMaxChange");
+    return _this;
+  }
+
+  _createClass(Range, [{
+    key: "handleMinChange",
+    value: function handleMinChange(singleValue) {
+      this.handleChange("min", singleValue);
+    }
+  }, {
+    key: "handleMaxChange",
+    value: function handleMaxChange(singleValue) {
+      this.handleChange("max", singleValue);
+    }
+  }, {
+    key: "handleChange",
+    value: function handleChange(type, singleValue) {
+      var props = this.props;
+      var onChange = props.onChange,
+          value = props.value;
+      var valuesArr = schemaVerify.Type.array.safe(value);
+      var minValue = valuesArr[0];
+      var maxValue = valuesArr[1];
+      var result = [minValue, maxValue];
+
+      switch (type) {
+        case "min":
+          result[0] = singleValue;
+          break;
+
+        case "max":
+          result[1] = singleValue;
+          break;
+      }
+
+      schemaVerify.Type["function"].is(onChange) && onChange(result);
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var props = this.props;
+      var disabled = props.disabled,
+          value = props.value;
+      var legalRange = props.legalRange;
+      var isIllegal = props.isIllegal;
+      var errorHint = props.errorHint;
+      var valuesArr = schemaVerify.Type.array.safe(value);
+      var minValue = valuesArr[0];
+      var maxValue = valuesArr[1];
+      legalRange = schemaVerify.Type.array.safe(legalRange);
+      var legalMin = legalRange[0];
+      var legalMax = legalRange[1];
+
+      if (schemaVerify.Type.number.is(minValue) && schemaVerify.Type.number.is(maxValue)) {
+        if (upperValue < lowerValue) {
+          isIllegal = true;
+          errorHint = COMPARE_HINT;
+        }
+
+        var isMinOver = schemaVerify.Type.number.is(legalMin) && minValue < legalMin;
+        var isMaxOver = schemaVerify.Type.number.is(legalMax) && maxValue > legalMax;
+
+        if (isMinOver || isMaxOver) {
+          isIllegal = true;
+          errorHint = OVER_RANGE_HINT;
+        }
+      } else {
+        isIllegal = true;
+        errorHint = ILLEGAL_NUM_HINT;
+      }
+
+      var inputProps = {
+        disabled: disabled
+      };
+
+      if (schemaVerify.Type.number.is(legalMin)) {
+        inputProps["mix"] = legalMin;
+      }
+
+      if (schemaVerify.Type.number.is(legalMax)) {
+        inputProps["max"] = legalMax;
+      }
+
+      var itemViewProps = Util.filterItemProps(props, {
+        errorHint: errorHint,
+        isIllegal: isIllegal
+      });
+      return React.createElement(ItemView, itemViewProps, React.createElement("div", {
+        className: styles$3["range-inputs-view"]
+      }, React.createElement(_InputNumber, _extends({}, inputProps, {
+        value: minValue,
+        onChange: this.handleMinChange
+      })), React.createElement("span", {
+        className: styles$3["input-between-space"]
+      }, "-"), React.createElement(_InputNumber, _extends({}, inputProps, {
+        value: maxValue,
+        onChange: this.handleMaxChange
+      }))));
+    }
+  }]);
+
+  return Range;
+}(React.PureComponent);
+
 var index = {
   Input: CInput,
   PatternInput: PatternInput,
@@ -1556,7 +1678,8 @@ var index = {
   RadioGroup: CRadioGroup,
   CheckboxGroup: CCheckboxGroup,
   DatePicker: CDatePicker,
-  TimeRange: TimeRange
+  TimeRange: TimeRange,
+  Range: Range
 };
 
 module.exports = index;

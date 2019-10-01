@@ -1,0 +1,10 @@
+.range-inputs-view {
+    width: 100%;
+    position: relative;
+}
+
+.input-between-space {
+    display: inline-block;
+    margin-left: 10px;
+    margin-right: 10px;
+}

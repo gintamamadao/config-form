@@ -7,6 +7,7 @@ import RadioGroup from "./radio_group/radio_group";
 import CheckboxGroup from "./checkbox_group/checkbox_group";
 import DatePicker from "./date_picker/date_picker";
 import TimeRange from "./time_range/time_range";
+import Range from "./range/range";
 
 export default {
     Input,
@@ -17,5 +18,6 @@ export default {
     RadioGroup,
     CheckboxGroup,
     DatePicker,
-    TimeRange
+    TimeRange,
+    Range
 };
