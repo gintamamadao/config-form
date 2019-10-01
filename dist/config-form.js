@@ -635,7 +635,7 @@ function (_React$PureComponent) {
       var style = props.style;
       var isIllegal = props.isIllegal;
       type = schemaVerify.Type.string.isNotEmpty(type) ? type : DEFAULT_TYPE;
-      style = schemaVerify.Type.object.is(style) ? Object.assign(style, DEFAULT_STYLE) : DEFAULT_STYLE;
+      style = schemaVerify.Type.object.is(style) ? style : DEFAULT_STYLE;
       var inputProps = {
         style: style,
         disabled: disabled,
@@ -1076,7 +1076,7 @@ function (_React$PureComponent) {
         }, text));
       }
 
-      style = schemaVerify.Type.object.is(style) ? Object.assign(style, DEFAULT_STYLE$1) : DEFAULT_STYLE$1;
+      style = schemaVerify.Type.object.is(style) ? style : DEFAULT_STYLE$1;
       var selectProps = {
         style: style,
         disabled: disabled,
@@ -1289,7 +1289,7 @@ function (_React$PureComponent) {
     Util.bindme(_this = _possibleConstructorReturn(this, _getPrototypeOf(CDatePicker).call(this, props)), "handleChange", "setHMSValue", "handlePanelChange", "handleOpenChange", "datePanelFooter");
     _this.state = {
       panelType: DATE_PANEL,
-      hmsValueStatus: null,
+      hmsValueStatus: props.hmsValueStatus,
       tempValue: null
     };
     return _this;
@@ -1391,7 +1391,7 @@ function (_React$PureComponent) {
         errorHint = "时间不在合法范围";
       }
 
-      style = schemaVerify.Type.object.is(style) ? Object.assign(style, DEFAULT_STYLE$2) : DEFAULT_STYLE$2;
+      style = schemaVerify.Type.object.is(style) ? style : DEFAULT_STYLE$2;
       var dateProps = {
         showTime: true,
         format: TIME_FORMAT,
@@ -1415,6 +1415,147 @@ function (_React$PureComponent) {
   return CDatePicker;
 }(React.PureComponent);
 
+var BE_FUTRUE_HINT = "开始时间不能晚于结束时间";
+var BE_OVER_RANGE_HINT = "时间不能超过合法的范围";
+var START_TIME_LABEL = "开始时间";
+var END_TIME_LABEL = "结束时间";
+var START_TIME_EMPTY_HINT = "开始时间不能为空";
+var END_TIME_EMPTY_HINT = "结束时间不能为空";
+var DEFAULT_STYLE$3 = {
+  width: "100%",
+  maxWidth: "280px"
+};
+var DATE_ITEM_LAYOUT = {
+  labelCol: {
+    xs: {
+      span: 24
+    },
+    sm: {
+      span: 5
+    }
+  },
+  wrapperCol: {
+    xs: {
+      span: 24
+    },
+    sm: {
+      span: 19
+    }
+  }
+};
+
+var TimeRange =
+/*#__PURE__*/
+function (_React$PureComponent) {
+  _inherits(TimeRange, _React$PureComponent);
+
+  function TimeRange(props) {
+    var _this;
+
+    _classCallCheck(this, TimeRange);
+
+    Util.bindme(_this = _possibleConstructorReturn(this, _getPrototypeOf(TimeRange).call(this, props)), "handleChange", "handleStartChange", "handleEndChange");
+    return _this;
+  }
+
+  _createClass(TimeRange, [{
+    key: "handleStartChange",
+    value: function handleStartChange(singleValue) {
+      this.handleChange("start", singleValue);
+    }
+  }, {
+    key: "handleEndChange",
+    value: function handleEndChange(singleValue) {
+      this.handleChange("end", singleValue);
+    }
+  }, {
+    key: "handleChange",
+    value: function handleChange(type, singleValue) {
+      var props = this.props;
+      var onChange = props.onChange;
+      var valuesArr = props.value;
+      var formatValue = Util.timeStampCheck(singleValue) ? singleValue : null;
+      var startValue = schemaVerify.Type.string.isNotEmpty(valuesArr[0]) ? valuesArr[0] : null;
+      var endValue = schemaVerify.Type.string.isNotEmpty(valuesArr[1]) ? valuesArr[1] : null;
+      var result = [startValue, endValue];
+
+      switch (type) {
+        case "start":
+          result[0] = formatValue;
+          break;
+
+        case "end":
+          result[1] = formatValue;
+          break;
+      }
+
+      schemaVerify.Type["function"].is(onChange) && onChange(result);
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var props = this.props;
+      var value = props.value,
+          disabled = props.disabled,
+          disabledDate = props.disabledDate;
+      var legalRange = props.legalRange;
+      var isIllegal = props.isIllegal;
+      var itemLayout = props.itemLayout;
+      var style = props.style;
+      var errorHint = props.errorHint;
+      var valuesArr = schemaVerify.Type.array.safe(value);
+      var startValue = Util.getMomValue(valuesArr[0]);
+      var endValue = Util.getMomValue(valuesArr[1]);
+
+      if (moment.isMoment(startValue) && moment.isMoment(endValue)) {
+        if (startValue.isAfter(endValue)) {
+          isIllegal = true;
+          errorHint = BE_FUTRUE_HINT;
+        }
+
+        if (schemaVerify.Type.array.is(legalRange)) {
+          var legalStart = Util.getMomValue(legalRange[0]);
+          var legalEnd = Util.getMomValue(legalRange[1]);
+
+          if (moment.isMoment(legalStart) && moment.isMoment(legalEnd)) {
+            if (startValue.isBefore(legalStart) || endValue.isAfter(legalEnd)) {
+              isIllegal = true;
+              errorHint = BE_OVER_RANGE_HINT;
+            }
+          }
+        }
+      }
+
+      style = schemaVerify.Type.object.is(style) ? style : DEFAULT_STYLE$3;
+      itemLayout = schemaVerify.Type.object.is(itemLayout) ? itemLayout : DATE_ITEM_LAYOUT;
+      var dateProps = {
+        disabled: disabled,
+        disabledDate: disabledDate,
+        style: style,
+        layout: itemLayout
+      };
+      var itemViewProps = Util.filterItemProps(props, {
+        errorHint: errorHint,
+        isIllegal: isIllegal
+      });
+      var itemDateProps = Object.assign({}, itemViewProps, dateProps);
+      return React.createElement(ItemView, itemViewProps, React.createElement(CDatePicker, _extends({}, itemDateProps, {
+        label: START_TIME_LABEL,
+        errorHint: START_TIME_EMPTY_HINT,
+        value: startValue,
+        onChange: this.handleStartChange
+      })), React.createElement(CDatePicker, _extends({}, itemDateProps, {
+        label: END_TIME_LABEL,
+        errorHint: END_TIME_EMPTY_HINT,
+        value: endValue,
+        onChange: this.handleEndChange
+      })));
+    }
+  }]);
+
+  return TimeRange;
+}(React.PureComponent);
+
 var index = {
   Input: CInput,
   PatternInput: PatternInput,
@@ -1423,7 +1564,8 @@ var index = {
   Select: CSelect,
   RadioGroup: CRadioGroup,
   CheckboxGroup: CCheckboxGroup,
-  DatePicker: CDatePicker
+  DatePicker: CDatePicker,
+  TimeRange: TimeRange
 };
 
 module.exports = index;

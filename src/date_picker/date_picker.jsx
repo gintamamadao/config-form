@@ -26,7 +26,7 @@ class CDatePicker extends React.PureComponent {
         );
         this.state = {
             panelType: DATE_PANEL,
-            hmsValueStatus: null,
+            hmsValueStatus: props.hmsValueStatus,
             tempValue: null
         };
     }
