@@ -7,6 +7,7 @@ import { Type } from "schema-verify";
 const DEFAULT_TYPE = "text";
 const TEXTAREA_TYPE = "textArea";
 const DEFAULT_ROW = 3;
+const DEFAULT_STYLE = { width: "100%" };
 
 class CInput extends React.PureComponent {
     constructor(props) {
@@ -25,11 +26,17 @@ class CInput extends React.PureComponent {
 
         let type = props.type;
         let row = props.row;
+        let style = props.style;
         let isIllegal = props.isIllegal;
 
         type = Type.string.isNotEmpty(type) ? type : DEFAULT_TYPE;
 
+        style = Type.object.is(style)
+            ? Object.assign(style, DEFAULT_STYLE)
+            : DEFAULT_STYLE;
+
         const inputProps = {
+            style,
             disabled,
             type,
             value,

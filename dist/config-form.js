@@ -597,6 +597,9 @@ function (_React$PureComponent) {
 var DEFAULT_TYPE = "text";
 var TEXTAREA_TYPE = "textArea";
 var DEFAULT_ROW = 3;
+var DEFAULT_STYLE = {
+  width: "100%"
+};
 
 var CInput =
 /*#__PURE__*/
@@ -629,9 +632,12 @@ function (_React$PureComponent) {
           placeholder = props.placeholder;
       var type = props.type;
       var row = props.row;
+      var style = props.style;
       var isIllegal = props.isIllegal;
       type = schemaVerify.Type.string.isNotEmpty(type) ? type : DEFAULT_TYPE;
+      style = schemaVerify.Type.object.is(style) ? Object.assign(style, DEFAULT_STYLE) : DEFAULT_STYLE;
       var inputProps = {
+        style: style,
         disabled: disabled,
         type: type,
         value: value,
@@ -1008,7 +1014,7 @@ function (_React$PureComponent) {
 }(React.PureComponent);
 
 var Option = _Select.Option;
-var DEFAULT_STYLE = {
+var DEFAULT_STYLE$1 = {
   width: "100%"
 };
 
@@ -1070,7 +1076,7 @@ function (_React$PureComponent) {
         }, text));
       }
 
-      style = schemaVerify.Type.object.is(style) ? Object.assign(style, DEFAULT_STYLE) : DEFAULT_STYLE;
+      style = schemaVerify.Type.object.is(style) ? Object.assign(style, DEFAULT_STYLE$1) : DEFAULT_STYLE$1;
       var selectProps = {
         style: style,
         disabled: disabled,
@@ -1259,8 +1265,9 @@ var css$2 = ".date_picker_date-footer-view__1jIWu {\r\n    width: 100%;\r\n    p
 var styles$2 = {"date-footer-view":"date_picker_date-footer-view__1jIWu","dateFooterView":"date_picker_date-footer-view__1jIWu"};
 styleInject(css$2);
 
-var DEFAULT_STYLE$1 = {
-  width: "100%"
+var DEFAULT_STYLE$2 = {
+  width: "100%",
+  maxWidth: "280px"
 };
 var RESET_STATUS = "reset";
 var MAX_STATUS = "maxValue";
@@ -1384,7 +1391,7 @@ function (_React$PureComponent) {
         errorHint = "时间不在合法范围";
       }
 
-      style = schemaVerify.Type.object.is(style) ? Object.assign(style, DEFAULT_STYLE$1) : DEFAULT_STYLE$1;
+      style = schemaVerify.Type.object.is(style) ? Object.assign(style, DEFAULT_STYLE$2) : DEFAULT_STYLE$2;
       var dateProps = {
         showTime: true,
         format: TIME_FORMAT,

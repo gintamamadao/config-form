@@ -6,7 +6,7 @@ import Util from "../util/util";
 import { Type } from "schema-verify";
 import moment from "moment";
 
-const DEFAULT_STYLE = { width: "100%" };
+const DEFAULT_STYLE = { width: "100%", maxWidth: "280px" };
 const RESET_STATUS = "reset";
 const MAX_STATUS = "maxValue";
 const RESET_STATUS_VALUE = "00:00:00";
