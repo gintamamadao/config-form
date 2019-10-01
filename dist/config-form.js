@@ -1381,10 +1381,10 @@ function (_React$PureComponent) {
       var value = props.value;
       var style = props.style;
       var errorHint = props.errorHint;
-      var isIllegal = props.isIlleg;
+      var isIllegal = props.isIllegal;
       value = Util.getMomValue(value);
       this.state.tempValue = value;
-      isIllegal = isIllegal || !schemaVerify.Type.object.is(value);
+      isIllegal = isIllegal || !moment.isMoment(value);
 
       if (schemaVerify.Type["function"].is(disabledDate) && disabledDate(value)) {
         isIllegal = true;
@@ -1539,6 +1539,9 @@ function (_React$PureComponent) {
         isIllegal: isIllegal
       });
       var itemDateProps = Object.assign({}, itemViewProps, dateProps);
+      delete itemDateProps["isIllegal"];
+      delete itemDateProps["help"];
+      delete itemDateProps["errorHint"];
       return React.createElement(ItemView, itemViewProps, React.createElement(CDatePicker, _extends({}, itemDateProps, {
         label: START_TIME_LABEL,
         errorHint: START_TIME_EMPTY_HINT,

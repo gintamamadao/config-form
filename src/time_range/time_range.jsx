@@ -128,6 +128,10 @@ class TimeRange extends React.PureComponent {
 
         const itemDateProps = Object.assign({}, itemViewProps, dateProps);
 
+        delete itemDateProps["isIllegal"];
+        delete itemDateProps["help"];
+        delete itemDateProps["errorHint"];
+
         return (
             <ItemView {...itemViewProps}>
                 <DatePicker

@@ -111,12 +111,12 @@ class CDatePicker extends React.PureComponent {
         let value = props.value;
         let style = props.style;
         let errorHint = props.errorHint;
-        let isIllegal = props.isIlleg;
+        let isIllegal = props.isIllegal;
 
         value = Util.getMomValue(value);
         this.state.tempValue = value;
 
-        isIllegal = isIllegal || !Type.object.is(value);
+        isIllegal = isIllegal || !moment.isMoment(value);
 
         if (Type.function.is(disabledDate) && disabledDate(value)) {
             isIllegal = true;
