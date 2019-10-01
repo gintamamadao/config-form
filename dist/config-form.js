@@ -1552,7 +1552,7 @@ var styles$3 = {"range-inputs-view":"range_range-inputs-view___jlue","input-betw
 styleInject(css$3);
 
 var ILLEGAL_NUM_HINT = "当前输入存在非法数字";
-var COMPARE_HINT = "最小值不能小于最大值";
+var COMPARE_HINT = "下限数字不能大于上限";
 var OVER_RANGE_HINT = "当前输入超过合法的范围";
 
 var Range =
@@ -1619,7 +1619,7 @@ function (_React$PureComponent) {
       var legalMax = legalRange[1];
 
       if (schemaVerify.Type.number.is(minValue) && schemaVerify.Type.number.is(maxValue)) {
-        if (upperValue < lowerValue) {
+        if (maxValue < minValue) {
           isIllegal = true;
           errorHint = COMPARE_HINT;
         }
@@ -1641,7 +1641,7 @@ function (_React$PureComponent) {
       };
 
       if (schemaVerify.Type.number.is(legalMin)) {
-        inputProps["mix"] = legalMin;
+        inputProps["min"] = legalMin;
       }
 
       if (schemaVerify.Type.number.is(legalMax)) {
