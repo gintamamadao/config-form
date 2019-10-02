@@ -61,7 +61,13 @@ function getMultiInput(itemProps, info) {
         "onChange"
     ];
     const inputProps = Util.objPropsFilter(info, keys);
-    return <PatternInput {...itemProps} {...inputProps}></PatternInput>;
+    return <MultiInput {...itemProps} {...inputProps}></MultiInput>;
+}
+
+function getNumberInput(itemProps, info) {
+    const keys = ["value", "max", "min", "step", "onChange"];
+    const inputProps = Util.objPropsFilter(info, keys);
+    return <NumberInput {...itemProps} {...inputProps}></NumberInput>;
 }
 
 class ConfigForm extends React.PureComponent {
@@ -105,6 +111,9 @@ class ConfigForm extends React.PureComponent {
                     break;
                 case FORM_TYPE.MultiInput:
                     itemHtml = getMultiInput(itemProps, info);
+                    break;
+                case FORM_TYPE.NumberInput:
+                    itemHtml = getNumberInput(itemProps, info);
                     break;
             }
 

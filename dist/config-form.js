@@ -1741,7 +1741,13 @@ function getPatternInput(itemProps, info) {
 function getMultiInput(itemProps, info) {
   var keys = ["style", "type", "value", "focusControl", "placeholder", "row", "onChange"];
   var inputProps = Util.objPropsFilter(info, keys);
-  return React.createElement(PatternInput, _extends({}, itemProps, inputProps));
+  return React.createElement(MultiInput, _extends({}, itemProps, inputProps));
+}
+
+function getNumberInput(itemProps, info) {
+  var keys = ["value", "max", "min", "step", "onChange"];
+  var inputProps = Util.objPropsFilter(info, keys);
+  return React.createElement(NumberInput, _extends({}, itemProps, inputProps));
 }
 
 var ConfigForm =
@@ -1801,6 +1807,10 @@ function (_React$PureComponent) {
 
           case FORM_TYPE.MultiInput:
             itemHtml = getMultiInput(itemProps, info);
+            break;
+
+          case FORM_TYPE.NumberInput:
+            itemHtml = getNumberInput(itemProps, info);
             break;
         }
 
