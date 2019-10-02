@@ -151,25 +151,21 @@ class ConfigForm extends React.PureComponent {
 
         const formItemsHtml = [];
         formInfos.forEach((info, index) => {
-            if (Type.object.is(info)) {
+            if (Type.object.isNot(info)) {
                 return;
             }
-
             const formType = info.formType;
             if (!Type.string.isNotEmpty(FORM_TYPE[formType])) {
                 return;
             }
-
             let itemCheck = info.check;
             let itemLyout = info.layout;
             itemCheck = Type.boolean.is(itemCheck) ? itemCheck : check;
             itemLyout = Type.object.is(itemLyout) ? itemLyout : layout;
-
             const itemProps = Util.filterItemProps(info, {
-                check,
-                layout
+                check: itemCheck,
+                layout: itemLyout
             });
-
             let itemHtml = null;
             switch (formType) {
                 case FORM_TYPE.ItemView:

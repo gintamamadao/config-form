@@ -1808,7 +1808,7 @@ function (_React$PureComponent) {
       formInfos = schemaVerify.Type.array.safe(formInfos);
       var formItemsHtml = [];
       formInfos.forEach(function (info, index) {
-        if (schemaVerify.Type.object.is(info)) {
+        if (schemaVerify.Type.object.isNot(info)) {
           return;
         }
 
@@ -1823,8 +1823,8 @@ function (_React$PureComponent) {
         itemCheck = schemaVerify.Type["boolean"].is(itemCheck) ? itemCheck : check;
         itemLyout = schemaVerify.Type.object.is(itemLyout) ? itemLyout : layout;
         var itemProps = Util.filterItemProps(info, {
-          check: check,
-          layout: layout
+          check: itemCheck,
+          layout: itemLyout
         });
         var itemHtml = null;
 
