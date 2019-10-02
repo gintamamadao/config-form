@@ -214,8 +214,26 @@ function (_React$PureComponent) {
   return FadeView;
 }(React.PureComponent);
 
-var FormItem = _Form.Item;
-var LAYOUT = {
+var RESET_STATUS = "reset";
+var MAX_STATUS = "maxValue";
+var TIME_FORMAT = "YYYY-MM-DD HH:mm:ss";
+var DEFAULT_STYLE = {
+  width: "100%"
+};
+var FORM_TYPE = {
+  ItemView: "ItemView",
+  Input: "Input",
+  PatternInput: "PatternInput",
+  MultiInput: "MultiInput",
+  NumberInput: "NumberInput",
+  Select: "Select",
+  RadioGroup: "RadioGroup",
+  CheckboxGroup: "CheckboxGroup",
+  DatePicker: "DatePicker",
+  TimeRange: "TimeRange",
+  Range: "Range"
+};
+var DEFAULT_LAYOUT = {
   labelCol: {
     xs: {
       span: 24
@@ -233,6 +251,8 @@ var LAYOUT = {
     }
   }
 };
+
+var FormItem = _Form.Item;
 var DEFAULT_HINT = "当前输入存在错误";
 var DEFAULT_LABEL = "(未命名)";
 var SUCC_STATUS = "success";
@@ -279,7 +299,7 @@ function (_React$PureComponent) {
         };
       }
 
-      layout = schemaVerify.Type.object.is(layout) ? layout : LAYOUT;
+      layout = schemaVerify.Type.object.is(layout) ? layout : DEFAULT_LAYOUT;
       label = schemaVerify.Type.string.isNotEmpty(label) ? label : DEFAULT_LABEL;
       return React.createElement(FadeView, {
         hidden: hidden
@@ -294,13 +314,6 @@ function (_React$PureComponent) {
 
   return ItemView;
 }(React.PureComponent);
-
-var RESET_STATUS = "reset";
-var MAX_STATUS = "maxValue";
-var TIME_FORMAT = "YYYY-MM-DD HH:mm:ss";
-var DEFAULT_STYLE = {
-  width: "100%"
-};
 
 var Util = {
   loadModule: function loadModule(moduleName) {
@@ -329,6 +342,7 @@ var Util = {
   },
   filterItemProps: function filterItemProps(props, newProps) {
     props = schemaVerify.Type.object.safe(props);
+    newProps = schemaVerify.Type.object.safe(newProps);
     var result = {
       noRedPoint: props.noRedPoint,
       required: props.required,
@@ -1669,6 +1683,72 @@ function (_React$PureComponent) {
   return Range;
 }(React.PureComponent);
 
+function getTemView(itemProps, info) {
+  var children = info.children;
+  return React.createElement(ItemView, itemProps, children);
+}
+
+var ConfigForm =
+/*#__PURE__*/
+function (_React$PureComponent) {
+  _inherits(ConfigForm, _React$PureComponent);
+
+  function ConfigForm() {
+    _classCallCheck(this, ConfigForm);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(ConfigForm).apply(this, arguments));
+  }
+
+  _createClass(ConfigForm, [{
+    key: "render",
+    value: function render() {
+      var props = this.props;
+      var check = props.check,
+          layout = props.layout,
+          hidden = props.hidden;
+      var formInfos = props.formInfos;
+      formInfos = schemaVerify.Type.array.safe(formInfos);
+      var formItemsHtml = [];
+      formInfos.forEach(function (info, index) {
+        if (schemaVerify.Type.object.is(info)) {
+          return;
+        }
+
+        var formType = info.formType;
+
+        if (!schemaVerify.Type.string.isNotEmpty(FORM_TYPE[formType])) {
+          return;
+        }
+
+        var itemCheck = info.check;
+        var itemLyout = info.layout;
+        itemCheck = schemaVerify.Type["boolean"].is(itemCheck) ? itemCheck : check;
+        itemLyout = schemaVerify.Type.object.is(itemLyout) ? itemLyout : layout;
+        var itemProps = Util.filterItemProps(info, {
+          check: check,
+          layout: layout
+        });
+        var itemHtml = null;
+
+        switch (formType) {
+          case FORM_TYPE.ItemView:
+            itemHtml = getTemView(itemProps, info);
+            break;
+        }
+
+        if (itemHtml) {
+          formItemsHtml.push(itemHtml);
+        }
+      });
+      return React.createElement(FadeView, {
+        hidden: hidden
+      }, formItemsHtml);
+    }
+  }]);
+
+  return ConfigForm;
+}(React.PureComponent);
+
 var index = {
   ItemView: ItemView,
   Input: CInput,
@@ -1680,7 +1760,8 @@ var index = {
   CheckboxGroup: CCheckboxGroup,
   DatePicker: CDatePicker,
   TimeRange: TimeRange,
-  Range: Range
+  Range: Range,
+  ConfigForm: ConfigForm
 };
 
 module.exports = index;

@@ -24,6 +24,7 @@ const Util = {
     },
     filterItemProps(props, newProps) {
         props = Type.object.safe(props);
+        newProps = Type.object.safe(newProps);
         const result = {
             noRedPoint: props.noRedPoint,
             required: props.required,

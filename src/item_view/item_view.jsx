@@ -2,26 +2,9 @@ import React from "react";
 import { Form } from "antd";
 import { Type } from "schema-verify";
 import FadeView from "../fade_view/fade_view";
+import { DEFAULT_LAYOUT } from "../constant/constant";
 
 const FormItem = Form.Item;
-const LAYOUT = {
-    labelCol: {
-        xs: {
-            span: 24
-        },
-        sm: {
-            span: 6
-        }
-    },
-    wrapperCol: {
-        xs: {
-            span: 24
-        },
-        sm: {
-            span: 14
-        }
-    }
-};
 const DEFAULT_HINT = "当前输入存在错误";
 const DEFAULT_LABEL = "(未命名)";
 const SUCC_STATUS = "success";
@@ -59,7 +42,7 @@ class ItemView extends React.PureComponent {
             };
         }
 
-        layout = Type.object.is(layout) ? layout : LAYOUT;
+        layout = Type.object.is(layout) ? layout : DEFAULT_LAYOUT;
         label = Type.string.isNotEmpty(label) ? label : DEFAULT_LABEL;
 
         return (
