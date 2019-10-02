@@ -2,14 +2,14 @@
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-var React = _interopDefault(require('react'));
-require('antd/lib/input/style/css');
-var _Input = _interopDefault(require('antd/lib/input'));
-var schemaVerify = require('schema-verify');
-var moment = _interopDefault(require('moment'));
 require('antd/lib/form/style/css');
 var _Form = _interopDefault(require('antd/lib/form'));
+var React = _interopDefault(require('react'));
+var schemaVerify = require('schema-verify');
 var reactTransitionGroup = require('react-transition-group');
+require('antd/lib/input/style/css');
+var _Input = _interopDefault(require('antd/lib/input'));
+var moment = _interopDefault(require('moment'));
 require('antd/lib/button/style/css');
 var _Button = _interopDefault(require('antd/lib/button'));
 var classnames = _interopDefault(require('classnames'));
@@ -159,6 +159,141 @@ function _possibleConstructorReturn(self, call) {
 
   return _assertThisInitialized(self);
 }
+
+var DURATION = 300;
+var DEFAULT_STYLES = {
+  position: "relative",
+  width: "100%",
+  transition: "opacity ".concat(DURATION, "ms ease-in-out"),
+  opacity: 0
+};
+var TRANS_STYLES = {
+  entering: {
+    opacity: 1
+  },
+  entered: {
+    opacity: 1
+  },
+  exiting: {
+    opacity: 0
+  },
+  exited: {
+    opacity: 0
+  }
+};
+
+var FadeView =
+/*#__PURE__*/
+function (_React$PureComponent) {
+  _inherits(FadeView, _React$PureComponent);
+
+  function FadeView() {
+    _classCallCheck(this, FadeView);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(FadeView).apply(this, arguments));
+  }
+
+  _createClass(FadeView, [{
+    key: "render",
+    value: function render() {
+      var props = this.props;
+      var hidden = props.hidden,
+          children = props.children;
+      return React.createElement(reactTransitionGroup.Transition, {
+        unmountOnExit: true,
+        "in": !hidden,
+        timeout: DURATION
+      }, function (state) {
+        return React.createElement("div", {
+          style: _objectSpread2({}, DEFAULT_STYLES, {}, TRANS_STYLES[state])
+        }, children);
+      });
+    }
+  }]);
+
+  return FadeView;
+}(React.PureComponent);
+
+var FormItem = _Form.Item;
+var LAYOUT = {
+  labelCol: {
+    xs: {
+      span: 24
+    },
+    sm: {
+      span: 6
+    }
+  },
+  wrapperCol: {
+    xs: {
+      span: 24
+    },
+    sm: {
+      span: 14
+    }
+  }
+};
+var DEFAULT_HINT = "当前输入存在错误";
+var DEFAULT_LABEL = "(未命名)";
+var SUCC_STATUS = "success";
+var ERR_STATUS = "error";
+
+var ItemView =
+/*#__PURE__*/
+function (_React$PureComponent) {
+  _inherits(ItemView, _React$PureComponent);
+
+  function ItemView() {
+    _classCallCheck(this, ItemView);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(ItemView).apply(this, arguments));
+  }
+
+  _createClass(ItemView, [{
+    key: "render",
+    value: function render() {
+      var props = this.props;
+      var isIllegal = props.isIllegal,
+          noRedPoint = props.noRedPoint,
+          required = props.required,
+          check = props.check,
+          disabled = props.disabled,
+          errorHint = props.errorHint,
+          hidden = props.hidden,
+          help = props.help,
+          children = props.children;
+      var layout = props.layout;
+      var label = props.label;
+      var valiStatus = {
+        status: SUCC_STATUS
+      };
+
+      if (schemaVerify.Type.string.isNotEmpty(help)) {
+        valiStatus["text"] = help;
+      }
+
+      if (check && required && !disabled && isIllegal) {
+        valiStatus = {
+          status: ERR_STATUS,
+          text: errorHint || DEFAULT_HINT
+        };
+      }
+
+      layout = schemaVerify.Type.object.is(layout) ? layout : LAYOUT;
+      label = schemaVerify.Type.string.isNotEmpty(label) ? label : DEFAULT_LABEL;
+      return React.createElement(FadeView, {
+        hidden: hidden
+      }, React.createElement(FormItem, _extends({}, layout, {
+        required: !noRedPoint && required,
+        validateStatus: valiStatus.status,
+        help: valiStatus.text,
+        label: label
+      }), children));
+    }
+  }]);
+
+  return ItemView;
+}(React.PureComponent);
 
 var RESET_STATUS = "reset";
 var MAX_STATUS = "maxValue";
@@ -464,141 +599,6 @@ function (_React$PureComponent2) {
   }]);
 
   return UnctrlInput;
-}(React.PureComponent);
-
-var DURATION = 300;
-var DEFAULT_STYLES = {
-  position: "relative",
-  width: "100%",
-  transition: "opacity ".concat(DURATION, "ms ease-in-out"),
-  opacity: 0
-};
-var TRANS_STYLES = {
-  entering: {
-    opacity: 1
-  },
-  entered: {
-    opacity: 1
-  },
-  exiting: {
-    opacity: 0
-  },
-  exited: {
-    opacity: 0
-  }
-};
-
-var FadeView =
-/*#__PURE__*/
-function (_React$PureComponent) {
-  _inherits(FadeView, _React$PureComponent);
-
-  function FadeView() {
-    _classCallCheck(this, FadeView);
-
-    return _possibleConstructorReturn(this, _getPrototypeOf(FadeView).apply(this, arguments));
-  }
-
-  _createClass(FadeView, [{
-    key: "render",
-    value: function render() {
-      var props = this.props;
-      var hidden = props.hidden,
-          children = props.children;
-      return React.createElement(reactTransitionGroup.Transition, {
-        unmountOnExit: true,
-        "in": !hidden,
-        timeout: DURATION
-      }, function (state) {
-        return React.createElement("div", {
-          style: _objectSpread2({}, DEFAULT_STYLES, {}, TRANS_STYLES[state])
-        }, children);
-      });
-    }
-  }]);
-
-  return FadeView;
-}(React.PureComponent);
-
-var FormItem = _Form.Item;
-var LAYOUT = {
-  labelCol: {
-    xs: {
-      span: 24
-    },
-    sm: {
-      span: 6
-    }
-  },
-  wrapperCol: {
-    xs: {
-      span: 24
-    },
-    sm: {
-      span: 14
-    }
-  }
-};
-var DEFAULT_HINT = "当前输入存在错误";
-var DEFAULT_LABEL = "(未命名)";
-var SUCC_STATUS = "success";
-var ERR_STATUS = "error";
-
-var ItemView =
-/*#__PURE__*/
-function (_React$PureComponent) {
-  _inherits(ItemView, _React$PureComponent);
-
-  function ItemView() {
-    _classCallCheck(this, ItemView);
-
-    return _possibleConstructorReturn(this, _getPrototypeOf(ItemView).apply(this, arguments));
-  }
-
-  _createClass(ItemView, [{
-    key: "render",
-    value: function render() {
-      var props = this.props;
-      var isIllegal = props.isIllegal,
-          noRedPoint = props.noRedPoint,
-          required = props.required,
-          check = props.check,
-          disabled = props.disabled,
-          errorHint = props.errorHint,
-          hidden = props.hidden,
-          help = props.help,
-          children = props.children;
-      var layout = props.layout;
-      var label = props.label;
-      var valiStatus = {
-        status: SUCC_STATUS
-      };
-
-      if (schemaVerify.Type.string.isNotEmpty(help)) {
-        valiStatus["text"] = help;
-      }
-
-      if (check && required && !disabled && isIllegal) {
-        valiStatus = {
-          status: ERR_STATUS,
-          text: errorHint || DEFAULT_HINT
-        };
-      }
-
-      layout = schemaVerify.Type.object.is(layout) ? layout : LAYOUT;
-      label = schemaVerify.Type.string.isNotEmpty(label) ? label : DEFAULT_LABEL;
-      return React.createElement(FadeView, {
-        hidden: hidden
-      }, React.createElement(FormItem, _extends({}, layout, {
-        required: !noRedPoint && required,
-        validateStatus: valiStatus.status,
-        help: valiStatus.text,
-        label: label
-      }), children));
-    }
-  }]);
-
-  return ItemView;
 }(React.PureComponent);
 
 var DEFAULT_TYPE = "text";
@@ -1670,6 +1670,7 @@ function (_React$PureComponent) {
 }(React.PureComponent);
 
 var index = {
+  ItemView: ItemView,
   Input: CInput,
   PatternInput: PatternInput,
   MultiInput: MultiInput,

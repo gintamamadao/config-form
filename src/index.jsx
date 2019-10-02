@@ -1,3 +1,4 @@
+import ItemView from "./item_view/item_view";
 import Input from "./input/input";
 import PatternInput from "./pattern_input/pattern_input";
 import MultiInput from "./multi_input/multi_input";
@@ -10,6 +11,7 @@ import TimeRange from "./time_range/time_range";
 import Range from "./range/range";
 
 export default {
+    ItemView,
     Input,
     PatternInput,
     MultiInput,
