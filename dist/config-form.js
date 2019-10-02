@@ -1699,69 +1699,91 @@ function (_React$PureComponent) {
   return Range;
 }(React.PureComponent);
 
-function getItemView(itemProps, info) {
+function getItemView(itemProps, info, index) {
   var children = info.children;
-  return React.createElement(ItemView, itemProps, children);
+  return React.createElement(ItemView, _extends({}, itemProps, {
+    key: index
+  }), children);
 }
 
-function getInput(itemProps, info) {
+function getInput(itemProps, info, index) {
   var keys = ["style", "type", "value", "focusControl", "placeholder", "row", "onChange"];
   var inputProps = Util.objPropsFilter(info, keys);
-  return React.createElement(CInput, _extends({}, itemProps, inputProps));
+  return React.createElement(CInput, _extends({}, itemProps, inputProps, {
+    key: index
+  }));
 }
 
-function getPatternInput(itemProps, info) {
+function getPatternInput(itemProps, info, index) {
   var keys = ["style", "type", "value", "focusControl", "placeholder", "row", "pattern", "patternInfo", "onChange"];
   var inputProps = Util.objPropsFilter(info, keys);
-  return React.createElement(PatternInput, _extends({}, itemProps, inputProps));
+  return React.createElement(PatternInput, _extends({}, itemProps, inputProps, {
+    key: index
+  }));
 }
 
-function getMultiInput(itemProps, info) {
+function getMultiInput(itemProps, info, index) {
   var keys = ["style", "type", "value", "focusControl", "placeholder", "row", "indexHintMap", "onChange"];
   var inputProps = Util.objPropsFilter(info, keys);
-  return React.createElement(MultiInput, _extends({}, itemProps, inputProps));
+  return React.createElement(MultiInput, _extends({}, itemProps, inputProps, {
+    key: index
+  }));
 }
 
-function getNumberInput(itemProps, info) {
+function getNumberInput(itemProps, info, index) {
   var keys = ["value", "max", "min", "step", "onChange"];
   var inputProps = Util.objPropsFilter(info, keys);
-  return React.createElement(NumberInput, _extends({}, itemProps, inputProps));
+  return React.createElement(NumberInput, _extends({}, itemProps, inputProps, {
+    key: index
+  }));
 }
 
-function getSelect(itemProps, info) {
+function getSelect(itemProps, info, index) {
   var keys = ["style", "placeholder", "value", "disableOpts", "optionsData", "filterOption", "onChange"];
   var inputProps = Util.objPropsFilter(info, keys);
-  return React.createElement(CSelect, _extends({}, itemProps, inputProps));
+  return React.createElement(CSelect, _extends({}, itemProps, inputProps, {
+    key: index
+  }));
 }
 
-function getRadioGroup(itemProps, info) {
+function getRadioGroup(itemProps, info, index) {
   var keys = ["value", "disableOpts", "optionsData", "onChange"];
   var inputProps = Util.objPropsFilter(info, keys);
-  return React.createElement(CRadioGroup, _extends({}, itemProps, inputProps));
+  return React.createElement(CRadioGroup, _extends({}, itemProps, inputProps, {
+    key: index
+  }));
 }
 
-function getCheckboxGroup(itemProps, info) {
+function getCheckboxGroup(itemProps, info, index) {
   var keys = ["value", "disableOpts", "optionsData", "onChange"];
   var inputProps = Util.objPropsFilter(info, keys);
-  return React.createElement(CCheckboxGroup, _extends({}, itemProps, inputProps));
+  return React.createElement(CCheckboxGroup, _extends({}, itemProps, inputProps, {
+    key: index
+  }));
 }
 
-function getDatePicker(itemProps, info) {
+function getDatePicker(itemProps, info, index) {
   var keys = ["style", "value", "disabledDate", "hmsValueStatus", "onChange"];
   var inputProps = Util.objPropsFilter(info, keys);
-  return React.createElement(CDatePicker, _extends({}, itemProps, inputProps));
+  return React.createElement(CDatePicker, _extends({}, itemProps, inputProps, {
+    key: index
+  }));
 }
 
-function getTimeRange(itemProps, info) {
+function getTimeRange(itemProps, info, index) {
   var keys = ["style", "value", "disabledDate", "legalRange", "itemLayout", "onChange"];
   var inputProps = Util.objPropsFilter(info, keys);
-  return React.createElement(TimeRange, _extends({}, itemProps, inputProps));
+  return React.createElement(TimeRange, _extends({}, itemProps, inputProps, {
+    key: index
+  }));
 }
 
-function getRange(itemProps, info) {
+function getRange(itemProps, info, index) {
   var keys = ["value", "legalRange", "onChange"];
   var inputProps = Util.objPropsFilter(info, keys);
-  return React.createElement(Range, _extends({}, itemProps, inputProps));
+  return React.createElement(Range, _extends({}, itemProps, inputProps, {
+    key: index
+  }));
 }
 
 var ConfigForm =
@@ -1808,47 +1830,47 @@ function (_React$PureComponent) {
 
         switch (formType) {
           case FORM_TYPE.ItemView:
-            itemHtml = getItemView(itemProps, info);
+            itemHtml = getItemView(itemProps, info, index);
             break;
 
           case FORM_TYPE.Input:
-            itemHtml = getInput(itemProps, info);
+            itemHtml = getInput(itemProps, info, index);
             break;
 
           case FORM_TYPE.PatternInput:
-            itemHtml = getPatternInput(itemProps, info);
+            itemHtml = getPatternInput(itemProps, info, index);
             break;
 
           case FORM_TYPE.MultiInput:
-            itemHtml = getMultiInput(itemProps, info);
+            itemHtml = getMultiInput(itemProps, info, index);
             break;
 
           case FORM_TYPE.NumberInput:
-            itemHtml = getNumberInput(itemProps, info);
+            itemHtml = getNumberInput(itemProps, info, index);
             break;
 
           case FORM_TYPE.Select:
-            itemHtml = getSelect(itemProps, info);
+            itemHtml = getSelect(itemProps, info, index);
             break;
 
           case FORM_TYPE.RadioGroup:
-            itemHtml = getRadioGroup(itemProps, info);
+            itemHtml = getRadioGroup(itemProps, info, index);
             break;
 
           case FORM_TYPE.CheckboxGroup:
-            itemHtml = getCheckboxGroup(itemProps, info);
+            itemHtml = getCheckboxGroup(itemProps, info, index);
             break;
 
           case FORM_TYPE.DatePicker:
-            itemHtml = getDatePicker(itemProps, info);
+            itemHtml = getDatePicker(itemProps, info, index);
             break;
 
           case FORM_TYPE.TimeRange:
-            itemHtml = getTimeRange(itemProps, info);
+            itemHtml = getTimeRange(itemProps, info, index);
             break;
 
           case FORM_TYPE.Range:
-            itemHtml = getRange(itemProps, info);
+            itemHtml = getRange(itemProps, info, index);
             break;
         }
 

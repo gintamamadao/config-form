@@ -15,12 +15,16 @@ import { FORM_TYPE } from "../constant/constant";
 import FadeView from "../fade_view/fade_view";
 import Util from "../util/util";
 
-function getItemView(itemProps, info) {
+function getItemView(itemProps, info, index) {
     const children = info.children;
-    return <ItemView {...itemProps}>{children}</ItemView>;
+    return (
+        <ItemView {...itemProps} key={index}>
+            {children}
+        </ItemView>
+    );
 }
 
-function getInput(itemProps, info) {
+function getInput(itemProps, info, index) {
     const keys = [
         "style",
         "type",
@@ -31,10 +35,10 @@ function getInput(itemProps, info) {
         "onChange"
     ];
     const inputProps = Util.objPropsFilter(info, keys);
-    return <Input {...itemProps} {...inputProps}></Input>;
+    return <Input {...itemProps} {...inputProps} key={index}></Input>;
 }
 
-function getPatternInput(itemProps, info) {
+function getPatternInput(itemProps, info, index) {
     const keys = [
         "style",
         "type",
@@ -47,10 +51,12 @@ function getPatternInput(itemProps, info) {
         "onChange"
     ];
     const inputProps = Util.objPropsFilter(info, keys);
-    return <PatternInput {...itemProps} {...inputProps}></PatternInput>;
+    return (
+        <PatternInput {...itemProps} {...inputProps} key={index}></PatternInput>
+    );
 }
 
-function getMultiInput(itemProps, info) {
+function getMultiInput(itemProps, info, index) {
     const keys = [
         "style",
         "type",
@@ -62,16 +68,18 @@ function getMultiInput(itemProps, info) {
         "onChange"
     ];
     const inputProps = Util.objPropsFilter(info, keys);
-    return <MultiInput {...itemProps} {...inputProps}></MultiInput>;
+    return <MultiInput {...itemProps} {...inputProps} key={index}></MultiInput>;
 }
 
-function getNumberInput(itemProps, info) {
+function getNumberInput(itemProps, info, index) {
     const keys = ["value", "max", "min", "step", "onChange"];
     const inputProps = Util.objPropsFilter(info, keys);
-    return <NumberInput {...itemProps} {...inputProps}></NumberInput>;
+    return (
+        <NumberInput {...itemProps} {...inputProps} key={index}></NumberInput>
+    );
 }
 
-function getSelect(itemProps, info) {
+function getSelect(itemProps, info, index) {
     const keys = [
         "style",
         "placeholder",
@@ -82,22 +90,28 @@ function getSelect(itemProps, info) {
         "onChange"
     ];
     const inputProps = Util.objPropsFilter(info, keys);
-    return <Select {...itemProps} {...inputProps}></Select>;
+    return <Select {...itemProps} {...inputProps} key={index}></Select>;
 }
 
-function getRadioGroup(itemProps, info) {
+function getRadioGroup(itemProps, info, index) {
     const keys = ["value", "disableOpts", "optionsData", "onChange"];
     const inputProps = Util.objPropsFilter(info, keys);
-    return <RadioGroup {...itemProps} {...inputProps}></RadioGroup>;
+    return <RadioGroup {...itemProps} {...inputProps} key={index}></RadioGroup>;
 }
 
-function getCheckboxGroup(itemProps, info) {
+function getCheckboxGroup(itemProps, info, index) {
     const keys = ["value", "disableOpts", "optionsData", "onChange"];
     const inputProps = Util.objPropsFilter(info, keys);
-    return <CheckboxGroup {...itemProps} {...inputProps}></CheckboxGroup>;
+    return (
+        <CheckboxGroup
+            {...itemProps}
+            {...inputProps}
+            key={index}
+        ></CheckboxGroup>
+    );
 }
 
-function getDatePicker(itemProps, info) {
+function getDatePicker(itemProps, info, index) {
     const keys = [
         "style",
         "value",
@@ -106,10 +120,10 @@ function getDatePicker(itemProps, info) {
         "onChange"
     ];
     const inputProps = Util.objPropsFilter(info, keys);
-    return <DatePicker {...itemProps} {...inputProps}></DatePicker>;
+    return <DatePicker {...itemProps} {...inputProps} key={index}></DatePicker>;
 }
 
-function getTimeRange(itemProps, info) {
+function getTimeRange(itemProps, info, index) {
     const keys = [
         "style",
         "value",
@@ -119,13 +133,13 @@ function getTimeRange(itemProps, info) {
         "onChange"
     ];
     const inputProps = Util.objPropsFilter(info, keys);
-    return <TimeRange {...itemProps} {...inputProps}></TimeRange>;
+    return <TimeRange {...itemProps} {...inputProps} key={index}></TimeRange>;
 }
 
-function getRange(itemProps, info) {
+function getRange(itemProps, info, index) {
     const keys = ["value", "legalRange", "onChange"];
     const inputProps = Util.objPropsFilter(info, keys);
-    return <Range {...itemProps} {...inputProps}></Range>;
+    return <Range {...itemProps} {...inputProps} key={index}></Range>;
 }
 
 class ConfigForm extends React.PureComponent {
@@ -159,37 +173,37 @@ class ConfigForm extends React.PureComponent {
             let itemHtml = null;
             switch (formType) {
                 case FORM_TYPE.ItemView:
-                    itemHtml = getItemView(itemProps, info);
+                    itemHtml = getItemView(itemProps, info, index);
                     break;
                 case FORM_TYPE.Input:
-                    itemHtml = getInput(itemProps, info);
+                    itemHtml = getInput(itemProps, info, index);
                     break;
                 case FORM_TYPE.PatternInput:
-                    itemHtml = getPatternInput(itemProps, info);
+                    itemHtml = getPatternInput(itemProps, info, index);
                     break;
                 case FORM_TYPE.MultiInput:
-                    itemHtml = getMultiInput(itemProps, info);
+                    itemHtml = getMultiInput(itemProps, info, index);
                     break;
                 case FORM_TYPE.NumberInput:
-                    itemHtml = getNumberInput(itemProps, info);
+                    itemHtml = getNumberInput(itemProps, info, index);
                     break;
                 case FORM_TYPE.Select:
-                    itemHtml = getSelect(itemProps, info);
+                    itemHtml = getSelect(itemProps, info, index);
                     break;
                 case FORM_TYPE.RadioGroup:
-                    itemHtml = getRadioGroup(itemProps, info);
+                    itemHtml = getRadioGroup(itemProps, info, index);
                     break;
                 case FORM_TYPE.CheckboxGroup:
-                    itemHtml = getCheckboxGroup(itemProps, info);
+                    itemHtml = getCheckboxGroup(itemProps, info, index);
                     break;
                 case FORM_TYPE.DatePicker:
-                    itemHtml = getDatePicker(itemProps, info);
+                    itemHtml = getDatePicker(itemProps, info, index);
                     break;
                 case FORM_TYPE.TimeRange:
-                    itemHtml = getTimeRange(itemProps, info);
+                    itemHtml = getTimeRange(itemProps, info, index);
                     break;
                 case FORM_TYPE.Range:
-                    itemHtml = getRange(itemProps, info);
+                    itemHtml = getRange(itemProps, info, index);
                     break;
             }
 
