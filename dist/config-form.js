@@ -1731,7 +1731,19 @@ function getNumberInput(itemProps, info) {
 function getSelect(itemProps, info) {
   var keys = ["style", "placeholder", "value", "disableOpts", "optionsData", "filterOption", "onChange"];
   var inputProps = Util.objPropsFilter(info, keys);
-  return React.createElement(NumberInput, _extends({}, itemProps, inputProps));
+  return React.createElement(CSelect, _extends({}, itemProps, inputProps));
+}
+
+function getRadioGroup(itemProps, info) {
+  var keys = ["value", "disableOpts", "optionsData", "onChange"];
+  var inputProps = Util.objPropsFilter(info, keys);
+  return React.createElement(CRadioGroup, _extends({}, itemProps, inputProps));
+}
+
+function getCheckboxGroup(itemProps, info) {
+  var keys = ["value", "disableOpts", "optionsData", "onChange"];
+  var inputProps = Util.objPropsFilter(info, keys);
+  return React.createElement(CCheckboxGroup, _extends({}, itemProps, inputProps));
 }
 
 var ConfigForm =
@@ -1799,6 +1811,14 @@ function (_React$PureComponent) {
 
           case FORM_TYPE.Select:
             itemHtml = getSelect(itemProps, info);
+            break;
+
+          case FORM_TYPE.RadioGroup:
+            itemHtml = getRadioGroup(itemProps, info);
+            break;
+
+          case FORM_TYPE.CheckboxGroup:
+            itemHtml = getCheckboxGroup(itemProps, info);
             break;
         }
 

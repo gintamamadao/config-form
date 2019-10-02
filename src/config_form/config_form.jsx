@@ -82,7 +82,19 @@ function getSelect(itemProps, info) {
         "onChange"
     ];
     const inputProps = Util.objPropsFilter(info, keys);
-    return <NumberInput {...itemProps} {...inputProps}></NumberInput>;
+    return <Select {...itemProps} {...inputProps}></Select>;
+}
+
+function getRadioGroup(itemProps, info) {
+    const keys = ["value", "disableOpts", "optionsData", "onChange"];
+    const inputProps = Util.objPropsFilter(info, keys);
+    return <RadioGroup {...itemProps} {...inputProps}></RadioGroup>;
+}
+
+function getCheckboxGroup(itemProps, info) {
+    const keys = ["value", "disableOpts", "optionsData", "onChange"];
+    const inputProps = Util.objPropsFilter(info, keys);
+    return <CheckboxGroup {...itemProps} {...inputProps}></CheckboxGroup>;
 }
 
 class ConfigForm extends React.PureComponent {
@@ -132,6 +144,12 @@ class ConfigForm extends React.PureComponent {
                     break;
                 case FORM_TYPE.Select:
                     itemHtml = getSelect(itemProps, info);
+                    break;
+                case FORM_TYPE.RadioGroup:
+                    itemHtml = getRadioGroup(itemProps, info);
+                    break;
+                case FORM_TYPE.CheckboxGroup:
+                    itemHtml = getCheckboxGroup(itemProps, info);
                     break;
             }
 
