@@ -7,6 +7,7 @@ import ItemView from "../item_view/item_view";
 import Util from "../util/util";
 import styles from "./multi_input.css";
 import FadeView from "../fade_view/fade_view";
+import { DEFAULT_STYLE } from "../constant/constant";
 
 const DEFAULT_TYPE = "text";
 const TEXTAREA_TYPE = "textArea";
@@ -56,13 +57,15 @@ class MultiInput extends React.PureComponent {
         const { props } = this;
         const { value, disabled, focusControl, placeholder } = props;
         let type = props.type;
+        let style = props.style;
         let required = props.required;
         let isIllegal = props.isIllegal;
         let errorHint = props.errorHint;
         let row = props.row;
         let indexHintMap = props.indexHintMap;
 
-        type = type ? type : DEFAULT_TYPE;
+        type = Type.string.isNotEmpty(type) ? type : DEFAULT_TYPE;
+        style = Type.object.is(style) ? style : DEFAULT_STYLE;
         indexHintMap = Type.object.safe(indexHintMap);
 
         const valuesArr = Type.array.safe(value);
@@ -74,12 +77,15 @@ class MultiInput extends React.PureComponent {
             [styles["inputs-item"]]: true,
             [styles["inputs-textarea-item"]]: isTextArea
         });
+
         const inputProps = {
+            style,
             disabled,
             type,
             focusControl,
             placeholder
         };
+
         if (isTextArea) {
             row = Type.number.is(row) ? row : DEFAULT_ROW;
             inputProps["row"] = row;

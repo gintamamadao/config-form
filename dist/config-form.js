@@ -372,6 +372,41 @@ var Util = {
     }
 
     return moment.isMoment(result) && result.isValid() ? result : null;
+  },
+  objPropsFilter: function objPropsFilter(obj, keys) {
+    obj = schemaVerify.Type.object.safe(obj);
+    keys = schemaVerify.Type.array.safe(keys);
+    var result = {};
+    var _iteratorNormalCompletion = true;
+    var _didIteratorError = false;
+    var _iteratorError = undefined;
+
+    try {
+      for (var _iterator = keys[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+        var key = _step.value;
+
+        if (!schemaVerify.Type.string.isNotEmpty(key) || !obj.hasOwnProperty(key)) {
+          continue;
+        }
+
+        result[key] = obj[key];
+      }
+    } catch (err) {
+      _didIteratorError = true;
+      _iteratorError = err;
+    } finally {
+      try {
+        if (!_iteratorNormalCompletion && _iterator["return"] != null) {
+          _iterator["return"]();
+        }
+      } finally {
+        if (_didIteratorError) {
+          throw _iteratorError;
+        }
+      }
+    }
+
+    return result;
   }
 };
 
@@ -867,18 +902,21 @@ function (_React$PureComponent) {
           focusControl = props.focusControl,
           placeholder = props.placeholder;
       var type = props.type;
+      var style = props.style;
       var required = props.required;
       var isIllegal = props.isIllegal;
       var errorHint = props.errorHint;
       var row = props.row;
       var indexHintMap = props.indexHintMap;
-      type = type ? type : DEFAULT_TYPE$1;
+      type = schemaVerify.Type.string.isNotEmpty(type) ? type : DEFAULT_TYPE$1;
+      style = schemaVerify.Type.object.is(style) ? style : DEFAULT_STYLE;
       indexHintMap = schemaVerify.Type.object.safe(indexHintMap);
       var valuesArr = schemaVerify.Type.array.safe(value);
       this.state.valuesArr = valuesArr;
       var isTextArea = type === TEXTAREA_TYPE$1;
       var inputItemClass = classnames((_classnames = {}, _defineProperty(_classnames, styles$1["inputs-item"], true), _defineProperty(_classnames, styles$1["inputs-textarea-item"], isTextArea), _classnames));
       var inputProps = {
+        style: style,
         disabled: disabled,
         type: type,
         focusControl: focusControl,
@@ -1689,25 +1727,21 @@ function getItemView(itemProps, info) {
 }
 
 function getInput(itemProps, info) {
-  var style = info.style,
-      disabled = info.disabled,
-      type = info.type,
-      value = info.value,
-      focusControl = info.focusControl,
-      placeholder = info.placeholder,
-      row = info.row,
-      onChange = info.onChange;
-  var inputProps = {
-    style: style,
-    disabled: disabled,
-    type: type,
-    value: value,
-    focusControl: focusControl,
-    placeholder: placeholder,
-    row: row,
-    onChange: onChange
-  };
+  var keys = ["style", "type", "value", "focusControl", "placeholder", "row", "onChange"];
+  var inputProps = Util.objPropsFilter(info, keys);
   return React.createElement(CInput, _extends({}, itemProps, inputProps));
+}
+
+function getPatternInput(itemProps, info) {
+  var keys = ["style", "type", "value", "focusControl", "placeholder", "row", "pattern", "patternInfo", "onChange"];
+  var inputProps = Util.objPropsFilter(info, keys);
+  return React.createElement(PatternInput, _extends({}, itemProps, inputProps));
+}
+
+function getMultiInput(itemProps, info) {
+  var keys = ["style", "type", "value", "focusControl", "placeholder", "row", "onChange"];
+  var inputProps = Util.objPropsFilter(info, keys);
+  return React.createElement(PatternInput, _extends({}, itemProps, inputProps));
 }
 
 var ConfigForm =
@@ -1762,7 +1796,11 @@ function (_React$PureComponent) {
             break;
 
           case FORM_TYPE.PatternInput:
-            itemHtml = getInput(itemProps, info);
+            itemHtml = getPatternInput(itemProps, info);
+            break;
+
+          case FORM_TYPE.MultiInput:
+            itemHtml = getMultiInput(itemProps, info);
             break;
         }
 

@@ -23,7 +23,6 @@ function getItemView(itemProps, info) {
 function getInput(itemProps, info) {
     const keys = [
         "style",
-        "disabled",
         "type",
         "value",
         "focusControl",
@@ -38,7 +37,6 @@ function getInput(itemProps, info) {
 function getPatternInput(itemProps, info) {
     const keys = [
         "style",
-        "disabled",
         "type",
         "value",
         "focusControl",
@@ -46,6 +44,20 @@ function getPatternInput(itemProps, info) {
         "row",
         "pattern",
         "patternInfo",
+        "onChange"
+    ];
+    const inputProps = Util.objPropsFilter(info, keys);
+    return <PatternInput {...itemProps} {...inputProps}></PatternInput>;
+}
+
+function getMultiInput(itemProps, info) {
+    const keys = [
+        "style",
+        "type",
+        "value",
+        "focusControl",
+        "placeholder",
+        "row",
         "onChange"
     ];
     const inputProps = Util.objPropsFilter(info, keys);
@@ -90,6 +102,9 @@ class ConfigForm extends React.PureComponent {
                     break;
                 case FORM_TYPE.PatternInput:
                     itemHtml = getPatternInput(itemProps, info);
+                    break;
+                case FORM_TYPE.MultiInput:
+                    itemHtml = getMultiInput(itemProps, info);
                     break;
             }
 
