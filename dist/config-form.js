@@ -1760,6 +1760,10 @@ function (_React$PureComponent) {
           case FORM_TYPE.Input:
             itemHtml = getInput(itemProps, info);
             break;
+
+          case FORM_TYPE.PatternInput:
+            itemHtml = getInput(itemProps, info);
+            break;
         }
 
         if (itemHtml) {

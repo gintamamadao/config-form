@@ -21,27 +21,35 @@ function getItemView(itemProps, info) {
 }
 
 function getInput(itemProps, info) {
-    const {
-        style,
-        disabled,
-        type,
-        value,
-        focusControl,
-        placeholder,
-        row,
-        onChange
-    } = info;
-    const inputProps = {
-        style,
-        disabled,
-        type,
-        value,
-        focusControl,
-        placeholder,
-        row,
-        onChange
-    };
+    const keys = [
+        "style",
+        "disabled",
+        "type",
+        "value",
+        "focusControl",
+        "placeholder",
+        "row",
+        "onChange"
+    ];
+    const inputProps = Util.objPropsFilter(info, keys);
     return <Input {...itemProps} {...inputProps}></Input>;
+}
+
+function getPatternInput(itemProps, info) {
+    const keys = [
+        "style",
+        "disabled",
+        "type",
+        "value",
+        "focusControl",
+        "placeholder",
+        "row",
+        "pattern",
+        "patternInfo",
+        "onChange"
+    ];
+    const inputProps = Util.objPropsFilter(info, keys);
+    return <PatternInput {...itemProps} {...inputProps}></PatternInput>;
 }
 
 class ConfigForm extends React.PureComponent {
@@ -79,6 +87,9 @@ class ConfigForm extends React.PureComponent {
                     break;
                 case FORM_TYPE.Input:
                     itemHtml = getInput(itemProps, info);
+                    break;
+                case FORM_TYPE.PatternInput:
+                    itemHtml = getPatternInput(itemProps, info);
                     break;
             }
 

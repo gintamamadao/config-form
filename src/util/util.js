@@ -51,6 +51,18 @@ const Util = {
             result = moment(v, TIME_FORMAT);
         }
         return moment.isMoment(result) && result.isValid() ? result : null;
+    },
+    objPropsFilter(obj, keys) {
+        obj = Type.object.safe(obj);
+        keys = Type.array.safe(keys);
+        const result = {};
+        for (const key of keys) {
+            if (!Type.string.isNotEmpty(key) || !obj.hasOwnProperty(key)) {
+                continue;
+            }
+            result[key] = obj[key];
+        }
+        return result;
     }
 };
 
