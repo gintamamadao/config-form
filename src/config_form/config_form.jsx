@@ -15,9 +15,33 @@ import { FORM_TYPE } from "../constant/constant";
 import FadeView from "../fade_view/fade_view";
 import Util from "../util/util";
 
-function getTemView(itemProps, info) {
+function getItemView(itemProps, info) {
     const children = info.children;
     return <ItemView {...itemProps}>{children}</ItemView>;
+}
+
+function getInput(itemProps, info) {
+    const {
+        style,
+        disabled,
+        type,
+        value,
+        focusControl,
+        placeholder,
+        row,
+        onChange
+    } = info;
+    const inputProps = {
+        style,
+        disabled,
+        type,
+        value,
+        focusControl,
+        placeholder,
+        row,
+        onChange
+    };
+    return <Input {...itemProps} {...inputProps}></Input>;
 }
 
 class ConfigForm extends React.PureComponent {
@@ -51,7 +75,10 @@ class ConfigForm extends React.PureComponent {
             let itemHtml = null;
             switch (formType) {
                 case FORM_TYPE.ItemView:
-                    itemHtml = getTemView(itemProps, info);
+                    itemHtml = getItemView(itemProps, info);
+                    break;
+                case FORM_TYPE.Input:
+                    itemHtml = getInput(itemProps, info);
                     break;
             }
 

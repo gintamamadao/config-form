@@ -1683,9 +1683,31 @@ function (_React$PureComponent) {
   return Range;
 }(React.PureComponent);
 
-function getTemView(itemProps, info) {
+function getItemView(itemProps, info) {
   var children = info.children;
   return React.createElement(ItemView, itemProps, children);
+}
+
+function getInput(itemProps, info) {
+  var style = info.style,
+      disabled = info.disabled,
+      type = info.type,
+      value = info.value,
+      focusControl = info.focusControl,
+      placeholder = info.placeholder,
+      row = info.row,
+      onChange = info.onChange;
+  var inputProps = {
+    style: style,
+    disabled: disabled,
+    type: type,
+    value: value,
+    focusControl: focusControl,
+    placeholder: placeholder,
+    row: row,
+    onChange: onChange
+  };
+  return React.createElement(CInput, _extends({}, itemProps, inputProps));
 }
 
 var ConfigForm =
@@ -1732,7 +1754,11 @@ function (_React$PureComponent) {
 
         switch (formType) {
           case FORM_TYPE.ItemView:
-            itemHtml = getTemView(itemProps, info);
+            itemHtml = getItemView(itemProps, info);
+            break;
+
+          case FORM_TYPE.Input:
+            itemHtml = getInput(itemProps, info);
             break;
         }
 
