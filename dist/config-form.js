@@ -1746,6 +1746,24 @@ function getCheckboxGroup(itemProps, info) {
   return React.createElement(CCheckboxGroup, _extends({}, itemProps, inputProps));
 }
 
+function getDatePicker(itemProps, info) {
+  var keys = ["style", "value", "disabledDate", "hmsValueStatus", "onChange"];
+  var inputProps = Util.objPropsFilter(info, keys);
+  return React.createElement(CDatePicker, _extends({}, itemProps, inputProps));
+}
+
+function getTimeRange(itemProps, info) {
+  var keys = ["style", "value", "disabledDate", "legalRange", "itemLayout", "onChange"];
+  var inputProps = Util.objPropsFilter(info, keys);
+  return React.createElement(TimeRange, _extends({}, itemProps, inputProps));
+}
+
+function getRange(itemProps, info) {
+  var keys = ["value", "legalRange", "onChange"];
+  var inputProps = Util.objPropsFilter(info, keys);
+  return React.createElement(Range, _extends({}, itemProps, inputProps));
+}
+
 var ConfigForm =
 /*#__PURE__*/
 function (_React$PureComponent) {
@@ -1819,6 +1837,18 @@ function (_React$PureComponent) {
 
           case FORM_TYPE.CheckboxGroup:
             itemHtml = getCheckboxGroup(itemProps, info);
+            break;
+
+          case FORM_TYPE.DatePicker:
+            itemHtml = getDatePicker(itemProps, info);
+            break;
+
+          case FORM_TYPE.TimeRange:
+            itemHtml = getTimeRange(itemProps, info);
+            break;
+
+          case FORM_TYPE.Range:
+            itemHtml = getRange(itemProps, info);
             break;
         }
 

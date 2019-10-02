@@ -97,6 +97,37 @@ function getCheckboxGroup(itemProps, info) {
     return <CheckboxGroup {...itemProps} {...inputProps}></CheckboxGroup>;
 }
 
+function getDatePicker(itemProps, info) {
+    const keys = [
+        "style",
+        "value",
+        "disabledDate",
+        "hmsValueStatus",
+        "onChange"
+    ];
+    const inputProps = Util.objPropsFilter(info, keys);
+    return <DatePicker {...itemProps} {...inputProps}></DatePicker>;
+}
+
+function getTimeRange(itemProps, info) {
+    const keys = [
+        "style",
+        "value",
+        "disabledDate",
+        "legalRange",
+        "itemLayout",
+        "onChange"
+    ];
+    const inputProps = Util.objPropsFilter(info, keys);
+    return <TimeRange {...itemProps} {...inputProps}></TimeRange>;
+}
+
+function getRange(itemProps, info) {
+    const keys = ["value", "legalRange", "onChange"];
+    const inputProps = Util.objPropsFilter(info, keys);
+    return <Range {...itemProps} {...inputProps}></Range>;
+}
+
 class ConfigForm extends React.PureComponent {
     render() {
         const { props } = this;
@@ -150,6 +181,15 @@ class ConfigForm extends React.PureComponent {
                     break;
                 case FORM_TYPE.CheckboxGroup:
                     itemHtml = getCheckboxGroup(itemProps, info);
+                    break;
+                case FORM_TYPE.DatePicker:
+                    itemHtml = getDatePicker(itemProps, info);
+                    break;
+                case FORM_TYPE.TimeRange:
+                    itemHtml = getTimeRange(itemProps, info);
+                    break;
+                case FORM_TYPE.Range:
+                    itemHtml = getRange(itemProps, info);
                     break;
             }
 
