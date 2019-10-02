@@ -56,12 +56,12 @@ const Util = {
         obj = Type.object.safe(obj);
         keys = Type.array.safe(keys);
         const result = {};
-        for (const key of keys) {
+        keys.forEach(key => {
             if (!Type.string.isNotEmpty(key) || !obj.hasOwnProperty(key)) {
-                continue;
+                return;
             }
             result[key] = obj[key];
-        }
+        });
         return result;
     }
 };

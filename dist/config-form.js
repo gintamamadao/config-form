@@ -377,35 +377,13 @@ var Util = {
     obj = schemaVerify.Type.object.safe(obj);
     keys = schemaVerify.Type.array.safe(keys);
     var result = {};
-    var _iteratorNormalCompletion = true;
-    var _didIteratorError = false;
-    var _iteratorError = undefined;
-
-    try {
-      for (var _iterator = keys[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-        var key = _step.value;
-
-        if (!schemaVerify.Type.string.isNotEmpty(key) || !obj.hasOwnProperty(key)) {
-          continue;
-        }
-
-        result[key] = obj[key];
+    keys.forEach(function (key) {
+      if (!schemaVerify.Type.string.isNotEmpty(key) || !obj.hasOwnProperty(key)) {
+        return;
       }
-    } catch (err) {
-      _didIteratorError = true;
-      _iteratorError = err;
-    } finally {
-      try {
-        if (!_iteratorNormalCompletion && _iterator["return"] != null) {
-          _iterator["return"]();
-        }
-      } finally {
-        if (_didIteratorError) {
-          throw _iteratorError;
-        }
-      }
-    }
 
+      result[key] = obj[key];
+    });
     return result;
   }
 };
@@ -1739,13 +1717,19 @@ function getPatternInput(itemProps, info) {
 }
 
 function getMultiInput(itemProps, info) {
-  var keys = ["style", "type", "value", "focusControl", "placeholder", "row", "onChange"];
+  var keys = ["style", "type", "value", "focusControl", "placeholder", "row", "indexHintMap", "onChange"];
   var inputProps = Util.objPropsFilter(info, keys);
   return React.createElement(MultiInput, _extends({}, itemProps, inputProps));
 }
 
 function getNumberInput(itemProps, info) {
   var keys = ["value", "max", "min", "step", "onChange"];
+  var inputProps = Util.objPropsFilter(info, keys);
+  return React.createElement(NumberInput, _extends({}, itemProps, inputProps));
+}
+
+function getSelect(itemProps, info) {
+  var keys = ["style", "placeholder", "value", "disableOpts", "optionsData", "filterOption", "onChange"];
   var inputProps = Util.objPropsFilter(info, keys);
   return React.createElement(NumberInput, _extends({}, itemProps, inputProps));
 }
@@ -1811,6 +1795,10 @@ function (_React$PureComponent) {
 
           case FORM_TYPE.NumberInput:
             itemHtml = getNumberInput(itemProps, info);
+            break;
+
+          case FORM_TYPE.Select:
+            itemHtml = getSelect(itemProps, info);
             break;
         }
 

@@ -58,6 +58,7 @@ function getMultiInput(itemProps, info) {
         "focusControl",
         "placeholder",
         "row",
+        "indexHintMap",
         "onChange"
     ];
     const inputProps = Util.objPropsFilter(info, keys);
@@ -66,6 +67,20 @@ function getMultiInput(itemProps, info) {
 
 function getNumberInput(itemProps, info) {
     const keys = ["value", "max", "min", "step", "onChange"];
+    const inputProps = Util.objPropsFilter(info, keys);
+    return <NumberInput {...itemProps} {...inputProps}></NumberInput>;
+}
+
+function getSelect(itemProps, info) {
+    const keys = [
+        "style",
+        "placeholder",
+        "value",
+        "disableOpts",
+        "optionsData",
+        "filterOption",
+        "onChange"
+    ];
     const inputProps = Util.objPropsFilter(info, keys);
     return <NumberInput {...itemProps} {...inputProps}></NumberInput>;
 }
@@ -114,6 +129,9 @@ class ConfigForm extends React.PureComponent {
                     break;
                 case FORM_TYPE.NumberInput:
                     itemHtml = getNumberInput(itemProps, info);
+                    break;
+                case FORM_TYPE.Select:
+                    itemHtml = getSelect(itemProps, info);
                     break;
             }
 
