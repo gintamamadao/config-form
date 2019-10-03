@@ -1,6 +1,6 @@
 {
     "name": "config-form",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "description": "config-form",
     "main": "./dist/config-form.js",
     "directories": {
