@@ -57,7 +57,7 @@ const UserForm = ({ data }) => {
 
 ## ConfigForm
 
-#### props 属性说明
+#### props 属性
 
 | 字段      |    类型     |                                             说明 |
 | --------- | :---------: | -----------------------------------------------: |
@@ -66,7 +66,7 @@ const UserForm = ({ data }) => {
 | layout    |   object    |       即 antd 组件库中的 Form 组件的 layout 属性 |
 | hidden    |   boolean   |         默认值为 false, 当值为 true 时，表单隐藏 |
 
-#### formInfos 属性的配置说明
+#### formInfos 属性的配置
 
 | 字段     |  类型  |           说明 |
 | -------- | :----: | -------------: |
@@ -79,7 +79,7 @@ const UserForm = ({ data }) => {
 
 -   字符串输入框
 
-#### 属性配置说明
+#### 属性配置
 
 | 字段         |   类型   |                                                 说明 |
 | ------------ | :------: | ---------------------------------------------------: |
@@ -104,7 +104,7 @@ const UserForm = ({ data }) => {
 
 -   带格式校验的字符串输入框
 
-#### 属性配置说明
+#### 属性配置
 
 | 字段         |   类型   |                                                 说明 |
 | ------------ | :------: | ---------------------------------------------------: |
@@ -148,7 +148,7 @@ const UserForm = ({ data }) => {
 
 -   多个字符串输入框
 
-#### 属性配置说明
+#### 属性配置
 
 | 字段         |   类型   |                                                 说明 |
 | ------------ | :------: | ---------------------------------------------------: |
@@ -167,10 +167,16 @@ const UserForm = ({ data }) => {
 | focusControl | boolean  |       默认值为 false, 当值为 true 时，组件为受控组件 |
 | placeholder  |  string  |                                       输入框的占位符 |
 | row          |  number  |           当 type 的值为 "textArea" 时，输入框的行数 |
-| indexHintMap |  object  |                     某个索引对应的输入框下的提示配置 |
+| indexHintMap |  object  |                       用于在某个输入框的下面显示提示 |
 | onChange     | function |                               当输入值变化的回调函数 |
 
-#### indexHintMap 中的输入框下的提示配置介绍
+#### indexHintMap 的配置
+
+| 字段    |  类型  |                                           说明 |
+| ------- | :----: | ---------------------------------------------: |
+| [index] | object | key [index] 为输入框的位置 , value 为 提示配置 |
+
+#### indexHintMap 中的提示配置
 
 | 字段   |  类型   |                                           说明 |
 | ------ | :-----: | ---------------------------------------------: |
@@ -235,5 +241,12 @@ const UserForm = ({ data }) => {
 | placeholder  |       string        |                                   输入框的占位符 |
 | optionsData  |       object        |                                         选项信息 |
 | disableOpts  |       object        |                                   禁止选择的选项 |
-| filterOption | boolean or function |                                 是否开启过滤选项 |
+| filterOption | boolean or function |                             是否开启过滤选项功能 |
 | onChange     |      function       |                           当输入值变化的回调函数 |
+
+#### indexHintMap 中的输入框下的提示配置介绍
+
+| 字段   |  类型   |                                           说明 |
+| ------ | :-----: | ---------------------------------------------: |
+| text   | string  |                                       提示文字 |
+| status | boolean | 默认值为 false, 当值为 true 时，提示文字为红色 |
