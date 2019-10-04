@@ -44,6 +44,7 @@ const UserForm = ({ data }) => {
 <!-- TOC -->
 
 -   [ConfigForm](#configform)
+    -   [ItemView](#itemView)
     -   [Input](#input)
     -   [PatternInput](#patterninput)
     -   [MultiInput](#multiinput)
@@ -74,6 +75,25 @@ const UserForm = ({ data }) => {
 | ...      |  ...   |            ... |
 
 -   formType 指定了用那一个表单组件，formInfos 属性的配置会根据不同的表单组件有不同的属性，下面我们分别介绍。
+
+### ItemView
+
+-   antd 组件库中的 Form.Item 的再一层封装的容器组件，下面所有的输入组件都用这个组件包装的，所以都有以下配置属性，除了 children 属性。
+
+#### 属性配置
+
+| 字段      |        类型        |                                             说明 |
+| --------- | :----------------: | -----------------------------------------------: |
+| required  |      boolean       |                                         是否必要 |
+| check     |      boolean       | 默认值为 false, 当值为 true 时，才会显示错误信息 |
+| disabled  |      boolean       |         默认值为 false, 当值为 true 时，禁止修改 |
+| isIllegal |      boolean       |   默认值为 false, 当值为 true 时表明当前输入错误 |
+| errorHint |       string       |                                         错误提示 |
+| label     |       string       |                                             标签 |
+| layout    |       object       |       即 antd 组件库中的 Form 组件的 layout 属性 |
+| hidden    |      boolean       |         默认值为 false, 当值为 true 时，表单隐藏 |
+| help      |       string       |                                         帮助提示 |
+| children  | object or funciton |                                           子元素 |
 
 ### Input
 
