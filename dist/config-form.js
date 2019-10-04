@@ -1164,28 +1164,30 @@ function (_React$PureComponent) {
       var isIllegal = props.isIllegal;
       disableOpts = schemaVerify.Type.object.safe(disableOpts);
       optionsData = schemaVerify.Type.object.safe(optionsData);
-      var radiosHtml = [];
+      var radiosOpts = [];
 
       for (var key in optionsData) {
         var optionInfo = optionsData[key];
         var text = schemaVerify.Type.object.is(optionInfo) && schemaVerify.Type.string.isNotEmpty(optionInfo.text) ? optionInfo.text : key;
-        radiosHtml.push(React.createElement(_Radio, {
-          disabled: disableOpts[key],
-          key: key,
-          value: key
-        }, text));
+        var radioOpt = {
+          label: text,
+          value: key,
+          disabled: disableOpts[key]
+        };
+        radiosOpts.push(radioOpt);
       }
 
       var radioGroupProps = {
         disabled: disabled,
         value: value,
+        options: radiosOpts,
         onChange: this.handleChange
       };
       isIllegal = isIllegal || !schemaVerify.Type.string.isNotEmpty(value);
       var itemProps = Util.filterItemProps(props, {
         isIllegal: isIllegal
       });
-      return React.createElement(ItemView, itemProps, React.createElement(RadioGroup, radioGroupProps, radiosHtml));
+      return React.createElement(ItemView, itemProps, React.createElement(RadioGroup, radioGroupProps));
     }
   }]);
 

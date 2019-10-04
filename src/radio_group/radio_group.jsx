@@ -29,7 +29,7 @@ class CRadioGroup extends React.PureComponent {
         disableOpts = Type.object.safe(disableOpts);
         optionsData = Type.object.safe(optionsData);
 
-        const radiosHtml = [];
+        const radiosOpts = [];
         for (const key in optionsData) {
             const optionInfo = optionsData[key];
             const text =
@@ -37,16 +37,18 @@ class CRadioGroup extends React.PureComponent {
                 Type.string.isNotEmpty(optionInfo.text)
                     ? optionInfo.text
                     : key;
-            radiosHtml.push(
-                <Radio disabled={disableOpts[key]} key={key} value={key}>
-                    {text}
-                </Radio>
-            );
+            const radioOpt = {
+                label: text,
+                value: key,
+                disabled: disableOpts[key]
+            };
+            radiosOpts.push(radioOpt);
         }
 
         const radioGroupProps = {
             disabled,
             value,
+            options: radiosOpts,
             onChange: this.handleChange
         };
 
@@ -55,7 +57,7 @@ class CRadioGroup extends React.PureComponent {
 
         return (
             <ItemView {...itemProps}>
-                <RadioGroup {...radioGroupProps}>{radiosHtml}</RadioGroup>
+                <RadioGroup {...radioGroupProps}></RadioGroup>
             </ItemView>
         );
     }
