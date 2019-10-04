@@ -733,7 +733,7 @@ var PATTERN_INFO = {
     }
   },
   phone: {
-    name: "手机",
+    name: "手机号",
     patternHint: "只允许11位的手机号",
     check: function check(v) {
       return schemaVerify.Pattern.phone.is(v);
