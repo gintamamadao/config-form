@@ -1,6 +1,6 @@
 {
     "name": "config-form",
-    "version": "1.0.5",
+    "version": "1.0.6",
     "description": "config-form",
     "main": "./dist/config-form.js",
     "directories": {
@@ -20,6 +20,12 @@
         "url": "https://github.com/gintamamadao/config-form/issues"
     },
     "homepage": "https://github.com/gintamamadao/config-form#readme",
+    "keywords": [
+        "json",
+        "config",
+        "form",
+        "antd"
+    ],
     "dependencies": {
         "@babel/runtime": "^7.6.2",
         "antd": "^3.23.4",

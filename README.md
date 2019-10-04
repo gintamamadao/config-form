@@ -46,6 +46,14 @@ const UserForm = ({ data }) => {
 -   [ConfigForm](#configform)
     -   [Input](#input)
     -   [PatternInput](#patterninput)
+    -   [MultiInput](#multiinput)
+    -   [NumberInput](#numberinput)
+    -   [Select](#select)
+    -   [RadioGroup](#radiogroup)
+    -   [CheckboxGroup](#checkboxgroup)
+    -   [DatePicker](#datepicker)
+    -   [TimeRange](#timerange)
+    -   [Range](#range)
 
 ## ConfigForm
 
@@ -204,3 +212,28 @@ const UserForm = ({ data }) => {
 | min       |  number  |                                 可以输入的最小值 |
 | step      |  number  |                                   增加数字的步长 |
 | onChange  | function |                           当输入值变化的回调函数 |
+
+### Select
+
+-   选择器
+
+#### 属性配置说明
+
+| 字段         |        类型         |                                             说明 |
+| ------------ | :-----------------: | -----------------------------------------------: |
+| required     |       boolean       |                                         是否必要 |
+| check        |       boolean       | 默认值为 false, 当值为 true 时，才会显示错误信息 |
+| disabled     |       boolean       |         默认值为 false, 当值为 true 时，禁止修改 |
+| isIllegal    |       boolean       |   默认值为 false, 当值为 true 时表明当前输入错误 |
+| errorHint    |       string        |                                         错误提示 |
+| label        |       string        |                                             标签 |
+| layout       |       object        |       即 antd 组件库中的 Form 组件的 layout 属性 |
+| hidden       |       boolean       |         默认值为 false, 当值为 true 时，表单隐藏 |
+| help         |       string        |                                         帮助提示 |
+| style        |       object        |                               input 输入框的样式 |
+| value        |       string        |                                       输入框的值 |
+| placeholder  |       string        |                                   输入框的占位符 |
+| optionsData  |       object        |                                         选项信息 |
+| disableOpts  |       object        |                                   禁止选择的选项 |
+| filterOption | boolean or function |                                 是否开启过滤选项 |
+| onChange     |      function       |                           当输入值变化的回调函数 |
