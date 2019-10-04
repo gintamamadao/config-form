@@ -225,24 +225,24 @@ const UserForm = ({ data }) => {
 
 #### 属性配置说明
 
-| 字段         |        类型         |                                             说明 |
-| ------------ | :-----------------: | -----------------------------------------------: |
-| required     |       boolean       |                                         是否必要 |
-| check        |       boolean       | 默认值为 false, 当值为 true 时，才会显示错误信息 |
-| disabled     |       boolean       |         默认值为 false, 当值为 true 时，禁止修改 |
-| isIllegal    |       boolean       |   默认值为 false, 当值为 true 时表明当前输入错误 |
-| errorHint    |       string        |                                         错误提示 |
-| label        |       string        |                                             标签 |
-| layout       |       object        |       即 antd 组件库中的 Form 组件的 layout 属性 |
-| hidden       |       boolean       |         默认值为 false, 当值为 true 时，表单隐藏 |
-| help         |       string        |                                         帮助提示 |
-| style        |       object        |                               input 输入框的样式 |
-| value        |       string        |                                       输入框的值 |
-| placeholder  |       string        |                                   输入框的占位符 |
-| optionsData  |       object        |                                         选项信息 |
-| disableOpts  |       object        |                                   禁止选择的选项 |
-| filterOption | boolean or function |                             是否开启过滤选项功能 |
-| onChange     |      function       |                           当输入值变化的回调函数 |
+| 字段         |        类型         |                                                       说明 |
+| ------------ | :-----------------: | ---------------------------------------------------------: |
+| required     |       boolean       |                                                   是否必要 |
+| check        |       boolean       |           默认值为 false, 当值为 true 时，才会显示错误信息 |
+| disabled     |       boolean       |                   默认值为 false, 当值为 true 时，禁止修改 |
+| isIllegal    |       boolean       |             默认值为 false, 当值为 true 时表明当前输入错误 |
+| errorHint    |       string        |                                                   错误提示 |
+| label        |       string        |                                                       标签 |
+| layout       |       object        |                 即 antd 组件库中的 Form 组件的 layout 属性 |
+| hidden       |       boolean       |                   默认值为 false, 当值为 true 时，表单隐藏 |
+| help         |       string        |                                                   帮助提示 |
+| style        |       object        |                                         input 输入框的样式 |
+| value        |       string        |                                                 输入框的值 |
+| placeholder  |       string        |                                             输入框的占位符 |
+| optionsData  |       object        |                                                   选项信息 |
+| disableOpts  |       object        |                                             禁止选择的选项 |
+| filterOption | boolean or function | 当值为 true 时开启默认搜索过滤选项，函数则为自定义过滤规则 |
+| onChange     |      function       |                                     当输入值变化的回调函数 |
 
 #### optionsData 属性配置
 
@@ -260,8 +260,23 @@ const UserForm = ({ data }) => {
 
 ```js
 {
-    name: {
-        text: "姓名";
+    man: {
+        text: "男";
+    },
+    woman: {
+        text: "女";
     }
+}
+```
+
+#### disableOpts 属性配置
+
+| 字段  |  类型   |                                                                         说明 |
+| ----- | :-----: | ---------------------------------------------------------------------------: |
+| [key] | boolean | [key] 是标签 <Option> 的 value, 默认值为 false, 当值为 true 时，选项无法选择 |
+
+```js
+{
+    man: true;
 }
 ```
