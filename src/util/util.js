@@ -29,9 +29,10 @@ const Util = {
             noRedPoint: props.noRedPoint,
             required: props.required,
             check: props.check,
-            label: props.label,
             disabled: props.disabled,
+            isIllegal: props.isIllegal,
             errorHint: props.errorHint,
+            label: props.label,
             layout: props.layout,
             hidden: props.hidden,
             help: props.help
