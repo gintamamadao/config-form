@@ -135,3 +135,36 @@ const UserForm = ({ data }) => {
 | name        | string |                     格式要求名 |
 | patternHint | string | 当前输入不符合格式要求时的提示 |
 | check       | string |         校验格式是否合格的函数 |
+
+### MultiInput
+
+-   多个字符串输入框
+
+#### 属性配置说明
+
+| 字段         |  类型   |                                                 说明 |
+| ------------ | :-----: | ---------------------------------------------------: |
+| required     | boolean |                                             是否必要 |
+| check        | boolean |     默认值为 false, 当值为 true 时，才会显示错误信息 |
+| disabled     | boolean |             默认值为 false, 当值为 true 时，禁止修改 |
+| isIllegal    | boolean |       默认值为 false, 当值为 true 时表明当前输入错误 |
+| errorHint    | string  |                                             错误提示 |
+| label        | string  |                                                 标签 |
+| layout       | boolean |           即 antd 组件库中的 Form 组件的 layout 属性 |
+| hidden       | boolean |             默认值为 false, 当值为 true 时，表单隐藏 |
+| help         | boolean |                                             帮助提示 |
+| style        | object  |                                   input 输入框的样式 |
+| type         | string  | 输入框的类型，值为"text" 或 "textArea" 默认为 "text" |
+| value        |  array  |                                       所有输入框的值 |
+| focusControl | boolean |       默认值为 false, 当值为 true 时，组件为受控组件 |
+| placeholder  | string  |                                       输入框的占位符 |
+| row          | number  |           当 type 的值为 "textArea" 时，输入框的行数 |
+| indexHintMap | object  |                     某个索引对应的输入框下的提示配置 |
+| onChange     | object  |                               当输入值变化的回调函数 |
+
+#### indexHintMap 中的某个索引对应的输入框下的提示配置介绍
+
+| 字段   |  类型   |                                           说明 |
+| ------ | :-----: | ---------------------------------------------: |
+| text   | string  |                                       提示文字 |
+| status | boolean | 默认值为 false, 当值为 true 时，提示文字为红色 |
