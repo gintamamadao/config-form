@@ -1,6 +1,6 @@
 # config-form
 
-根据 json 配置生成输入表单
+generate form based on the json config
 
 ## 项目简介
 
