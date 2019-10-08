@@ -1,6 +1,6 @@
 {
     "name": "config-form",
-    "version": "1.0.7",
+    "version": "1.0.8",
     "description": "config-form",
     "main": "./dist/config-form.js",
     "directories": {
@@ -27,13 +27,12 @@
         "antd"
     ],
     "dependencies": {
-        "@babel/runtime": "^7.6.2",
         "antd": "^3.23.4",
         "classnames": "^2.2.6",
         "moment": "^2.24.0",
         "react": "^16.9.0",
         "react-transition-group": "^4.3.0",
-        "schema-verify": "^1.2.2"
+        "schema-verify": "^1.2.7"
     },
     "devDependencies": {
         "@babel/core": "^7.4.5",
