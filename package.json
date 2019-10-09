@@ -1,6 +1,6 @@
 {
     "name": "config-form",
-    "version": "1.0.10",
+    "version": "1.0.11",
     "description": "generate form based on the json config",
     "main": "./dist/config-form.js",
     "scripts": {

@@ -39,7 +39,7 @@ const UserForm = ({ data }) => {
 
 上面的例子中，ConfigForm 根据 formInfos 里的信息生成了一个包含了标签，提示，占位符，错误提示等逻辑的字符串输入框。
 
-## 目录
+# 目录
 
 <!-- TOC -->
 
@@ -56,9 +56,9 @@ const UserForm = ({ data }) => {
     -   [TimeRange](#timerange)
     -   [Range](#range)
 
-## ConfigForm
+# ConfigForm
 
-#### 属性
+## 属性
 
 | 字段      |    类型     |                                             说明 |
 | --------- | :---------: | -----------------------------------------------: |
@@ -67,7 +67,7 @@ const UserForm = ({ data }) => {
 | layout    |   object    |       即 antd 组件库中的 Form 组件的 layout 属性 |
 | hidden    |   boolean   |         默认值为 false, 当值为 true 时，表单隐藏 |
 
-#### formInfos 属性配置
+## formInfos 属性配置
 
 | 字段     |  类型  |           说明 |
 | -------- | :----: | -------------: |
@@ -76,11 +76,11 @@ const UserForm = ({ data }) => {
 
 -   formType 指定了用那一个表单组件，formInfos 属性的配置会根据不同的表单组件有不同的属性，下面我们分别介绍。
 
-### ItemView
+## ItemView
 
 -   antd 组件库中的 Form.Item 的再一层封装的容器组件，下面所有的输入组件都用这个组件包装的，所以都有以下配置属性，除了 children 属性。
 
-#### 属性配置
+## 属性配置
 
 | 字段      |        类型        |                                             说明 |
 | --------- | :----------------: | -----------------------------------------------: |
@@ -95,11 +95,11 @@ const UserForm = ({ data }) => {
 | help      |       string       |                                         帮助提示 |
 | children  | object or funciton |                                           子元素 |
 
-### Input
+## Input
 
 -   字符串输入框
 
-#### 属性配置
+## 属性配置
 
 | 字段         |   类型   |                                                 说明 |
 | ------------ | :------: | ---------------------------------------------------: |
@@ -120,11 +120,11 @@ const UserForm = ({ data }) => {
 | row          |  number  |           当 type 的值为 "textArea" 时，输入框的行数 |
 | onChange     | function |                               当输入值变化的回调函数 |
 
-### PatternInput
+## PatternInput
 
 -   带格式校验的字符串输入框
 
-#### 属性配置
+## 属性配置
 
 | 字段         |   类型   |                                                 说明 |
 | ------------ | :------: | ---------------------------------------------------: |
@@ -147,7 +147,7 @@ const UserForm = ({ data }) => {
 | patternInfo  |  object  |                         自定义对当前输入值的格式要求 |
 | onChange     | function |                               当输入值变化的回调函数 |
 
-#### pattern 支持的格式要求
+## pattern 支持的格式要求
 
 -   sign （标识）
 -   uri （链接）
@@ -156,7 +156,7 @@ const UserForm = ({ data }) => {
 -   phone （手机号）
 -   json （json 字符串）
 
-#### patternInfo 属性配置
+## patternInfo 属性配置
 
 | 字段        |   类型   |                           说明 |
 | ----------- | :------: | -----------------------------: |
@@ -164,11 +164,11 @@ const UserForm = ({ data }) => {
 | patternHint |  string  | 当前输入不符合格式要求时的提示 |
 | check       | function |         校验格式是否合格的函数 |
 
-### MultiInput
+## MultiInput
 
 -   多个字符串输入框
 
-#### 属性配置
+## 属性配置
 
 | 字段         |   类型   |                                                 说明 |
 | ------------ | :------: | ---------------------------------------------------: |
@@ -190,20 +190,20 @@ const UserForm = ({ data }) => {
 | indexHintMap |  object  |                       用于在某个输入框的下面显示提示 |
 | onChange     | function |                               当输入值变化的回调函数 |
 
-#### indexHintMap 属性配置
+## indexHintMap 属性配置
 
 | 字段    |  类型  |                                           说明 |
 | ------- | :----: | ---------------------------------------------: |
 | [index] | object | key [index] 为输入框的位置 , value 为 提示配置 |
 
-##### indexHintMap 某个[index]的属性配置
+### indexHintMap 某个[index]的属性配置
 
 | 字段   |  类型   |                                           说明 |
 | ------ | :-----: | ---------------------------------------------: |
 | text   | string  |                                       提示文字 |
 | status | boolean | 默认值为 false, 当值为 true 时，提示文字为红色 |
 
-##### indexHintMap 配置例子
+### indexHintMap 配置例子
 
 ```js
 {
@@ -216,11 +216,11 @@ const UserForm = ({ data }) => {
 
 -   该提示会出现在第一个输入框和第二输入框中间
 
-### NumberInput
+## NumberInput
 
 -   数字输入框
 
-#### 属性配置
+## 属性配置
 
 | 字段      |   类型   |                                             说明 |
 | --------- | :------: | -----------------------------------------------: |
@@ -239,11 +239,11 @@ const UserForm = ({ data }) => {
 | step      |  number  |                                   增加数字的步长 |
 | onChange  | function |                           当输入值变化的回调函数 |
 
-### Select
+## Select
 
 -   选择器
 
-#### 属性配置
+## 属性配置
 
 | 字段         |        类型         |                                                       说明 |
 | ------------ | :-----------------: | ---------------------------------------------------------: |
@@ -264,19 +264,19 @@ const UserForm = ({ data }) => {
 | filterOption | boolean or function | 当值为 true 时开启默认搜索过滤选项，函数则为自定义过滤规则 |
 | onChange     |      function       |                                     当输入值变化的回调函数 |
 
-#### optionsData 属性配置
+## optionsData 属性配置
 
 | 字段  |  类型  |                  说明 |
 | ----- | :----: | --------------------: |
 | [key] | object | [key] 是选项的 value, |
 
-#### optionsData 某个[key]的属性配置
+## optionsData 某个[key]的属性配置
 
 | 字段 |  类型  |           说明 |
 | ---- | :----: | -------------: |
 | text | string | 选项的文字内容 |
 
-##### optionsData 配置例子
+### optionsData 配置例子
 
 ```js
 {
@@ -289,7 +289,7 @@ const UserForm = ({ data }) => {
 }
 ```
 
-#### disableOpts 属性配置
+## disableOpts 属性配置
 
 | 字段  |  类型   |                                                               说明 |
 | ----- | :-----: | -----------------------------------------------------------------: |
@@ -301,11 +301,11 @@ const UserForm = ({ data }) => {
 }
 ```
 
-### RadioGroup
+## RadioGroup
 
 -   单选框组
 
-#### 属性配置
+## 属性配置
 
 | 字段        |   类型   |                                             说明 |
 | ----------- | :------: | -----------------------------------------------: |
@@ -323,19 +323,19 @@ const UserForm = ({ data }) => {
 | disableOpts |  object  |                                   禁止选择的选项 |
 | onChange    | function |                           当输入值变化的回调函数 |
 
-#### optionsData 属性配置
+## optionsData 属性配置
 
 | 字段  |  类型  |                   说明 |
 | ----- | :----: | ---------------------: |
 | [key] | object | [key] 是选项 的 value, |
 
-#### optionsData 某个[key]的属性配置
+## optionsData 某个[key]的属性配置
 
 | 字段 |  类型  |         说明 |
 | ---- | :----: | -----------: |
 | text | string | 选项的 label |
 
-##### optionsData 配置例子
+### optionsData 配置例子
 
 ```js
 {
@@ -348,7 +348,7 @@ const UserForm = ({ data }) => {
 }
 ```
 
-#### disableOpts 属性配置
+## disableOpts 属性配置
 
 | 字段  |  类型   |                                                               说明 |
 | ----- | :-----: | -----------------------------------------------------------------: |
@@ -360,11 +360,11 @@ const UserForm = ({ data }) => {
 }
 ```
 
-### CheckboxGroup
+## CheckboxGroup
 
 -   多选框组
 
-#### 属性配置
+## 属性配置
 
 | 字段        |   类型   |                                             说明 |
 | ----------- | :------: | -----------------------------------------------: |
@@ -382,19 +382,19 @@ const UserForm = ({ data }) => {
 | disableOpts |  object  |                                   禁止选择的选项 |
 | onChange    | function |                           当输入值变化的回调函数 |
 
-#### optionsData 属性配置
+## optionsData 属性配置
 
 | 字段  |  类型  |                  说明 |
 | ----- | :----: | --------------------: |
 | [key] | object | [key] 是选项的 value, |
 
-#### optionsData 某个[key]的属性配置
+## optionsData 某个[key]的属性配置
 
 | 字段 |  类型  |         说明 |
 | ---- | :----: | -----------: |
 | text | string | 选项的 label |
 
-##### optionsData 配置例子
+### optionsData 配置例子
 
 ```js
 {
@@ -407,7 +407,7 @@ const UserForm = ({ data }) => {
 }
 ```
 
-#### disableOpts 属性配置
+## disableOpts 属性配置
 
 | 字段  |  类型   |                                                               说明 |
 | ----- | :-----: | -----------------------------------------------------------------: |
@@ -419,11 +419,11 @@ const UserForm = ({ data }) => {
 }
 ```
 
-### DatePicker
+## DatePicker
 
 -   日期选择器
 
-#### 属性配置
+## 属性配置
 
 | 字段           |   类型   |                                                                               说明 |
 | -------------- | :------: | ---------------------------------------------------------------------------------: |
@@ -442,11 +442,11 @@ const UserForm = ({ data }) => {
 | hmsValueStatus |  string  | 日期的时分秒的默认值类型，reset-默认值是 "00:00:00" ，maxValue-默认值是 "23:59:59" |
 | onChange       | function |                                                             当输入值变化的回调函数 |
 
-### TimeRange
+## TimeRange
 
 -   日期范围选择器
 
-#### 属性配置
+## 属性配置
 
 | 字段         |   类型   |                                                           说明 |
 | ------------ | :------: | -------------------------------------------------------------: |
@@ -466,11 +466,11 @@ const UserForm = ({ data }) => {
 | itemLayout   |  object  | 即 antd 组件库中的 Form 组件的 layout 属性，但是配置给子表单的 |
 | onChange     | function |                                         当输入值变化的回调函数 |
 
-### Range
+## Range
 
 -   数字范围输入框
 
-#### 属性配置
+## 属性配置
 
 | 字段       |   类型   |                                             说明 |
 | ---------- | :------: | -----------------------------------------------: |
@@ -487,7 +487,7 @@ const UserForm = ({ data }) => {
 | legalRange |  array   |                                   合法的数字范围 |
 | onChange   | function |                           当输入值变化的回调函数 |
 
-## License (MIT)
+# License (MIT)
 
 ```
 Copyright (c) 2019 gintamamadao
