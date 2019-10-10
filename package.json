@@ -1,6 +1,6 @@
 {
     "name": "config-form",
-    "version": "1.0.11",
+    "version": "1.0.12",
     "description": "generate form based on the json config",
     "main": "./dist/config-form.js",
     "scripts": {
@@ -29,7 +29,7 @@
         "moment": "^2.24.0",
         "react": "^16.9.0",
         "react-transition-group": "^4.3.0",
-        "schema-verify": "^1.2.7"
+        "schema-verify": "^1.3.0"
     },
     "devDependencies": {
         "@babel/core": "^7.4.5",

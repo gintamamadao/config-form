@@ -1,10 +1,10 @@
 # config-form
 
-generate form based on the json config
+> generate form based on the json config
 
 ## 项目简介
 
-中后台系统往往需要编写大量的表单逻辑，而且其中大量工作重复度高，为了减少没必要的重复工作，对 antd 组件库中的表单组件结合一些常用的表单逻辑封装成一个组件，该组件可以根据 json 配置生成表单逻辑。
+> 中后台系统往往需要编写大量的表单逻辑，而且其中大量工作重复度高，为了减少没必要的重复工作，对 antd 组件库中的表单组件结合一些常用的表单逻辑封装成一个组件，该组件可以根据 json 配置生成表单逻辑。
 
 ## 环境安装
 
@@ -37,7 +37,7 @@ const UserForm = ({ data }) => {
 };
 ```
 
-上面的例子中，ConfigForm 根据 formInfos 里的信息生成了一个包含了标签，提示，占位符，错误提示等逻辑的字符串输入框。
+> 上面的例子中，ConfigForm 根据 formInfos 里的信息生成了一个包含了标签，提示，占位符，错误提示等逻辑的字符串输入框。
 
 # 目录
 
@@ -74,11 +74,11 @@ const UserForm = ({ data }) => {
 | formType | string | 要成表单的类型 |
 | ...      |  ...   |            ... |
 
--   formType 指定了用那一个表单组件，formInfos 属性的配置会根据不同的表单组件有不同的属性，下面我们分别介绍。
+> formType 指定了用那一个表单组件，formInfos 属性的配置会根据不同的表单组件有不同的属性，下面我们分别介绍。
 
 ## ItemView
 
--   antd 组件库中的 Form.Item 的再一层封装的容器组件，下面所有的输入组件都用这个组件包装的，所以都有以下配置属性，除了 children 属性。
+> antd 组件库中的 Form.Item 的再一层封装的容器组件，下面所有的输入组件都用这个组件包装的，所以都有以下配置属性，除了 children 属性。
 
 ## 属性配置
 
@@ -97,7 +97,7 @@ const UserForm = ({ data }) => {
 
 ## Input
 
--   字符串输入框
+> 字符串输入框
 
 ## 属性配置
 
@@ -122,7 +122,7 @@ const UserForm = ({ data }) => {
 
 ## PatternInput
 
--   带格式校验的字符串输入框
+> 带格式校验的字符串输入框
 
 ## 属性配置
 
@@ -166,7 +166,7 @@ const UserForm = ({ data }) => {
 
 ## MultiInput
 
--   多个字符串输入框
+> 多个字符串输入框
 
 ## 属性配置
 
@@ -214,11 +214,11 @@ const UserForm = ({ data }) => {
 }
 ```
 
--   该提示会出现在第一个输入框和第二输入框中间
+> 该提示会出现在第一个输入框和第二输入框中间
 
 ## NumberInput
 
--   数字输入框
+> 数字输入框
 
 ## 属性配置
 
@@ -241,7 +241,7 @@ const UserForm = ({ data }) => {
 
 ## Select
 
--   选择器
+> 选择器
 
 ## 属性配置
 
@@ -303,7 +303,7 @@ const UserForm = ({ data }) => {
 
 ## RadioGroup
 
--   单选框组
+> 单选框组
 
 ## 属性配置
 
@@ -362,7 +362,7 @@ const UserForm = ({ data }) => {
 
 ## CheckboxGroup
 
--   多选框组
+> 多选框组
 
 ## 属性配置
 
@@ -421,7 +421,7 @@ const UserForm = ({ data }) => {
 
 ## DatePicker
 
--   日期选择器
+> 日期选择器
 
 ## 属性配置
 
@@ -444,7 +444,7 @@ const UserForm = ({ data }) => {
 
 ## TimeRange
 
--   日期范围选择器
+> 日期范围选择器
 
 ## 属性配置
 
@@ -468,7 +468,7 @@ const UserForm = ({ data }) => {
 
 ## Range
 
--   数字范围输入框
+> 数字范围输入框
 
 ## 属性配置
 
