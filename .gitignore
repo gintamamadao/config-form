@@ -11,4 +11,8 @@ logs/
 npm-debug.log
 .vscode/
 log/
+<<<<<<< HEAD
 dist/
+=======
+dist/
+>>>>>>> 0101cb9e27e676e095828af8e5e6873efe3dec0e
